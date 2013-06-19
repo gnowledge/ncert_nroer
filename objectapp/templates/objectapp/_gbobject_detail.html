@@ -1,0 +1,108 @@
+{% load tagging_tags comments i18n %}
+{% load i18n gstudio_tags %}
+<script type="text/javascript" >
+$(window).load(function() {
+ 
+ $("#savecontent").hide();
+});
+</script>
+
+      <h2 class="nodetype-title">
+    {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-document'  %}
+      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Document</font>
+
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-image'  %}
+      <a href="/gstudio/resources/images/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is an Image</font>
+
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-video'  %}
+      <a href="/gstudio/resources/videos/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Video</font>
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-topic'  %}
+		{% for each in object.ref.in_gbobject_set_of.all %}
+			{% for each1 in each.system_set.all %}
+			<a href="/gstudio/group/gnowsys-grp/{{each1.id}}">{{object.title}}</a>&nbsp; <font size="2" color="black">is a Topic of a Loom-thread</font><br/>
+			{% endfor %}
+		{% endfor %}
+	 
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-section'  %}
+		{% for each in object.ref.in_gbobject_set_of.all %}
+			{% for each1 in each.system_set.all %}
+			 <a href="/gstudio/page/gnowsys-page/{{each1}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Section of a wiki-page</font><br/>
+			{% endfor %}
+		{% endfor %}
+
+	{% else %}
+    {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-reply'  %}
+
+	{% for eachobject in object.ref.prior_nodes.all %}
+		{% if eachobject.ref.prior_nodes.all %}
+			{% for eachobject1 in eachobject.ref.prior_nodes.all %}
+				{% if eachobject1.ref.prior_nodes.all %}
+					{% for eachobject2 in eachobject1.ref.prior_nodes.all %}
+						 <a href="/gstudio/{% show_nodesystem  eachobject2.id  %}">{{object.title}}</a>&nbsp; <font size="2" color="black">is a Reply</font>
+					{% endfor %}
+				{% else %}
+					 <a href="/gstudio/{% show_nodesystem  eachobject1.id  %}">{{object.title}}</a>&nbsp; <font size="2" color="black">is a Reply </font>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+		 <a href="/gstudio/{% show_nodesystem  eachobject.id  %}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Reply </font>
+		{% endif %}
+
+	{% endfor %}
+	{% else %}
+     {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-subsection'  %}
+	{% for eachobject in object.ref.prior_nodes.all %}
+	 <a href="/gstudio/{% show_nodesystem  eachobject.id  %}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Subsection of a Section wiki-page</font>
+	{% endfor %}
+	{% else %}
+<a href="{{ object.ref.get_absolute_url }}" title="{{ object.title }}" rel="bookmark" id = "{{object.id}}awikiloom"> {{ object.title }} </a><font size="2" color="black">
+<script type="text/javascript" >
+var a = "{{object.ref.system.systemtypes.all|slugify}}"
+if (a != "")
+{
+
+space = a.replace( "-", " " );
+b = space.match("meeting")
+c = space.match("wikipage")
+if(b == "meeting"){
+document.getElementById("{{object.id}}awikiloom").setAttribute("href","/gstudio/group/gnowsys-grp/{{object.id}}");
+document.write("is a Loom thread" );
+}
+if(c == "wikipage"){
+document.getElementById("{{object.id}}awikiloom").setAttribute("href","/gstudio/page/gnowsys-page/{{object.id}}");
+document.write("is a Wiki page" );
+}
+
+}
+else
+{
+var e;
+e = "{{ object.nodemodel}}";
+if(e == "Gbobject")
+{document.write("is an Object");
+}
+else
+{
+document.write("is a {{object.nodemodel}}");
+}
+}
+</script>
+</font>
+      
+
+{% endifequal %}
+{% endifequal %}
+{% endifequal %}
+	{% endifequal %}
+       {% endifequal %}
+       {% endifequal %}
+       {% endifequal %}
+
+<!-- <a href="{{ object.ref.get_edit_url }}" target="_blank" >[edit]</a>  -->
+    </h2>
+		
+     

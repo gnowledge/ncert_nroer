@@ -1,0 +1,18 @@
+<br/>
+<strong>Relations:</strong>
+{% for each in relations %}
+<a href="{{each.get_view_object_url}}">{{each}}</a>
+{% if not forloop.last %},{% endif %}
+{% empty %}
+ <span>No prior page</span>
+{% endfor %}
+<br/>
+<strong>Posterior Pages:</strong>
+{% for each in posteriorgbobject %}
+<a href="{{each.get_view_object_url}}">{{each}}</a>
+{% if not forloop.last %},{% endif %}
+{% empty %}
+ <span>No Posterior Page</span>
+{% endfor %}
+<br/>
+anu7ja567@123

@@ -1,0 +1,81 @@
+{% extends "gstudio/base.html" %}
+{% load gstudio_tags %}
+{% load i18n %}
+ {% block title %}Loom{% endblock %}
+{% block content %}
+
+
+
+<!--    <h> Welcome to the  GnowledgeStudio</h></br>
+   <h>You are logged in as <font color="blue">{{user.username}}</font></h>
+    <p></br> -->
+<p><font size ="3" > On the loom now:</font></p>
+</br>
+{% if user.is_authenticated %}
+    <input type="button" value="Want to weave a thread?" onClick="location.href='groupadd/';">
+<br/>
+{% endif %}
+
+    {% for each in meetings.member_systems.all %}
+    <font size ="3" ><a href="/gstudio/group/gnowsys-grp/{{each.id}}/">{{each.title}}</a> </font></br>
+    {% endfor %}
+{% if user.is_authenticated %}
+    <input type="button" value="Want to weave a thread?" onClick="location.href='groupadd/';">
+{% endif %}
+ 
+    </br>
+
+
+
+
+{% endblock %}
+
+{% block graph %}
+{% endblock %}
+<!--<html>
+<head>
+<script type="text/javascript" src="{{ STATIC_URL }}gstudio/js/domtab.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}gstudio/css/domtab.css" />
+
+</head>
+<body>
+<div class="domtab">
+  <ul class="domtabs">
+    <li><a href="#t1">Create a group</a></li>
+    <li><a href="#t2">MyGroups</a></li>
+    <li><a href="#t3">Join a group</a></li>
+    <li><a href="#t4">Statopedia</a></li>
+  </ul>
+  <div>
+    <h2><a name="t1" id="t1">Create a group</a></h2>
+    <p><!-- link to group makers page</p>
+   <!-- <p><a href="#top">back to menu</a></p>
+  </div>
+  <div>
+    <h2><a name="t2" id="t2">My Groups</a></h2>
+    <p>Unfortunate to find none :(</p>
+    <p><a href="#top">back to menu</a></p>
+  </div>
+ <div>
+    <h2><a name="t3" id="t3">Find a Group</a></h2>
+    <p><!-- runa for loop for all systemtype objects meeting "></p>
+    <p><a href="#top">back to menu</a></p>
+  </div>
+ <div>
+    <h2><a name="t4" id="t4">Stats</a></h2>
+   <p>Nothing!!!!</p>
+      <p><a href="#top">back to menu</a></p>
+
+   
+  </div>
+cd ..
+
+
+</body>
+</html>
+-->
+
+
+	
+
+

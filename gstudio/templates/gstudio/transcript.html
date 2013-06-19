@@ -1,0 +1,242 @@
+{% extends "gstudio/base.html" %}
+{% load adminmedia grp_tags %}
+{% load i18n comments gstudio_tags %} 
+{% load tagging_tags comments i18n %}
+{% load gstudio_tags %}
+
+<html>
+<head>
+{% block javascripts %}
+
+<script type="text/javascript">
+			// GLOBALS
+			var grappelli = {},
+
+			// TODO: klemens: drop ADMIN_URL
+			ADMIN_URL = "{% url admin:index %}",
+			MODEL_URL_ARRAY = {% get_content_types %}, DATE_FORMAT = "{% get_date_format %}", TIME_FORMAT = "{% get_time_format %}", DATETIME_FORMAT = "{% get_datetime_format %}";
+</script>
+<link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
+<script src="{% admin_media_prefix %}jquery/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/jquery.pandoravideo.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/jquery.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/jquery-ui-1.8.21.custom.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+
+
+ <script type="text/javascript" >
+			var isWikipage=false;
+			var isSection=false;
+			var isSubsection=false;
+			var editSubsection=false;
+			var editSection=false;
+			var editWikipage=false;
+			var isTwist=false;
+			var isThread=false;
+			var isResponse=false;
+			var editTwist=false;
+			var editThread=false;
+			var editResponse=false;
+			var editImage=false;
+			var isImage=false;
+			var isVideotitle=false;
+			var isNode=false;
+			var isObject=false;
+			var isEditdoc = false;
+      $(window).load(function() {
+      $("#content").css({
+    "width": "600px"});});
+
+$(window).load(function() {
+
+ $("#graphcss").hide();   
+  });
+$(window).load(function() {
+ $("#chart").hide();});
+var i = 0;
+jQuery(document).ready(function($) {
+    $("#editcontent").click(function(){
+        $(this).replaceWith('<textarea id="gnoweditor" style="visibility:hidden;width:450px"></textarea>');
+        isImage=true;
+        document.getElementById('gnoweditor').style.visibility="visible";
+	 $("#gnoweditor").val($("#editortext").val());
+        $("#gnoweditor").orgitdown(mySettings);
+	$("#content img").css({"max-width":"600px",})
+	   
+        $(".orgitdownContainer").css({"margin-top":"0px","margin-left":"10px"});               
+	<!--document.getElementById('save').style.visibility="visible";-->
+	$("#editcontent").hide();
+        
+		
+	});
+	
+     $("#save").click(function(){
+            var org_data = $("#gnoweditor").val();       
+	    var encode_data = encodeURIComponent(org_data);
+	    var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " "));
+ 	    $("#commenttext").val(decode_data);	   
+	    $(".orgitdownContainer").hide();
+	});
+});
+</script>
+<script type="text/javascript">
+ 
+$.noConflict();	
+$(function() {
+$('#pandoravideo').pandoravideo();
+});
+</script>
+
+{% endblock %}
+ {% block title %}{{ video.title }}{% endblock %}
+</head>
+<body>
+{% block content %}
+
+<div id="pandoravideo" data-pandora-id={{video.slug}} data-pandora-layers="transcripts, descriptions, keywords, places">
+</div>
+<b>Download:</b>&nbsp;&nbsp;<a href={{video.rurl}} target="_blank">Right click to download</a><br/>
+<form method="post" action="">{% csrf_token %}
+<font color='black'>Name:</font>
+<font ><font id="fonttitleid" >{% if video.title %}{{video.title}}{% else %}{{video.altnames}}{% endif %}</font></font>
+{% if user.is_authenticated %}
+{% edit_title video.id video.title %}
+{% endif %}
+<br/>
+<font color = 'black'>Posted By : </font>
+{% for author in video.get_nbh.posted_by %}
+  <font >{{ author }}</font>
+{% endfor %}
+
+<br>
+<font color = 'black'>Posted At :</font>
+{% for date in video.get_nbh.creation_day %}
+<font >{{date}}</font>
+
+{% endfor %}
+ 
+
+<br>
+		<font color = 'black'>Location: </font>
+{% for we in video.get_nbh.source %}
+		<!-- <font color = 'black'>Location: </font>  -->
+			{% for map in video.get_nbh.map_link %}
+				{% ifnotequal map '' %}
+<a href=http://maps.google.co.in/maps?hl=en&cp=43&gs_id=6&xhr=t&q={{map}}&bav=on.2,or.r_gc.r_pw.r_qf.,cf.osb&biw=1304&bih=680&um=1&ie=UTF-8&sa=N&tab=wl target="_blank">{{we}}</a>
+				{% endifnotequal %}
+			{% endfor %}
+		{% endfor %}
+
+<br>
+ <input type="hidden" name="contentname" value="{{ video.content }}" />
+ <input type="hidden" name="ratename" value="{{ video.rating.get_rating }}" />
+<font color = 'black'>Description:</font>
+{%autoescape on%}
+{% with video.html_content|safe as video_content %}
+     {{video_content}}
+{% endwith %}
+{% endautoescape%}
+
+{% if user.is_authenticated %}
+<input type="hidden" name="vidid" value={{video.id}}>
+<input type="button" id="editcontent" name="{{video.content}}" value="Edit"/>
+<input type="submit" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" />
+<input type="hidden" name="contenttext" id="commenttext" style="visibility:hidden" />
+<input type="hidden" id="editortext" style="visibility:hidden" value="{{video.content_org}}">
+{% endif %}
+</form>
+<br/>
+
+{% ifequal video.rating.get_rating 0 %}
+
+<font color = 'black'>Current rating is: &nbsp;<font > No rating yet </font></font>
+{% else %}
+<font color = 'black'>Average Current rating is:  &nbsp;<font ><b>{{ video.rating.get_rating }}</b></font> </font><br/>
+<font color = 'black'>Total Number of votes is:  &nbsp;<font ><b>{{ video.rating_votes }}</b></font> </font>
+{% endifequal %}
+<br>
+{% if user.is_authenticated %}
+<form method="post" action="">
+{% csrf_token %}
+<input name="star1" type="radio" value=1 class="star"/>
+<input name="star1" type="radio" value=2 class="star"/>
+<input name="star1" type="radio" value=3 class="star"/>
+<input name="star1" type="radio" value=4 class="star"/>
+<input name="star1" type="radio" value=5 class="star"/>
+  
+<input type="hidden" name="vidid" value={{video.id}}>
+<input type="submit" value="Rate it!!!">
+</form>
+<br>
+<form method="post" action="">
+{% csrf_token %}
+<input type="hidden" name="favusr" value={{user.username}}>
+{% if relation %}
+<input type="hidden" name="removefavid" value={{video.id}}>
+<input type="submit" value="Remove from favourites">
+{% else %}
+<input type="hidden" name="favid" value={{video.id}}>
+<input type="submit" value="Add to favourites">
+{% endif %}
+
+</form>
+{% endif %}
+<br>
+<!--ADDING AND DISPLAY TAG-->
+	{% addtag video video.id user %}
+
+
+{% block nodetype-comments %}
+<div id="comments" class="">
+  <h5>{% trans "Comments" %}</h5>
+  {% with video.comments as comment_list %}
+  {% if comment_list.count %}
+  <ol id="comment-list" class="span-15 last">
+    {% for comment in comment_list %}
+    <li id="comment_{{ comment.pk }}" class="comment vcard {% cycle box1,box2 %}{% if comment.user in video.authors.all %} post-author{% endif %} span-15 last">
+      <div class="span-2">
+	<img src="{% get_gravatar comment.email 60 "G" %}" class="gravatar photo" alt="{{ comment.user_name }}"/>
+      </div>
+      <div class="comment-body span-13 last">
+	<div class="comment-author span-13 last">
+	  {% if comment.url %}
+	  <a href="{{ comment.url }}" class="fn url" title = "{{ comment.user_name }}">{{ comment.user_name }}</a>
+	  {% else %}
+	  {{ comment.user_name }}
+	  {% endif %}
+	  {% trans "on" %} {{ comment.submit_date|date:"SHORT_DATETIME_FORMAT" }}
+	</div>
+	<div class="span-13 last">
+	  {{ comment.comment|linebreaks }}
+	</div>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+    {% if not video.comments_are_open %}
+  <p>{% trans "Comments are closed." %}</p>
+    {% endif %}
+  {% else %}
+    {% if video.comments_are_open %}
+  <p>{% trans "No comments yet." %}</p>
+    {% else %}
+  <p>{% trans "Comments are closed." %}</p>
+    {% endif %}
+  {% endif %}
+  {% endwith %}
+</div>
+{% endblock %}
+
+
+<div class="commentForm span-16 last">
+  {% render_comment_form for video %}
+</div>
+<!--<hr width="100%" style="height:5px;" color="black"/>-->
+<br>
+
+{% endblock %}
+{% block graph %}
+
+{% endblock %}
+</body>

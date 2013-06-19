@@ -1,0 +1,94 @@
+{% load i18n grp_tags %}
+
+
+<div id="header">
+
+    <div class="branding">&nbsp;  Gnowledge Studio  </div>
+
+    <!-- Title -->
+    <div class="admin-title">  
+	<a href="/" title="Home">Home</a> 
+	 <!-- |    {% if grappelli_admin_title %}{{
+      grappelli_admin_title }}{% else %}{% get_admin_title %}{% endif %}
+  -->
+<!--    | <a href="{{ get_absolute_url }}/objects" title="Objects">Objects</a>-->
+
+        | <a href="{{  get_absolute_url }}/gstudio/user" title="Loom Studio">Loom</a>
+        | <a href="{{  get_absolute_url }}/gstudio/user/wikipage" title="Wikipages">Wikipages</a>
+	| <a href="{{  get_absolute_url }}/gstudio/resources/documents" title="My Documents">Documents</a>
+        | <a href="{{  get_absolute_url }}/gstudio/resources/images" title="Images">Images</a>
+        | <a href="{{  get_absolute_url }}/gstudio/resources/videos" title="My Videos">Videos</a>
+<!--        | <a href="{{  get_absolute_url }}/nodetypes" title="Nodes">Node Types</a>
+        | <a href="{{  get_absolute_url }}/objects" title="Objects">Node Objects</a>
+-->
+   {% if user.is_authenticated %}
+	{% if user.is_staff %}
+ 
+        | <a href="{{  get_absolute_url }}/admin" title="Admin Dashboard">Dashboard</a>
+
+       {% endif %}
+    {% endif %}
+    
+
+    </div> 
+
+    {% if user.is_authenticated %}
+        <ul id="user-tools">
+            <!-- Username -->
+            <li class="user-options-container collapse closed">
+                <a href="javascript://" class="user-options-handler collapse-handler" title="{% firstof user.first_name user.username %}">{% firstof user.first_name user.username %}</a>
+                <ul class="user-options">
+                    <!-- Change Password -->
+                    {% url admin:password_change as password_change_url %}
+                    {% if password_change_url %}
+                        <li><a href="{{ password_change_url }}" title="Change Password">
+                    {% else %}
+                        <li><a href="{{ root_path }}password_change/">
+                    {% endif %}
+                    {% trans 'Change password' %}</a></li>
+		<!--Loom Preference !-->
+		    <li><a href="/gstudio/userpreference/" title="Loom Preference" >
+		    {% trans 'Loom Preference'%}</a></li>
+                    <!-- Logout -->
+		    <li><a href="{{get_absoulute_url}}/accounts/logout/" title="Log out">
+                    {% trans 'Log out' %}</a></li>
+
+                </ul>
+            </li>
+            <!-- Userlinks -->
+            {% block userlinks %}
+                <!-- JS tests -->
+                {% url test-index as testindexurl %}
+                {% if testindexurl %}
+                    <li><a href="{{ testindexurl }}" title="Tests">{% trans 'Tests' %}</a></li>
+                {% endif %}
+                <!-- Documentation -->
+                {% url django-admindocs-docroot as docsroot %}
+                {% if docsroot %}
+                 <!--   <li><a href="{{ docsroot }}" title="Documentation">{% trans 'Documentation' %}</a></li>-->
+                {% endif %}
+                <li><a href="https://gitorious.org/gnowsys-studio" title="Code">Code</a></li>
+            {% endblock %}
+        </ul>
+    {% else %}
+        <ul id="user-tools">
+	  <li><a href="{{root_path}}/accounts/login" title="Login">{% trans 'Login' %}</a></li>
+	  <li>Not registered ? <a href="{{root_path}}/accounts/register" title="Register">{% trans 'Register' %}</a></li>
+	    </ul>
+	 
+	  
+	  
+	    
+    {% endif %}
+    {% block nav-global %}
+    {% endblock %}
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    (function($) {
+        $(document).ready(function() {
+            $("div#header .collapse").grp_collapsible();
+        });
+    })(django.jQuery);
+</script>
+

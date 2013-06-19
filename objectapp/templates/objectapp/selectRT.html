@@ -1,0 +1,36 @@
+
+{% extends "objectapp/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<form method="." action="POST">
+{% csrf_token %}
+<b>{{ gb }}</b>
+<b>{{ reltit }}</b>
+
+<!-- -------------------------------------------- -->
+
+<select id ="id_select_mem">
+<option>-select-</option>
+{% if finaldict %}
+{% for key, val in finaldict.iteritems %}
+    <option value="{{ val }}">{{ val }}</option>
+{% endfor %}
+{% else %}
+    <option> No Member </option>
+    <input type="button" id="id_back" value="Back"/>
+{% endif %}
+</select>
+
+<!-- -------------------------------------------- -->
+<input type="button" id="id_go" value="GO"/>
+<input type="button" id="id_back" value="Back"/>
+<input  id="id_left" type="hidden" value="{{ gb }}">
+<input  id="id_rel" type="hidden" value="{{ reltit }}">
+<input  id="id_back_url" type="hidden" value="{{ absolute_url_node }}">
+<input  id="id_right" type="hidden" value=" ">
+
+<!-- -------------------------------------------- -->
+
+</form>
+{% endblock %}

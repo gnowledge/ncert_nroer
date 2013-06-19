@@ -1,0 +1,325 @@
+<html>
+<body>
+{% extends "gstudio/base.html" %}
+{% load pagination_tags %}
+{% load adminmedia grp_tags %}
+{% load i18n %}
+ {% block title %}Images{% endblock %}
+{% block content %}
+<script src="/static/gstudio/js/jquery.form.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+<script type="text/javascript" >
+  $(function(){
+          $("#mydropdown").change(function(event){
+            $("option:selected", $(this)).each(function(){
+                var obj = document.getElementById('mydropdown').value;
+                if(obj=="creation_date"){
+		$("#searchfont").show();
+		}
+		else{$("#searchfont").hide();}
+	
+            });
+          });
+        });
+$(window).load(function(){
+var isImage=false;
+$("#content").css({"width": "100%"});});
+$(window).load(function() {
+ $("#chart").hide();});			
+$(window).load(function() {
+ $("#graphcss").hide();
+// $(".gbobject-image").hide();
+    
+  });
+
+var i = 0;
+
+jQuery(document).ready(function($) {
+     $("#commenteditor").click(function(){
+	$(this).replaceWith('<textarea id="gnoweditor" style="visibility:hidden;width:450px"></textarea>');
+        isImage=true;
+        document.getElementById('gnoweditor').style.visibility="visible";
+        $("#gnoweditor").orgitdown(mySettings);
+	<!--document.getElementById('save').style.visibility="visible";-->
+        $(".orgitdownContainer").css({"margin-top":"0px","margin-left":"10px"});
+	$("#submitpostid").hide();//css({"margin-left":"400px","margin-top":"-38px"});
+	$("#commenteditor").hide();
+			
+	});
+	$("#save").click(function(){
+        var org_data = $("#gnoweditor").val();
+	var encode_data = encodeURIComponent(org_data);
+	var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " "));       
+ 	$("#commenttext").val(decode_data);
+        $('.orgitdownContainer').hide();
+	$("#submitpostid").css({"margin-left":"0px","margin-top":"0px"});
+	$("#divpost b").text(decode_data); 
+	$("#editcommenteditor").show();
+	$("#submitpostid").show();
+	   
+	});
+
+     $("#editcommenteditor").click(function(){
+	$('.orgitdownContainer').show();
+	$("#editcommenteditor").hide();
+	$("#submitpostid").hide();
+	});
+    
+
+});
+</script>
+<script type="text/javascript" >
+jQuery.noConflict();
+jQuery(document).ready(function($) {
+$(".gbobject-image1").live({
+mouseenter: function() {
+var id=this.id;
+var srcid=$(".imgbig"+id).attr("id");
+$(".imgbig"+id).attr("src",srcid);
+$("#divimage"+id).show();
+},
+mouseleave: function() {
+var id1=this.id;
+$("#divimage"+id1).hide();
+//$(this).removeClass("over");
+}
+});});
+
+</script>
+<script type="text/javascript">
+function ajaxmakesure(id) {
+r = confirm("Please confirm delete ")
+if (r==true)
+  {
+	var image_id = "";
+	image_id = id;
+	var ajurl ="/gstudio/resources/images/imagedelete/";
+	$.ajax({
+       	       url:ajurl,
+	       data: {image_ajax_id:image_id},
+	       beforeSend: function() {
+                              $("#ajax_load_image").show();
+                            
+			      $("#content").css({"opacity":"0.1",})
+	   
+                              },
+	       success: function(data){	
+	       		     $('#imageGallery').html(data);
+			     },
+	       complete: function(){
+                             $("#ajax_load_image").hide();
+			     $("#content").css({"opacity":"",})
+			     },
+   		});
+                             
+       			      
+  }
+else
+  {
+  
+  }
+
+}
+</script>
+
+<script type="text/javascript">
+	jQuery.noConflict();
+        jQuery(document).ready(function($) { 
+            $('#imagepost').submit(function(form) { 
+		//document.getelementby
+		form.preventDefault();
+		var formdata={ 
+        		//target: '#imageGallery',   // target element(s) to be updated with server response 
+        		beforeSubmit:  function() {
+                              $("#ajax_load_image").show();
+                            
+			      $("#content").css({"opacity":"0.1",})
+	 
+                              },  // pre-submit callback 
+        		success: function(data){	
+	       		     $('#imageGallery').html(data);
+			     },  // post-submit callback 
+			 complete: function(){
+                             $("#ajax_load_image").hide();
+			     $("#content").css({"opacity":"",})
+				document.getElementById("title").value="";
+				document.getElementById("image").value="";
+				document.getElementById("commenttext").value="";
+			     },
+			url:  "/gstudio/resources/images/imagepost/",     // override for form's 'action' attribute 
+        		type: $('#imagepost').attr('method')
+			};
+			$(this).ajaxSubmit(formdata);
+            }); 
+        });  
+</script>
+
+<style type="text/css">
+#divsearch
+{
+position:absolute;
+}
+#upperdiv
+{
+position:relative;
+margin-bottom:220px;
+}
+#divpost
+{
+position:absolute;
+margin-left:52%;
+}
+
+</style>
+<h2 style="">Image Library</h2>
+<br/>
+<div id="upperdiv">
+<div id="divsearch">
+<form method="post" action="">
+{% csrf_token %}
+<h4 style="color: black; margin-left: 0px;">Search Image:</h4>
+<p><input type="text" name="simg" value={{val}}></p>
+<font size="1" id="searchfont" style="display:none"><b>YY-MM-DD HH:MM:SS</b></font>
+<br/>
+<p><div align="left">
+<select name="mydropdown" id="mydropdown">
+<option value="title">Title</option>
+<option value="creation_date">Creation Date</option>
+</select>
+</div>
+<input type="submit" value="Search">
+</form>
+{% if user.is_authenticated %}
+<br/><br/><br/>
+<form method="post" action="/gstudio/resources/images/">
+{% csrf_token %}
+<input type="hidden" name="user" value={{user.username}}>
+<input type="submit" name="fav" value="View Favourites">
+</form>
+{% endif %}
+</div>
+{% if user.is_authenticated %}
+<div id="divpost">
+<form id ="imagepost" enctype="multipart/form-data" method="post" action="">
+{% csrf_token %}
+
+<h4 style="color: black; margin-left: 0px;">Submit Image:</h4>
+Title:&nbsp; <input type="text" name="title1" id ="title"><br/><br/>
+Image:&nbsp; <input type="file" name="image[]" multiple="multiple" id="image"/><br/><br/>
+Description:&nbsp;&nbsp;<b></b>
+<input type="button"  id="editcommenteditor"  value="edit" style="display:none" >
+<input type="button"  id="commenteditor"  value="Add Content" >
+<input type="button" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" />
+<input type="text" name="contenttext" id="commenttext" style="visibility:hidden" />
+<input type="hidden" name="user" value={{user.username}}><br/><br/>
+<input type="submit" id="submitpostid" value="Submit" size="900" name="post">
+
+</form>
+</div>
+{% endif %}
+</div>
+<br>
+{% if reportid %}
+<h2><font color="red">this image is already uploaded on this site</font></h2>
+<a href="/gstudio/resources/images/show/{{ reportid }}/"> <font size="4">to see this image click here</font></a><br/><br/><br/>
+{% endif %}
+ <div>
+{% if fav %}
+<h2 style="">Favourite Images</h2><br/>
+{% else %}
+<h4 style="">Image Gallery</h4>
+{% endif %}
+<div id="imageGallery">
+{% autopaginate images 40 %}
+<table width="100%">
+    <tr>
+{% for image1 in images %}
+        <td class="gbobject-image1" id = "{{image1.id}}"><a href="/gstudio/resources/images/show/{{image1.id}}"><img src="{% admin_media_prefix %}img/{{image1.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"></a>
+<form method="post" action="">{% csrf_token %}
+{% for author in image1.authors.all %}
+	{% ifequal author.username user.username %}&nbsp;
+	<input type="hidden" name="fulid" value={{image1.id}}>
+	<!--  <input type="submit" value="Show" name="Show">-->
+	<input type="hidden" name="pict" id="imgid" value={{image1.id}}>
+	<input type="hidden" name="user" value={{user.username}}>
+	<input type="button" id="delete" name="delete" value="Delete" onclick="ajaxmakesure({{image1.id}})" style="margin-top:5px;width:60px">
+
+	{% endifequal %}
+{% endfor %}
+</form>
+        </td>  
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"8" %}
+    </tr>
+    <tr>
+				<td colspan="8">
+ 				 {%  with x=forloop.counter|add:"-8"|stringformat:"s" %}
+ 				 {% with y=forloop.counter|stringformat:"s" %}
+ 				  {% with count=x|add:":"|add:y %}
+ 				{% for image in images|slice:count %}
+ 					 				
+ 					<div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
+					
+      					<center>
+					<h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
+					
+					</h2></center><br/>
+					
+					<center>
+					<a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
+					<img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
+					</a></center>
+					&nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</a> ]					&nbsp;
+
+					{% for author in image.authors.all %}
+ 					<font color = 'black'>Posted By : </font> <font >{{author}}</font>
+					{% endfor %}
+					</div>
+					
+ 				{% endfor %}
+ 					{% endwith %}
+ 				{% endwith%}
+ 			{% endwith %}
+ 			</td>
+ 		</tr>
+		
+     {% endif %}	
+{% endfor %}
+    </tr>
+<tr>
+				<td colspan="8">
+ 				 
+ 				{% for image in images|slice:"0:40" %}
+ 					 				
+ 					<div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
+					
+      					<center>
+					<h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
+					
+					</h2></center><br/>
+					
+					<center>
+					<a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
+					<img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
+					</a></center>
+					&nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</a> ]					&nbsp;
+
+					{% for author in image.authors.all %}
+ 					<font color = 'black'>Posted By : </font> <font >{{author}}</font>
+					{% endfor %}
+					</div>
+					
+ 				{% endfor %}
+				
+ 				
+ 			</td>
+ 		</tr>
+</table>
+
+ <h2>
+{% paginate %}</h2>
+</div>
+{% endblock %}
+</body>
+</html>

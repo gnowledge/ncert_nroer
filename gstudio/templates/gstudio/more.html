@@ -1,0 +1,161 @@
+{% load objectapp_tags i18n %}
+{% load gstudio_tags i18n %}
+
+{% load adminmedia  grp_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}" version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+   <link rel="stylesheet" type="text/css" media="screen, projection" href="/static/gstudio/css/screen.css" /> 
+    <style type="text/css">
+      #more_body{
+      background: url(/static/gstudio/img/bg.jpg) no-repeat scroll 0 0 white;
+      padding:0px;
+      margin:0px;
+      }
+      #header {
+      background: none repeat scroll 0 0 #2B3959;
+      border-bottom: 1px solid #E9E9F3;
+      color: white;
+      margin-bottom: 1em;
+      }
+      #header a:hover, #header a:active{
+      color: red;
+      }	   
+    
+      #portal-footer {
+      background-color: #FFE9E8;
+      border-bottom: 1px solid #FF0026;
+      border-top: 1px solid #FF0026;
+      float: none;
+      line-height: 1.2em;
+      margin: 2em -19px 1em;
+      padding: 0.5em 0 1em;
+      text-align: center;
+      }
+      #more_content { 
+	margin: 230px 0 10px;
+	padding-left:20px;
+	}
+    </style>  
+    
+  </head>
+  <body dir="ltr" id = "more_body" class="section-front-page template-document_view">
+
+    <link href="{% admin_media_prefix %}css/base.css" rel="stylesheet" type="text/css" />
+    <script src="{% admin_media_prefix %}jquery/jquery-1.6.2.min.js" type="text/javascript"></script>
+    <script src="{% admin_media_prefix %}jquery/ui/js/jquery-ui-1.8.15.custom.min.js" type="text/javascript"></script>
+    <!-- Grappelli Main JS -->
+    <script src="{% admin_media_prefix %}js/grappelli/grappelli.js" type="text/javascript"></script> 
+    <!-- Grappelli jQuery Plugins, Widgets -->
+    <script src="{% admin_media_prefix %}js/grappelli/jquery.grp_collapsible.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="/static/gstudio/img/favicon.ico" />
+    <div id="header" >
+      {% include "gstudio/_header.html" %}
+    </div>
+    <div class="logo"><img src="/static/gstudio/img/logo2.png"></div>
+    <link type="text/css" rel="stylesheet" href="more.css">
+      <table id="portal-columns">
+        <tbody>
+            <tr>
+<p>
+
+{% put_more_content as more_content %}
+
+{% with more_content|safe as more %}
+{{more}}
+{% endwith %}
+</p>
+<br/>
+<div id="more_content">
+<p>This site is an initiative of a
+the <a href="http://www.hbcse.tifr.res.in/">Homi Bhabha Centre for
+Science Education</a>, <a href="http://www.tifr.res.in" target="_blank"> TIFR</a> , Mumbai, India for establishing
+collaboration among students, teachers, researchers or anyone else
+interested, to shape education and research in strikingly different
+ways.  Why is the platform called "metaStudio" is described in another
+article.  However, if you join at this portal as a registered user, it
+does not imply that you endorse the idea of <a href="http://metastudio.org/groups/studio"
+target="_self" title="studio based education">studio based
+education.</a> Please read the <a href="http://metastudio.org/about/terms" target="_self"
+title="terms">terms</a> of using the site before registration at the
+site. Please do read the articles in the <a href="http://metastudio.org/about"
+target="_self" title="about">About section</a> from the menu, as well.
+If you have any queries, please do not hesitate to write to us.
+
+<h1>What facilities does this platform offer?</h1>
+
+<p>The site offers a few simple ways of collaboration</p>
+
+<ul>
+
+<li>a wiki: you can create wiki style pages collaboratively on topics and subjects of your choice. </li>
+
+<li>a loom studio: to form a thread and discuss, seek responses from members. </li>
+
+
+<li>upload useful resources such as lessons, documents, pictures, videos, articles, software etc (You will get points for your contributions). </li>
+
+
+<li>start collaborative research projects on any area of interest under the<a> Creative Commons license.</a></li>
+
+</ul>
+
+<h1>Our Protocol: Creative Commons using open standards</h1>
+
+<p>As a project inspired by <a href="http://www.gnu.org/philosophy/" target="_blank" title="free software philosophy">free software philosophy</a> , this site encourages the members to adhere to the principles that <strong>protect freedom, sharing, collaboration and socially acceptable protocols.</strong></p>
+
+<ul>
+
+<li>when you upload resources (digital documents and software) please ensure that you are uploading them under the  <a href="/content/article/13" target="_self" title="creative commons">Creative Commons license or other copy left license or public domain. <br /></a></li>
+
+<li>ensure that the documents uploaded are encoded in <a href="http://en.wikipedia.org/wiki/Open_standard" target="_self" title="open standards">open standards (non-proprietary).</a></li>
+
+</ul>
+
+<h1>Join Us</h1>
+
+<p>Explore our web site and see how you can use our infrastructure to further your own research and educational activities. <a href="/register" title="Sign up!">Create your own account</a>.  <a href="/contribute">Become a contributor</a> by sharing your work, message, criticism, questions, responses, tools, or anything you seem useful and interesting to the community.</p>
+
+<ul>
+
+				      <li>
+					see our code
+					at <a href="http://savannah.gnu.org/projects/gnowsys/">Savannah
+					or gitorious or
+					github</a></li></ul>
+				  </div>
+				  <p>The site uses <a href="http://www.gnu.org/software/gnowsys/" class="external-link">GNOWSYS (Gnowledge Networking and Organizing System)</a>
+				    as a backend.</p>
+				</li>
+				   
+			  
+                            </tr>
+			    </tbody>
+			    </table>     
+</div>
+<div class="clear"></div>
+
+	<div id="footer" align="center" style="margin-top:100px;background:#eaeaea;">
+				<p>
+  
+    a project of <a href="http://ncert.nic.in/" target="_blank">NCERT</a>, <a href="http://ciet.nic.in/" target="_blank">CIET</a><br> 
+        
+</p>
+					<p> 
+
+						<a rel="license"
+						href="http://creativecommons.org/licenses/by-sa/3.0/" title="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative
+						Commons License" style="border-width:0"	src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png"/></a> All material is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" title = "http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a> unless mentioned otherwise.
+						<br/>
+						Powered	by <a href="http://www.djangoproject.com" title="https://www.djangoproject.com/">Django</a>
+						and <a href="https://gitorious.org/gnowsys-studio" title="https://gitorious.org/gnowsys-studio">Gstudio
+						{{ GSTUDIO_VERSION }}</a>.
+					</p>
+					<center>
+				      <a href="http://atlas.gnowledge.org/softwares"><img src="/static/gstudio/img/community.png"></a></center>
+				</div>
+			
+				
+			      </body>
+			    </html>
+			    

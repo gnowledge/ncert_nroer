@@ -1,0 +1,579 @@
+{% load gstudio_tags i18n  %}
+{% get_tags as nodetype_tags %}
+{% load adminmedia  grp_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}" version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" type="text/css" href="/static/gstudio/css/home/style.css">
+<script src="/static/gstudio/js/home/jquery-latest.js" type="text/javascript"></script>
+<script src="/static/gstudio/js/jquery.autocomplete.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/gstudio/js/jquery.min.js" ></script>
+<script type="text/javascript" src="/static/gstudio/js/jquery-ui.js" ></script>
+<script type="text/javascript" src="/static/gstudio/js/underscore.js" ></script>
+<script type="text/javascript" src="/static/gstudio/js/home/script_2.js"></script>
+<script src="/static/gstudio/js/home/tabcontent.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+	
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+
+        <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/loomscripts.js"></script>
+	 <script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+	
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+
+	
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/savedata.js"></script>
+	 <script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+	
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+	
+	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/addcontent.js"></script>
+	<script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+/*stepcarousel.setup({
+	galleryid: 'mygallery',
+	beltclass: 'belt',
+	panelclass: 'panel',
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/home/left_scroll_btn.gif', -53, 5], rightnav: ['/static/gstudio/img/home/right_scroll_btn.gif', 7,5]},
+	statusvars: ['statusA', 'statusB', 'statusC'],
+	contenttype: ['inline'] 
+})*/
+
+</script>
+		
+
+		<!-- the header lines from grappelli -->
+		{% block blockbots %}
+		<meta name="robots" content="NONE,NOARCHIVE" />
+		{% endblock %}
+		
+		<!-- STYLESHEETS -->
+		{% block stylesheets %}
+                    
+		{% endblock %} 
+	
+		<!-- EXTRASTYLES -->
+		{% block extrastyle %}{% endblock %} 
+	
+		<!-- JAVASCRIPTS -->
+		{% block javascripts %}
+			<script type="text/javascript">
+				// GLOBALS
+				var isImage=false;
+				var editImage=false;
+				var isEditdoc = false;
+				var isWikipage = false;
+
+				var objid;
+				var grappelli = {},
+				// TODO: klemens: drop ADMIN_URL
+				ADMIN_URL = "{% url admin:index %}",
+				MODEL_URL_ARRAY = {% get_content_types %}, DATE_FORMAT = "{% get_date_format %}", TIME_FORMAT = "{% get_time_format %}", DATETIME_FORMAT = "{% get_datetime_format %}";
+			</script>
+			
+			<!-- EXTRAHEAD -->
+			{% block extrahead %}{% endblock %}
+
+		{% endblock %} 
+	
+		<!-- the header lines from gstudio -->
+		{% block meta %}{% endblock %}
+	
+		<link rel="pingback" href="/xmlrpc/" />
+		<link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
+		<link rel="home" href="{% url gstudio_nodetype_archive_index %}" />
+
+
+
+
+		 
+		{% block link %}{% endblock %}
+		
+		{% block script %}{% endblock %} 
+		<title>NROER - {% block title %}{% endblock %}</title>
+	</head>
+
+<body id="gstudio">
+	<center><img id="ajax_load_image" width="50" style="display: none; position:fixed; top: 50%; left: 55%; margin-top: -50px; margin-left: -100px;" src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif"></center>
+
+	<div id="body" class="span-24 last">
+
+		<div id="content_body2">
+			  	  <div align="right"><img src="/static/gstudio/img/home/logo_mhrd.png" />
+				  </div>
+				  <div id="inner_menu">
+				    <ul id="navigationMenu">
+				      <li> <a class="home" href="/"> <span>Home</span> </a> </li>
+				      <li> <a class="loom" href="/gstudio/user"> <span>Loom</span> </a> </li>
+				      <li> <a class="wikipages" href="/gstudio/user/wikipage"> <span>Wikipages</span> </a> </li>
+				      <li> <a class="documents" href="/gstudio/resources/documents"> <span>Documents</span> </a> </li>
+				      <li> <a class="images" href="/gstudio/resources/images"> <span>Images</span> </a> </li>
+				      <li> <a class="videos" href="/gstudio/resources/videos"> <span>Videos</span> </a> </li>
+				      <li> <a class="tags" href="/tagclouds"> <span>Tags</span> </a> </li>
+				    </ul>
+				  </div>
+				  <div class="blank_txt">
+
+					<div id="content" class="hfeed span-16 border">
+				
+						{% block content %} <h3>The content block need to be overrided!</h3>
+						{% endblock %}
+					</div>
+
+					 <div class="clear"></div>
+				  </div>
+  
+	       </div>
+
+		<textarea id="gnoweditor" style="visibility:hidden;"></textarea>
+
+		{% block graph %}
+				<div id="graphcss">
+				<div id="chart">
+					
+				</div>
+				<script type="text/javascript" src="/static/gstudio/js/jquery.min.js" ></script>
+				<script type="text/javascript" src="/static/gstudio/js/jquery-ui.js" ></script>
+				<script type="text/javascript" src="/static/gstudio/js/underscore.js" ></script>
+				<script type="text/javascript" src="/static/gstudio/js/d3.js"></script>
+				<script type="text/javascript" src="/static/gstudio/js/d3.layout.js"></script>
+				<script type="text/javascript" src="/static/gstudio/js/d3.geom.js"></script>
+				<!-- <script type="text/javascript" src="/static/gstudio/js/force.js"></script>
+
+				Javascript for Object type force graph
+				-->
+				
+				<script type="text/javascript" >
+
+				function init(a,b)
+				{
+					  nodes_by_id = _.reduce(a, function(acc, n) {
+        				  acc[n._id] = n;
+				          return acc;
+			        	  }, {});
+     
+     
+				all_edges=new Array();  
+
+				//this contains all the links between the nodes
+				  all_edges =_(b).chain().map(function(e) {
+				        e.source = nodes_by_id[e.from];
+				        e.target = nodes_by_id[e.to];
+					//`e.type = nodes_by_id[e.type]
+			         	 return e;
+			         	 }).filter(function(e){
+				 	       return nodes_by_id[e.from] && nodes_by_id[e.to]&& e.type!="title" && e.type!="content" 
+			         		}).value();
+				}
+
+				function fgraph() {
+					neighbour_node= new Array();
+					clicked_node=new Array();
+					prev_node=new Array();
+					neighbour_node= neighbour_node.concat({{object.id}});		  
+
+					$.getJSON('/nodetypes/graphs/graph_json/' + {{object.id}}, function (json1) { 
+										metadata=json1.node_metadata;
+  										relations=json1.relations;
+									
+										init(metadata,relations);
+										load({{object.id}}) });
+
+
+					function load(key)
+					{
+  
+						/*			if (s > 0 ){
+						var a = 50 * s;
+						var w = 1000;
+	   					var p = 140 + "%";
+						var h = 650;
+   						var q = 3 * s + 75 + "%";
+						}else{*/
+						var w = 1000;
+	   					var p = 98 + "%";
+						var h = 650;
+   						var q = 100 + "%";			
+						//}
+					        fill = d3.scale.category20();
+ 
+						var vis = d3.select("#chart")
+					        .append("svg:svg")
+						.attr("id", "amazingViz") 
+					        .attr("width", p)
+					        .attr("height", q);
+
+						vis.append("svg:g").attr("class", "edges");        
+						vis.append("svg:g").attr("class", "nodes");
+  	
+						nodes_by_id[key].x = w/2.0;
+						nodes_by_id[key].y = h/2.0;
+        
+  						var force = d3.layout.force()
+					              .linkStrength(1)
+					              .charge(-4000)
+					              .friction(0.7)
+					              .gravity(0.4)
+					              .linkDistance(50)
+  					              .nodes([])
+					              .links([])
+					              .size([w, h])
+					              .start();
+	
+					      function update(edges){
+					        // for each func
+					        _.each(nodes_by_id, function(n){n.added = false});
+					        // reduce the nodes list to have only those nodes for a given rel.
+					      nodes = _.reduce(edges, function(acc, e) {
+						          if(nodes_by_id[e.from] && !nodes_by_id[e.from].added){
+							            nodes_by_id[e.from].added = true;
+							            acc.push(nodes_by_id[e.from]);
+							   }
+						          if(nodes_by_id[e.to] && !nodes_by_id[e.to].added){
+							            nodes_by_id[e.to].added = true;
+							            acc.push(nodes_by_id[e.to]);
+						          }       
+						          return acc;
+							  }, []);
+        
+						        force.nodes(nodes);
+						        force.links(edges);
+						        force.start();
+
+
+
+
+						        link = d3.select("#chart g.edges").selectAll("line.link").select(this.arrowhead)
+						          .data(edges, function(e){return e.from + "-" + e.to + "-" + e.type});
+                
+					                link.enter().append("svg:line")
+						          .attr("class", "link")
+					                  .style("stroke-width", 2 /* function(d) {
+						           return Math.sqrt(d.value);
+						           } */ )
+                                     	                  .attr("x1", function(d) {
+					                return d.source.x;
+				                })		
+				                .attr("y1", function(d) {
+				                  return d.source.y;
+					                })
+				                .attr("x2", function(d) {
+				                  return d.target.x;
+					               })
+				                .attr("y2", function(d) {
+				                  return d.target.y;	
+					                })
+				                .attr("text", function(d) {
+				                  return d.type;
+					                })
+						.attr("marker-end", "url(#arrowhead)");
+			
+		
+
+
+	     
+          
+	  var node = d3.select("#chart g.nodes").selectAll("g.node").data(nodes);  
+
+	    
+
+ 
+          var new_g = node.enter().append("svg:a")
+              .attr("class", function(d) { var e=(d._id).charAt(0); if (d._id==key) return "mainnode"; else if (e=="-") return "nodetext"; else if (isNaN(d._id)) return "relnode"  ; else return "node"; })   	      
+	    
+	      .call(force.drag);
+
+
+
+		new_g.append("svg:marker")
+                                .attr("id", "arrowhead")
+                                .attr("viewBox","0 0 10 10")
+                                .attr("refX","20")
+                                .attr("refY","5")
+                                .attr("markerUnits","strokeWidth")
+                                .attr("markerWidth","9")
+                                .attr("markerHeight","5")
+                                .attr("orient","auto")
+                                .append("svg:path")
+                                .attr("d","M 0 0 L 10 5 L 0 10 z")
+                                .attr("fill", "#6D6666"); 
+
+
+$(window).bind('keydown',function(event) {
+		if(event.keyCode==17){
+		 
+		 new_g.on("click",function(d){                  
+                               
+                               
+		                 
+				
+                if(d._id>0 && d.expanded=="true" && d._id!= {{object.id}})
+				{ 
+				
+                                $.getJSON('/nodetypes/graphs/graph_json/' + d._id , function (json2) {
+					new_metadata=json2.node_metadata;
+
+ 				});
+                         	
+                               _.filter(new_metadata, function(e){if(e._id>0) 
+				{
+				  clicked_node=clicked_node.concat(e._id) ;   
+                                 }
+                                });
+				
+				
+ 				index = _.indexOf(neighbour_node , d._id);
+				prev_node=neighbour_node.slice(0,index);
+				
+				 neighbour_node = _.difference(neighbour_node,clicked_node) ;
+				
+                                neighbour_node= neighbour_node.concat(prev_node);
+				neighbour_node = _.uniq(neighbour_node);
+				metadata=[]
+				relations=[]
+			        metadata1=[]
+				relations1=[]
+					for(i=0;i<(neighbour_node.length);i++)
+					{
+                 
+					d3.select("#amazingViz").remove();  
+                                         g=neighbour_node[i]			
+                                        
+	    				
+					
+					$.ajax({
+					async:false,
+					url:'/nodetypes/graphs/graph_json/' + g , 
+					datatype:'json',
+					success:function (json2) {
+	    			new_metadata=json2.node_metadata;
+	  			new_relations=json2.relations;	
+				metadata=_.union(new_metadata,metadata);
+						
+				relations=_.union(new_relations,relations);
+				relations= check_Relationtype(metadata,relations); 
+				}});						     			
+							
+			}
+				_.each(metadata, function(m){
+				
+				  for(i=0;i<neighbour_node.length;i++)
+				  	{
+					if(m._id==neighbour_node[i])
+						{m.expanded="true";}
+					else 
+						{m.expanded="false";}
+					}
+					   
+                                
+                                });
+				
+         			init(metadata,relations);
+				load({{object.id}}) ;                        
+
+ 				
+	
+                            }
+
+        
+
+
+		else if(d._id>0 && d._id!= {{object.id}})
+				{
+                                
+				neighbour_node =neighbour_node.concat(d._id);
+				
+				d3.select("#amazingViz").remove();  
+				
+				$.ajax({
+					async:false,
+					url:'/nodetypes/graphs/graph_json/' + d._id , 
+					datatype:'json',
+					success:function (json2) {
+				
+	    			new_metadata=json2.node_metadata;
+	  			new_relations=json2.relations;	
+						
+				metadata=_.union(new_metadata,metadata);
+				relations=_.union(new_relations,relations);	
+                                relations= check_Relationtype(metadata,relations);
+				_.each(metadata, function(m){
+				
+				  for(i=0;i<neighbour_node.length;i++)
+				  	{
+					if(m._id==neighbour_node[i])
+						m.expanded="true";
+					}
+				});
+					   
+                                
+                                }});
+				console.log(metadata);
+				init(metadata,relations);
+				load({{object.id}});
+
+
+				
+					
+				}
+});
+}
+
+});         
+
+
+
+
+	new_g.on("click", function(d) {
+
+		new_g.attr("xlink:href",function(d){return d.url;});
+		});	
+
+
+  	  
+
+
+			
+		text1 = new_g.append("svg:text")
+			.attr("class",function(d) {var e=(d._id).charAt(0);  if (d._id==key) return "mainnode";else if (e=="-") return "nodetext"; else if (isNaN(d._id)) return "relnode";  else return "node"; })
+                        .attr("y", 20)
+	                .attr("x", 25) 
+			.attr("dy", ".35em")
+                        .attr("text-anchor","middle") 
+			
+                       
+                        .text(function(d) {
+                          return d.screen_name;
+                        });  
+			
+                bbox = text1.node().getBBox();
+		console.log(bbox);
+
+		new_g.filter(function(d) { return (d._id).charAt(0)=="-"; }).append("svg:rect")
+                                                      .attr("x",bbox.x-22)
+						      .attr("y", bbox.y)	
+						       .attr("width", function(d) {var ttx=d.screen_name ; return (ttx.length+bbox.width+50)})
+							.attr("height", bbox.height)
+						      .call(force.drag)
+				    		      .style("fill-opacity", ".1")
+				                      .style("stroke", "#000")
+				 		      .style("stroke-width","1px"  );
+				    		      
+							
+
+
+
+
+		new_g.filter(function(d) { return (d._id)>0;}).append("svg:ellipse")
+				    .attr("cx", bbox.x+25)
+				    .attr("cy", bbox.y+13)
+				    .call(force.drag)
+				    .attr("rx",function(d) {var ttx=d.screen_name ; return (ttx.length + 70)})
+				    .attr("ry",13)
+				    .style("fill-opacity", "0.3")
+				    .style("stroke", "white")
+				    .style("stroke-width", "0.0px")
+				    .style("fill", function(d) {if ((d.expanded=="true" && d.refType=="Objecttype") ||(d._id=={{object.id}}) ) return "blue"; else if(d.expanded=="true" && d.refType=="Gbobject") return "red"; else return "none"});
+
+
+
+
+
+           	node.exit().remove();
+	
+
+        force.on("tick", function() {
+
+          var x_center = $("#chart").width() / 2;
+          var y_center = $("#chart").height() / 2;
+
+          link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+          node.attr("transform", function(d) { return "translate(" + (d.x-16) + "," + (d.y-16) + ")"; });
+
+        });
+      }
+
+         
+	
+	update(all_edges);
+
+      vis.style("opacity", 1e-6)
+              .transition()
+              .duration(1000)
+              .style("opacity", 1);
+      
+  
+
+
+
+}
+
+function check_Relationtype(metadata,relations)
+{
+
+	
+		_.each(metadata,function(d){
+						    if (d.refType=="Relationtype")
+							{ 
+							  a=d.inverse;
+							  if (d.flag==1)
+							  {
+							  	relations= _.reject(relations,function(e)
+										     {
+											return e.type==a
+										     });
+							  }
+						          else if (d.flag==0)
+							  {
+							  	relations= _.reject(relations,function(e)
+										     {
+											return e.type==d.screen_name
+										     });
+							  }
+							}
+							 
+						 }); 
+return relations;
+
+
+}
+
+
+}
+$(fgraph());
+
+</script>
+</div>
+{% endblock %}
+								
+ </div>
+
+<div id="sidebardetails">
+{% block sidebardetails %}
+{% endblock %}          
+</div>				
+	<div id="copyright" align="center">
+    <div class="blank_txt"></div>
+    <div>Copyright© 2012 NCERT. All rights reserved.</div>
+    <div><a href="/">Home</a> <span>&#124;</span> <a href="/gstudio/user">Loom</a> <span>&#124;</span> <a href="/gstudio/user/wikipage">Wikipages</a> <span>&#124;</span> <a href="/gstudio/resources/documents">Documents</a> <span>&#124;</span> <a href="/gstudio/resources/images">Images</a> <span>&#124;</span> <a href="/gstudio/resources/videos/wetube" title="wetube.gnowledge.org">WeTube</a> <span>&#124;</span> <a href="/gstudio/resources/videos">Videos</a> <span>&#124;</span> <a href="/tagclouds">Tags</a>{% if not user.is_authenticated %}<span>&#124;</span> <a href="/accounts/login/?next={{request.path}}">Login</a>{% else %}<span>&#124;</span> <a href="/accounts/logout/">Logout</a>{% endif %}</div>
+  </div>
+  <div class="clear"></div>			
+
+	
+	</body>
+</html>

@@ -1,0 +1,238 @@
+{% extends "gstudio/base.html" %}
+{% load pagination_tags %}
+{% load i18n %}
+{% load adminmedia grp_tags %}
+{% load i18n comments gstudio_tags %}
+ {% block title %}Videos{% endblock %}
+{% block content %}
+<script src="{% admin_media_prefix %}jquery/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+    <script type="text/javascript" >
+      $(window).load(function() {
+      $("#content").css({
+    "width": "100%",});});
+$(window).load(function() {
+ $("#chart").hide();});
+$(window).load(function() {
+
+ $("#graphcss").hide();   
+  });
+var i = 0;
+jQuery(document).ready(function($) {
+    $("#commenteditor").click(function(){
+	$(this).replaceWith('<textarea id="gnoweditor" style="visibility:hidden;width:450px"></textarea>');
+        isImage=true;
+        document.getElementById('gnoweditor').style.visibility="visible";
+        $("#gnoweditor").orgitdown(mySettings);
+	<!--document.getElementById('save').style.visibility="visible";-->
+        $(".orgitdownContainer").css({"margin-top":"0px","margin-left":"10px"});
+	$("#submitpostid").hide();//css({"margin-left":"400px","margin-top":"-38px"});
+	$("#commenteditor").hide();
+		
+	});
+     $("#save").click(function(){
+            var org_data = $("#gnoweditor").val();   
+	    var encode_data = encodeURIComponent(org_data);
+	    var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " "));    
+ 	    $("#commenttext").val(decode_data);	
+	    $('.orgitdownContainer').hide();
+	    $("#submitpostid").css({"margin-left":"0px","margin-top":"0px"});
+	    $("#divpost b").text(decode_data); 
+	    $("#editcommenteditor").show();
+            $("#submitpostid").show();   
+	});
+
+     $("#editcommenteditor").click(function(){
+	$('.orgitdownContainer').show();
+	$("#editcommenteditor").hide();
+	$("#submitpostid").hide();
+	});
+});
+</script>
+<style type="text/css">
+#div2
+{
+background-color:#E8E8E8 ;
+}
+#div1
+{
+background-color:white
+}
+#divsearch
+{
+position:absolute;
+}
+#upperdiv
+{
+position:relative;
+margin-bottom:6%;
+}
+#divpost
+{
+position:absolute;
+margin-left:52%;
+}
+#showingprocess
+{
+width:371px;
+height:38px;
+border:solid 1px #B3B3B3;
+}
+#inner{
+width:10px;
+height:36px;
+border:solid 1px blue;
+margin-top:1px;
+background: green;
+
+}
+</style>
+
+
+
+{% autopaginate vids 40 %}
+
+
+<h2 style="">Video Library</h2>
+<br/>
+<div id="upperdiv">
+
+<div id="divsearch">
+<form method="post" action="">
+{% csrf_token %}
+<h4 style="color: black;">Search Videos:</h4>
+<p><input type="text" name="svid" value={{val}}></p>
+
+
+<select name="mydropdown">
+<option value="title">Title</option>
+<option value="creation_date">Creation Date</option>
+</select>
+<br/>
+<input type="submit" name="norm" value="Search">
+<input type="submit" name="spe" value="Search by User">
+</form>
+<br>
+{% if user.is_authenticated %}
+<form method="post" action="/gstudio/resources/videos/">
+{% csrf_token %}
+<input type="hidden" name="user" value={{user.username}}>
+<input type="submit" name="fav" value="View Favourites">
+</form>
+{% endif %}
+</div>
+
+{% if user.is_authenticated %}
+<div id="divpost">
+<form enctype="multipart/form-data" method="post" action="">
+{% csrf_token %}
+<p><h4 style="color: black;">Submit Videos:</h4>
+Title:&nbsp; <input type="text" name="title1"><br/><br/>
+Video:&nbsp;<input type="file" name="clip" multiple="multiple" /></p><br/>
+Description:&nbsp;&nbsp;<b></b>
+<input type="button"  id="editcommenteditor"  value="edit" style="display:none" >
+<input type="button"  id="commenteditor"  value="Add Content" >
+<input type="button" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" />
+<input type=text name="contenttext" id="commenttext" style="visibility:hidden" />
+<input type="hidden" name="user" value={{user.username}}>
+<input type="hidden" name="userpassword" value={{user.password}}>
+<input type="hidden" name="useremail" value={{user.email}}>
+<p><font> Enter the password of wetube.gnowledge.org</font> </p>
+<input type="password" name="videopassword" />
+
+<input type="submit" id="submitpostid" value="Upload"  onclick="return myupload();" >
+<script type="text/javascript">
+function myupload()
+{
+document.getElementById('showingprocess').style.visibility="visible";
+document.getElementById('headvideo').style.visibility="visible";
+
+	setInterval( function() {
+	if( i < 340 )
+	{
+	
+	i = i + 20;
+	$("#inner").css({ "-moz-box-sizing":"border-box", "margin-left":i });
+	}
+	else 
+		{
+		i = 0;
+		}
+	},1000);
+
+	
+
+}
+</script>
+</form>
+</div>
+{% endif %}
+</div>
+{% if reportid %}
+<h2><font color="red">this image is already uploaded on this site</font></h2>
+<a href="/gstudio/resources/images/show/{{ reportid }}/"> <font size="4">to see this image click here</font></a><br/><br/><br/>
+{% endif %}
+<h2 id="headvideo" style="visibility:hidden;">Processing And Uploading Video</h2>
+<div id="showingprocess" style="visibility:hidden;">
+<div id="inner">
+</div>
+</div>
+
+
+{% if fav %}
+<h2 style="">Favourite Videos</h2><br/>
+{% else %}
+<h2 style="">List of Videos in the library </h2><br/>
+{% endif %}
+
+<div id="listvideo">
+<table class="tblClass">
+    <tr>
+{% for video in vids %}
+<td>
+<form enctype="multipart/form-data" method="post" action="" target="_blank">{% csrf_token %}
+	<input type="hidden" name = "full" value ={{video.slug}}>
+	<a href="/gstudio/resources/videos/show/{{video.id}}/">
+	<img src="http://wetube.gnowledge.org/{{video.slug}}/icon128.jpg" alt="{{ video.title }}" style="border-radius: 10px 10px 10px 10px;" title="{{ video.title }}">
+	</a>
+	{% for author in video.get_nbh.posted_by %}
+  	<input type="hidden" name="authorname" value="{{ author }}"  />
+	{% endfor %}
+
+	{% for date in video.get_nbh.creation_day %}
+ 	<input type="hidden" name="datename" value="{{ date }}"  />
+	{% endfor %}
+ 	<input type="hidden" name="titlename" value="{{ video.title }}"  />
+
+	{% for we in video.get_nbh.source %}
+			{% for map in video.get_nbh.map_link %}
+				{% ifnotequal map '' %}
+		                    <input type="hidden" name="mapname" value="{{ map }}"  />
+				     <input type="hidden" name="wename" value="{{ we }}"  />
+				{% endifnotequal %}
+			{% endfor %}
+		{% endfor %}
+ 	<input type="hidden" name="contentname" value="{{ video.content }}" />
+ 	<input type="hidden" name="ratename" value="{{ video.rating.get_rating }}" />
+	<input type="hidden" name="vidid" value={{video.id}}>
+</form>
+<td>
+ {% if not forloop.last and forloop.counter|divisibleby:"8" %}
+</tr>
+{% endif %}
+{% endfor %}
+</table>
+</div>
+<h2>{% paginate %}</h2>
+
+{% endblock %}
+
+{% block chart %}
+<br> 
+
+<br>
+{% endblock %}
+
+
+

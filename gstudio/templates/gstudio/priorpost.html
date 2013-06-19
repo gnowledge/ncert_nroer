@@ -1,0 +1,120 @@
+{% load gstudio_tags %}
+{% load i18n %}
+<script type="text/javascript" >
+
+var availableObjects = [];
+$.merge(availableObjects, {% get_pri_post_page %})
+
+jQuery(document).ready(function($) { 
+$("#addpriorpost").click(function(){
+     
+var data 
+data = $("#priorpage").val();//attr('value');
+$.ajax({
+	url: '/gstudio/resources/images/addpriorpost/',
+	//type:"POST",
+	data: {title:data,titleid:{{objectid}}},
+        beforeSend: function() {
+              $("#ajax_load_image").show();
+              $("#content").css({"opacity":"0.1",})
+                              },
+	success: function(data){
+		$('#priorpostpages').html(data);
+		$("#chart").text("");
+		fgraph();
+			},
+        complete: function(){
+                $("#ajax_load_image").hide();
+		$("#content").css({"opacity":"",})
+		  }
+});  
+$("#priorpage").val("");
+});
+});
+
+$(document).ready(function(){
+$( "#priorpage" ).autocomplete({
+source: availableObjects
+});
+});
+
+</script>
+
+<div id = "priorpostpages">
+<script type="text/javascript" >
+jQuery(document).ready(function($) { 
+$(".deletepriorpage").click(function(){
+var id1 = {{objectid}},
+    id2 = this.id;
+r = confirm("Please confirm delete ")
+if (r==true)
+  {
+tagname = arr;
+$.ajax({
+	url: '/gstudio/ajax/deletepriorpage/',
+	type: 'POST',
+	data: {objectid1:id1,objectid2:id2,csrfmiddlewaretoken: '{{ csrf_token }}' },
+        beforeSend: function() {
+              $("#ajax_load_image").show();
+              $("#content").css({"opacity":"0.1",})
+                              },
+	success: function(data){
+		$('#priorpostpages').html(data);
+		$("#chart").text("");
+		fgraph();
+		},
+        complete: function(){
+                $("#ajax_load_image").hide();
+		$("#content").css({"opacity":"",})
+		  }
+});  
+       			      
+  }
+else
+  {
+  
+  }
+});
+
+});
+</script>
+
+<br/>
+<strong>Prior Pages:</strong>
+{% for each in priorgbobject %}
+<a href="{{each.get_view_object_url}}">{{each}}</a>
+{% if user.is_authenticated %}
+<a class="deletepriorpage" id="{{each.id}}" value="{{each}}" title="delete {{each}}"> 
+<img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/>
+</a>
+{% endif %}
+{% if not forloop.last %},{% endif %}
+{% empty %}
+ <span>No prior page</span>
+{% endfor %}
+<br/>
+<strong>Posterior Pages:</strong>
+{% for each in posteriorgbobject %}
+<a href="{{each.get_view_object_url}}">{{each}}</a>
+{% if not forloop.last %},{% endif %}
+{% empty %}
+ <span>No Posterior Page</span>
+{% endfor %}
+<br/>
+</div>
+
+{% if user.is_authenticated %}
+<!-- <form method="get" action=""> -->{% csrf_token %}
+
+<input type="hidden" name="docid" value={{objectid}}>
+<input id="priorpage"  class="tagpriorpage" name="textpriorpage">
+<input type="button" class="priorpost" id="addpriorpost" value="Add Prior Page" name="addtags" />
+<br/><br/>
+<!-- <input type="button" id="titleeditcontent" name="" value="Edit a title"/>
+<input type="text" value="" name="texttags" id="texttagtitle" style="visibility:hidden" /> 
+<input type="button" class="titlecommentsavecontent" id="titlesave" value="Save" style="visibility:hidden" />
+<input type="hidden" name="titlecontenttext" id="titlecommenttext" style="visibility:hidden" />
+<input type="hidden" id="titleeditortext" style="visibility:hidden" value="{{ objecttitle }}">
+<!-- </form> -->
+{% endif %}
+

@@ -1,0 +1,7 @@
+<ul>
+{% for key,value in gbobjects.items %}
+<li>
+<a href="{{ value.0 }}">{{key}}</a>&nbsp; - &nbsp;{{ value.1 }}
+</li>
+{% endfor %}
+</ul>
