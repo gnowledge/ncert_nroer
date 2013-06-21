@@ -1,5 +1,6 @@
 {% load tagging_tags comments i18n %}
 {% load i18n gstudio_tags %}
+{% load tagging_tags %}
 <div id="nodetype-{{ object.pk }}" class="hnodetype{% if object.featured %} featured{% endif %} span-16 last">
   <div class="nodetype-header span-16 last">
  <h2 class="nodetype-title">
@@ -77,7 +78,16 @@ document.write("is a {{object.nodemodel}}");
 	{% endifequal %}
        {% endifequal %}
        {% endifequal %}
- 
+<br/><img src="/static/gstudio/img/home/tag.jpg" />
+
+      {% tags_for_object object.ref as tag_list %}
+       	   {% for tag in tag_list %}
+       	   <span><a href="{% url objectapp_tag_detail tag %}"
+              title="Tag {{ tag }}" rel="tag">{{ tag }}</a></span>
+   	   <span>{% if not forloop.last %},{% endif %}</span>
+       	   {% empty %}
+       	   <span>{% trans "No tags" %}</span>
+       	   {% endfor %}
 
      
 <!--	<a href="{{ object.ref.get_edit_url }}" target="_blank" >[edit]</a>     -->

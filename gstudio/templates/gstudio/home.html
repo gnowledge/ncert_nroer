@@ -50,7 +50,7 @@ stepcarousel.setup({
 	panelclass: 'panel',
 	autostep: {enable:true, moveby:1, pause:3000},
 	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
-	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/home/left_scroll_btn.gif', -73, 5], rightnav: ['/static/gstudio/img/home/right_scroll_btn.gif', 27,5]},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/home/left_scroll_btn.jpg', -25, 30], rightnav: ['/static/gstudio/img/home/right_scroll_btn.jpg', 5,30]},
 	statusvars: ['statusA', 'statusB', 'statusC'],
 	contenttype: ['inline'] 
 })
@@ -59,83 +59,36 @@ stepcarousel.setup({
 </head>
 <body>
 <div id="content_body">
-  <div align="right"><img src="/static/gstudio/img/home/logo_mhrd.png" /></div>
-  <div id="box1">
-    <div class="home_content">
-      <div id="nav">
-        <ul>
-          <li><a href="/" class="select">Home</a></li>
-          <li><a href="/gstudio/user">Loom</a></li>
-          <li><a href="/gstudio/user/wikipage">Wikipages</a></li>
-          <li><a href="/gstudio/resources/documents">Documents</a></li>
-          <li><a href="/gstudio/resources/images">Images</a></li>
-          <li><a href="/gstudio/resources/videos">Videos</a></li>
-          <li><a href="/tagclouds">Tag</a></li>
-        </ul>
-      </div>
-      <div class="home_txt">NROER is a digital repository for Open Educational Resources. The Repository houses a wide range of educational content and resources covering all subjects and all grades for school students, teachers and other stakeholders. In addition to the educational resources which are available in a wide variety of forms, the NROER also provides opportunities to users to enroll in various online courses and participate in online contests.</div>
-    </div>
-    <div id="search_box">
-      <div><strong>NROER</strong></div>
-<div class="search_bg">
-<form action="{% url gstudio_nodetype_search %}" method="get">
+ <div id="box1" align="center">
+	<div class="logo_blank"></div>
+		<img src="/static/gstudio/img/home/mhrdlogo.png" />
+	<div class="logo_blank"></div>
+<a href="#"><img src="/static/gstudio/img/home/nroerlogo.png" /></a>
+<div class="logo_blank"></div>
+<img src="/static/gstudio/img/home/ncertlogo.png" />
+<div class="logo_blank"></div>
+<div align="center"><a href="">About Us</a>&nbsp; <a href="">Terms of Use</a>&nbsp; <a href="">Contact Us</a></div> 
+ </div>
+<div id="box2"><p>NROER is a digital repository for Open Educational Resources. The Repository houses a wide range of educational content and resources covering all subjects and grades. The content is also available in multiple languages. In addition to the educational resources which are available in a wide variety of forms, the NROER also provides opportunities to teachers to share the content developed by them and also to comment and rate the resources available on the repository</p>
+
+<div id="search_box">
+	<div class="left"><img src="/static/gstudio/img/home/searchicon.jpg" /></div>
+	<div class="left"><div class="search_bg"><form action="{% url gstudio_nodetype_search %}" method="get">
 
  <input type="text" class="search_txt" value="Search by concept" name="pattern" onfocus="if(this.value == 'Search by concept'){this.value=''}" onblur="if(this.value == null || this.value == ''){this.value='Search by concept'}">
-	<input class="searchbutton" id = "searchid" type="submit" value="Search" title="Search" style="display:none;" />
+	<input class="searchbutton" id = "searchid" type="submit" value="" title="Search" />
 &nbsp;&nbsp;
 	<!-- <a href="{% url objectapp_gbobject_latest_feed %}" class="feeds" title="Rssfeed"><img src="/static/gstudio/img/rss.png" alt="?" width="20" height="" id= "rssimage" style="display:none"/></a>-->
       </form>
-      
+
+</div></div>
+	<div class="left browse_txt"><b><a href="">or browse by collection</a></b></div>
+	<div class="clear"></div>
        
-      </div>
-    </div>
-    <div class="search_btn"><a onclick="Submit();">Submit</a><br/>
-      <a href="#">Advanced Search</a></div>
-    <div class="clear"></div>
-  </div>
-  <div id="frame">
-    <div id="tabbed_box">
-      <div style="width: 753px; margin: 0 auto; padding: 10px 0 40px; font: 0.85em arial;">
-        <ul class="tabs">
-          <li><a href="#" rel="view1">Overview</a></li>
-          <li><a href="#" rel="view2">How it works</a></li>
-          <li class="selected"><a href="#" rel="view3">Showcase</a></li>
-          <li><a href="#" rel="view4">Recent Objects</a></li>
-        </ul>
-        <div class="tabcontents">
-          <div id="view2" class="tabcontent">
-            <div class="tab_content_bg">
-              <div class="blank_txt"><strong>The NROER offers a few simple ways of collaboration</strong>
-              <ul>
-              	<li><strong>a wiki: you can create wiki style pages collaboratively on topics and subjects of your choice.</strong></li>
-    <li><strong>a loom studio: to form a thread and discuss, seek responses from members.</strong></li>
-    <li><strong>upload useful resources such as lessons, documents, pictures, videos, articles, software etc (You will get points for your contributions).</strong></li>
-    <li><strong>start collaborative research projects on any area of interest under the Creative Commons license.</strong></li>
-              </ul>
-              
-              
-              </div>
-            </div>
-           
-          </div>
-          <div id="view1" class="tabcontent">
-            <div class="tab_content_bg">
-              <div class="blank_txt"><b>NROER is a comprehensive digital repository of resources that can be used by teachers in the teaching learning process. Conceptualized as a collaborative workspace, NROER provides a platform to teachers to create content which is localized and cater to the needs of her students. The idea is to make variety of resources available to teachers so that they use the one which is most appropriate to her teaching style, the needs of her students and aids the learning of the subject.</b>
-              <p><strong>Multiple resources are collected and created around various concepts. Teachers can access audio, video, learning objects, images, questions banks, activities & presentations etc related to those concepts. They can also upload resources which will be subjected to review by experts. In addition to accessing and uploading resources, NROER allows teachers to download, share, comment and rate media resources.</strong></p>
-              
-              
-              </div>
-            </div>
-           
-          </div>
-          <div id="view3" class="tabcontent">
-           
-            <div align="center">
-              <video id="videoarea" controls="controls" poster="" src="" width="400px" height="200px"></video>
-            </div>
-            <div class="clear"></div>
-            <div id="scroll_box">
-      <div id="mygallery" class="stepcarousel">
+</div>
+<h2>&nbsp;&nbsp;<b>Featured Resources</b></h2>
+<div id="scroll_box">
+ <div id="mygallery" class="stepcarousel">
         <div class="belt">
         <ul id="playlist">
           <li movieurl="http://wetube.gnowledge.org/BYX/480p.webm"><div class="panel">
@@ -155,69 +108,37 @@ stepcarousel.setup({
           </div></li>
         </UL>
         </div>
+	</div>
       </div>
-    </div>
-          </div>
-          <div id="view4" class="tabcontent">
-            <div class="tab_content_bg">
-              <div class="blank_txt listing" id="recentObject"><strong>
+<div class="clear"></div>
+<div class="blank"></div>
+<div class="clear"></div>
+<div class="home_box">	
+	<h2><img src="/static/gstudio/img/home/mission.jpg" align="left"/> Our Mission</h2>
+<div class="clear"></div>
+	<p>To store , preserve and provide access to variety of digital resources for students and teachers.</p>
+<p>To enable the participation of the community in development and sharing of digital resources. </p>
+	</div>
+<div class="home_blank"></div>
+<div class="home_box"><h2><img src="/static/gstudio/img/home/contribute.jpg" align="left"/> Who can Contribute</h2>
+<div class="clear"></div>
+	<p>Experts from various subject areas</p>
+<p>Instructional designers, independent producers, directors and film makers who would like to add their educational content on the repository.</p>
+<p>Other govt and non govt organisations who would wish to share their resources.</p>
+<p><a href="http://cietncert.org/ICT-Schools/ICTSchools/e-content" target="_blank"><u>To contribute click here >></u></a></p>
+</div>
+<div class="home_blank"></div>
+<div class="home_box">
+<h2><img src="/static/gstudio/img/home/news.jpg" align="left"/> Latest News</h2>
+<div class="clear"></div>
+<p>Experts from various subject areas</p>
+<p>Instructional designers, independent producers, directors and film makers who would like to add their educational content on the repository.</p>
+<p>Other govt and non govt organisations who would wish to share their resources.</p>
+</div>
+<div class="clear"></div>
 
-              </strong></div>
-            </div>
-           
-          </div>
-        </div>
-      </div>
-    </div>
-   
-  </div>
-  <div id="box3">
-    <div class="box4">
-      <div class="box_bg1">Our Mission</div>
-      <div class="home_listing">
-        <ul>
-          <li>To store , preserve and provide
-            access to variety of digital resources
-            for students and teachers.</li>
-          <li>To enable the participation of the
-            community in development and
-            sharing of digital resources. </li>
-        </ul>
-      </div>
-    </div>
-    <div class="box5">
-      <div class="box_bg2">Latest News</div>
-      <div id="news">
-        <div class="image_bg"><img src="/static/gstudio/img/home/news_img_1.jpg" /></div>
-        <div class="image_bg"><img src="/static/gstudio/img/home/news_img_1.jpg" /></div>
-        <div class="image_bg"><img src="/static/gstudio/img/home/news_img_1.jpg" /></div>
-      </div>
-    </div>
-    <div class="box4">
-      <div class="box_bg3">
-        <div class="contribute">Who can contribute</div>
-        <div class="home_listing">
-          <ul>
-            <li>Experts from various subject areas</li>
-            <li>Instructional designers, independent
-              producers, directors and film makers
-              who would like to add their
-              educational content on the 
-              repository.</li>
-            <li>Other govt and non govt 
-              organisations who would wish to
-              share their resources.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div id="copyright" align="center">
-    <div class="blank_txt"></div>
-    <div>Copyright© 2012 NCERT. All rights reserved.</div>
-    <div><a href="/"><b>Home</b></a> <span>&#124;</span><a href="/gstudio/user">Loom</a> <span>&#124;</span> <a href="/gstudio/user/wikipage">Wikipages</a> <span>&#124;</span> <a href="/gstudio/resources/documents">Documents</a> <span>&#124;</span> <a href="/gstudio/resources/images">Images</a> <span>&#124;</span> <a href="/gstudio/resources/videos/wetube" title="wetube.gnowledge.org">WeTube</a> <span>&#124;</span>  <a href="/gstudio/resources/videos">Videos</a> <span>&#124;</span> <a href="/tagclouds">Tags</a>{% if not user.is_authenticated %}<span>&#124;</span> <a href="/accounts/login/?next={{request.path}}">Login</a>{% else %}<span>&#124;</span> <a href="/accounts/logout/">Logout</a>{% endif %}</div>
-  </div>
+</div>
+<div class="clear"></div>
 </div>
 </body>
 </html>
