@@ -110,33 +110,25 @@
 	<div id="body" class="span-24 last">
 
 		<div id="content_body2">
-			  	  <div align="right"><img src="/static/gstudio/img/home/logo_mhrd.png" />
-				  </div>
-				  <div id="inner_menu">
-				    <ul id="navigationMenu">
-				      <li> <a class="home" href="/"> <span>Home</span> </a> </li>
-				      <li> <a class="loom" href="/gstudio/user"> <span>Loom</span> </a> </li>
-				      <li> <a class="wikipages" href="/gstudio/user/wikipage"> <span>Wikipages</span> </a> </li>
-				      <li> <a class="documents" href="/gstudio/resources/documents"> <span>Documents</span> </a> </li>
-				      <li> <a class="images" href="/gstudio/resources/images"> <span>Images</span> </a> </li>
-				      <li> <a class="videos" href="/gstudio/resources/videos"> <span>Videos</span> </a> </li>
-				      <li> <a class="tags" href="/tagclouds"> <span>Tags</span> </a> </li>
-				    </ul>
-				  </div>
-				  <div class="blank_txt">
+			  	 
+	<div id="box1" align="center">
+		<div class="logo_blank"></div>
+		<img src="/static/gstudio/img/home/mhrdlogo.png" />
+		<div class="logo_blank"></div>
+	<img src="/static/gstudio/img/home/nroerlogo.png" />
+	<div class="logo_blank"></div>
+<img src="/static/gstudio/img/home/ncertlogo.png" />
+<div class="logo_blank"></div>
+<div align="center"><a href="">About Us</a>&nbsp; <a href="">Terms of Use</a>&nbsp; <a href="">Contact Us</a></div> 
+ </div>
 
-					<div id="content" class="hfeed span-16 border">
-				
+<div id="box2">
+
 						{% block content %} <h3>The content block need to be overrided!</h3>
 						{% endblock %}
-					</div>
 
-					 <div class="clear"></div>
-				  </div>
-  
-	       </div>
 
-		<textarea id="gnoweditor" style="visibility:hidden;"></textarea>
+<textarea id="gnoweditor" style="visibility:hidden;"></textarea>
 
 		{% block graph %}
 				<div id="graphcss">
@@ -567,13 +559,18 @@ $(fgraph());
 {% block sidebardetails %}
 {% endblock %}          
 </div>				
-	<div id="copyright" align="center">
-    <div class="blank_txt"></div>
-    <div>Copyright© 2012 NCERT. All rights reserved.</div>
-    <div><a href="/">Home</a> <span>&#124;</span> <a href="/gstudio/user">Loom</a> <span>&#124;</span> <a href="/gstudio/user/wikipage">Wikipages</a> <span>&#124;</span> <a href="/gstudio/resources/documents">Documents</a> <span>&#124;</span> <a href="/gstudio/resources/images">Images</a> <span>&#124;</span> <a href="/gstudio/resources/videos/wetube" title="wetube.gnowledge.org">WeTube</a> <span>&#124;</span> <a href="/gstudio/resources/videos">Videos</a> <span>&#124;</span> <a href="/tagclouds">Tags</a>{% if not user.is_authenticated %}<span>&#124;</span> <a href="/accounts/login/?next={{request.path}}">Login</a>{% else %}<span>&#124;</span> <a href="/accounts/logout/">Logout</a>{% endif %}</div>
-  </div>
-  <div class="clear"></div>			
+	  <div class="clear"></div>			
 
+
+
+</div>
+<div class="clear"></div>
+
+				  				  </div>
+  
+	       </div>
+
+		
 	
 	</body>
 </html>

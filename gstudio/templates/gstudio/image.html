@@ -43,7 +43,7 @@ jQuery(document).ready(function($) {
         $("#gnoweditor").orgitdown(mySettings);
 	<!--document.getElementById('save').style.visibility="visible";-->
         $(".orgitdownContainer").css({"margin-top":"0px","margin-left":"10px"});
-	$("#submitpostid").hide();//css({"margin-left":"400px","margin-top":"-38px"});
+	$("#submitpostid").hide();//css({"margin-left":"400px","margin-top":"-35px"});
 	$("#commenteditor").hide();
 			
 	});
@@ -154,44 +154,26 @@ else
             }); 
         });  
 </script>
-
-<style type="text/css">
-#divsearch
-{
-position:absolute;
-}
-#upperdiv
-{
-position:relative;
-margin-bottom:220px;
-}
-#divpost
-{
-position:absolute;
-margin-left:52%;
-}
-
-</style>
 <h2 style="">Image Library</h2>
 <br/>
 <div id="upperdiv">
 <div id="divsearch">
 <form method="post" action="">
 {% csrf_token %}
-<h4 style="color: black; margin-left: 0px;">Search Image:</h4>
-<p><input type="text" name="simg" value={{val}}></p>
-<font size="1" id="searchfont" style="display:none"><b>YY-MM-DD HH:MM:SS</b></font>
-<br/>
-<p><div align="left">
-<select name="mydropdown" id="mydropdown">
+<h4 style="color: black; margin-left: 0px;" class="left">Search Image: &nbsp;</h4>
+<div class="left">
+	<input type="text" name="simg" value={{val}}>&nbsp;&nbsp;<select name="mydropdown" id="mydropdown">
 <option value="title">Title</option>
 <option value="creation_date">Creation Date</option>
-</select>
+</select>&nbsp;&nbsp;<input type="submit" value="Search">
+
 </div>
-<input type="submit" value="Search">
+<div class="clear"></div>
+<font size="1" id="searchfont" style="display:none"><b>YY-MM-DD HH:MM:SS</b></font>
+
+
 </form>
 {% if user.is_authenticated %}
-<br/><br/><br/>
 <form method="post" action="/gstudio/resources/images/">
 {% csrf_token %}
 <input type="hidden" name="user" value={{user.username}}>
@@ -212,9 +194,10 @@ Description:&nbsp;&nbsp;<b></b>
 <input type="button"  id="commenteditor"  value="Add Content" >
 <input type="button" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" />
 <input type="text" name="contenttext" id="commenttext" style="visibility:hidden" />
-<input type="hidden" name="user" value={{user.username}}><br/><br/>
+<input type="hidden" name="user" value={{user.username}}>
+<div>
 <input type="submit" id="submitpostid" value="Submit" size="900" name="post">
-
+</div>
 </form>
 </div>
 {% endif %}
@@ -226,9 +209,11 @@ Description:&nbsp;&nbsp;<b></b>
 {% endif %}
  <div>
 {% if fav %}
-<h2 style="">Favourite Images</h2><br/>
+<h2 style="">Favourite Images</h2>
 {% else %}
+<div class="blank2"></div>
 <h4 style="">Image Gallery</h4>
+<br/>
 {% endif %}
 <div id="imageGallery">
 {% autopaginate images 40 %}
@@ -250,11 +235,11 @@ Description:&nbsp;&nbsp;<b></b>
 </form>
         </td>  
 	     
-    {% if not forloop.last and forloop.counter|divisibleby:"8" %}
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
     </tr>
     <tr>
-				<td colspan="8">
- 				 {%  with x=forloop.counter|add:"-8"|stringformat:"s" %}
+				<td colspan="5">
+ 				 {%  with x=forloop.counter|add:"-5"|stringformat:"s" %}
  				 {% with y=forloop.counter|stringformat:"s" %}
  				  {% with count=x|add:":"|add:y %}
  				{% for image in images|slice:count %}
@@ -288,7 +273,7 @@ Description:&nbsp;&nbsp;<b></b>
 {% endfor %}
     </tr>
 <tr>
-				<td colspan="8">
+				<td colspan="5">
  				 
  				{% for image in images|slice:"0:40" %}
  					 				
