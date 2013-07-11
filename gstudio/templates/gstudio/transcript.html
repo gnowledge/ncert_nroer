@@ -44,7 +44,34 @@
 			var isNode=false;
 			var isObject=false;
 			var isEditdoc = false;
-      $(window).load(function() {
+ $(window).load(function() {
+var sendData = JSON.stringify({'id': "{{video.slug}}", 'keys': []});
+var jsonDetails = {'Posted By':"user","Posted At":"created","Location":"location","Source":"source","Summary":"summary","Description":"notes","Language":"language","Topic":"topic"}
+/* ajax call for fetching video's data from wetube.gnowledge.org api */
+$.ajax({
+	url: 'http://wetube.gnowledge.org/api',
+	type: 'POST',
+	dataType: "json",
+	data: {action:"get",data:sendData},
+        beforeSend: function() {},
+	success: function(result){
+	if (result.data.title != "{{video.title}}"){ $("#fonttitleid").text(result.data.title);}
+		for (var each in jsonDetails){if(result.data[jsonDetails[each]]){
+			 var font1=$("<font>"+each+"  :  "+"</font>")
+			.attr("color","black")
+			.appendTo($(".detailsOfVideo"));
+			var font2 = $("<font>"+result.data[jsonDetails[each]]+"</font>")
+				.appendTo($(".detailsOfVideo"));
+			var br = $("<br>")
+				.appendTo($(".detailsOfVideo"));
+			} } 
+				
+	},
+        complete: function(){
+	}
+
+});  
+
       $("#content").css({
     "width": "600px"});});
 
@@ -99,39 +126,15 @@ $('#pandoravideo').pandoravideo();
 <b>Download:</b>&nbsp;&nbsp;<a href={{video.rurl}} target="_blank">Right click to download</a><br/>
 <form method="post" action="">{% csrf_token %}
 <font color='black'>Name:</font>
-<font ><font id="fonttitleid" >{% if video.title %}{{video.title}}{% else %}{{video.altnames}}{% endif %}</font></font>
+<font ><font id="fonttitleid" >{{video.title}}</font></font>
 {% if user.is_authenticated %}
-{% edit_title video.id video.title %}
+{#{% edit_title video.id video.title %}#}
 {% endif %}
 <br/>
-<font color = 'black'>Posted By : </font>
-{% for author in video.get_nbh.posted_by %}
-  <font >{{ author }}</font>
-{% endfor %}
-
-<br>
-<font color = 'black'>Posted At :</font>
-{% for date in video.get_nbh.creation_day %}
-<font >{{date}}</font>
-
-{% endfor %}
- 
-
-<br>
-		<font color = 'black'>Location: </font>
-{% for we in video.get_nbh.source %}
-		<!-- <font color = 'black'>Location: </font>  -->
-			{% for map in video.get_nbh.map_link %}
-				{% ifnotequal map '' %}
-<a href=http://maps.google.co.in/maps?hl=en&cp=43&gs_id=6&xhr=t&q={{map}}&bav=on.2,or.r_gc.r_pw.r_qf.,cf.osb&biw=1304&bih=680&um=1&ie=UTF-8&sa=N&tab=wl target="_blank">{{we}}</a>
-				{% endifnotequal %}
-			{% endfor %}
-		{% endfor %}
-
-<br>
- <input type="hidden" name="contentname" value="{{ video.content }}" />
- <input type="hidden" name="ratename" value="{{ video.rating.get_rating }}" />
-<font color = 'black'>Description:</font>
+<div class="detailsOfVideo">
+</div>
+{% if video.content %}
+<font color = 'black'>Content:</font>
 {%autoescape on%}
 {% with video.html_content|safe as video_content %}
      {{video_content}}
@@ -144,6 +147,7 @@ $('#pandoravideo').pandoravideo();
 <input type="submit" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" />
 <input type="hidden" name="contenttext" id="commenttext" style="visibility:hidden" />
 <input type="hidden" id="editortext" style="visibility:hidden" value="{{video.content_org}}">
+{% endif %}
 {% endif %}
 </form>
 <br/>

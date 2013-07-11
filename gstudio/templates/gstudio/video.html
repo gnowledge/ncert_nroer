@@ -9,7 +9,21 @@
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
     <script type="text/javascript" >
-      $(window).load(function() {
+function getVideo(){
+$.ajax({
+	url: '/gstudio/resources/videos/getVideo/',
+	//type: 'POST',
+	//data: 
+        beforeSend: function() {},
+	success: function(data){},
+        complete: function(){}
+
+});  
+
+	}
+
+$(window).load(function() {
+	getVideo();
       $("#content").css({
     "width": "100%",});});
 $(window).load(function() {
