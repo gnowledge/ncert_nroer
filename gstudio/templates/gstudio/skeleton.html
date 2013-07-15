@@ -165,7 +165,7 @@
 					//`e.type = nodes_by_id[e.type]
 			         	 return e;
 			         	 }).filter(function(e){
-				 	       return nodes_by_id[e.from] && nodes_by_id[e.to]&& e.type!="title" && e.type!="content" 
+				 	      return nodes_by_id[e.from] && nodes_by_id[e.to]&& e.type!="title" && e.type!="content" 							&& e.type!="has_text" && e.type!="has_image" && e.type!="has_video" 							&& e.type!="has_document" 
 			         		}).value();
 				}
 
