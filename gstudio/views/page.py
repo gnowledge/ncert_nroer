@@ -84,9 +84,12 @@ def pagedashboard(request,pageid):
    page_ob = System.objects.get(id=pageid)
    collsys=page_ob.systemtypes.all()
    iscoll=collsys.filter(title="Collection")
+   dictobj=getobjs()
    if iscoll:
       collection=True
-   variables = RequestContext(request, {'ot' : ot,'section' : Section,'page_ob' : page_ob,'object':page_ob,'admin_m':admin_m,"flag" : flag,"admin_id" : admin_id,'post':post,'test':test,'collection':collection,'test1':test1})
+   nbhdata=get_nbh_of_nbh(pageid)#calling function from method to get nbhood data
+   
+   variables = RequestContext(request, {'ot' : ot,'section' : Section,'page_ob' : page_ob,'object':page_ob,'admin_m':admin_m,"flag" : flag,"admin_id" : admin_id,'post':post,'test':test,'collection':collection,'test1':test1,'dictobj':dictobj,'nbhdata':nbhdata})
   
    template = "metadashboard/pgedashboard.html"
    return render_to_response(template, variables)

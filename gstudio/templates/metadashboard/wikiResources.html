@@ -1,0 +1,37 @@
+{% load gstudio_tags %}
+{% load adminmedia grp_tags %}
+{%  for key,value in page_ob.get_relations_for_view.items %}
+
+	{% if key == 'has_text' %}
+	<b>Text:</b>
+	{% endif %}
+
+        {% if key == 'has_image' %}
+	<b>Image:</b>
+	{% endif %}
+
+	{% if key == 'has_video' %}
+	<b>Video:</b>
+	{% endif %}
+
+	{% if  key == 'has_document'  %}
+	<b>Document:</b>
+	{% endif %}
+
+	{% for k  in value %}
+		{% if  key == 'has_image'  %}
+			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+		{% endif %}
+		{% if  key == 'has_video'  %}
+			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+		{% endif %}
+		{% if  key == 'has_document'  %}
+			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+		{% endif %}
+		{% if  key == 'has_text'  %}
+			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+		{% endif %}
+	
+	{% endfor %}
+	<br/>
+{% endfor %}
