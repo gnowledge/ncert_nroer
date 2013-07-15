@@ -19,10 +19,131 @@ from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.contrib.sessions.models import Session
 from djangoratings.models import *
+import unicodedata
+
 lst1=[]
 count=0
 response_set=[]
 
+def getdocuments():
+    dicdoc={}
+    docot=Objecttype.objects.get(title='Document')
+    docs=docot.get_nbh['contains_members']
+    for each in docs:
+        dicdoc[each.id]=each.__str__()
+    return dicdoc
+
+def getimages():
+    dictimg={}
+    imgot=Objecttype.objects.get(title='Image')
+    imgs=imgot.get_nbh['contains_members']
+    for each in imgs:
+        dictimg[each.id]=each.__str__()
+    return dictimg
+
+
+def getobjs():
+    dic={}
+    for each in Gbobject.objects.all():
+        obtypes=each.objecttypes.all()
+        if not ('page box of' in each.title or 'message box of' in each.title):
+            dic[each.id]=str(unicodedata.normalize('NFKD', each.title).encode('ascii','ignore'))
+    return dic
+
+check = []
+def get_nbh_of_nbh(nid):
+    global check
+    data = {}
+    data['node']=[]
+    data['subnode']=[]
+    nidobject = NID.objects.get(id=nid)
+    nidobject = nidobject.ref
+    data['title']=nidobject.title
+    check.append(nid)
+    for each in nidobject.prior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data['node'].append(data1)
+            check.append(each.id)
+    for each in nidobject.posterior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data['node'].append(data1)
+            check.append(each.id)
+    r_right = Relation.objects.filter(right_subject=nid)
+    l_left = Relation.objects.filter(left_subject=nid)
+    for each in r_right:
+        each1 =  each.left_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data['node'].append(data1)
+            check.append(each1.id)
+    for each in l_left:
+        each1 =  each.right_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data['node'].append(data1)
+            check.append(each1.id)
+    for each in data['node']:
+        data['subnode'].extend(get_subjson(each['id']))
+    check = []
+    return(data)
+
+def get_subjson(nid):
+    global check
+    data = []
+    nidobject = NID.objects.get(id=nid)
+    nidobject = nidobject.ref
+    for each in nidobject.prior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data.append(data1)
+            check.append(each.id)
+    for each in nidobject.posterior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data.append(data1)
+            check.append(each.id)
+    r_right = Relation.objects.filter(right_subject=nid)
+    l_left = Relation.objects.filter(left_subject=nid)
+    for each in r_right:
+        each1 =  each.left_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data.append(data1)
+            check.append(each1.id)
+    for each in l_left:
+        each1 =  each.right_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data.append(data1)
+            check.append(each1.id)
+
+    return(data)
 
 def get_all_logged_in_users():
     # Query all non-expired sessions

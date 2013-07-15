@@ -423,90 +423,90 @@ width: 153px;
 }
 /* tabbed css*/
 
-ul.tabs
-{
-    padding: 7px 0;
-    font-size: 0;
-    margin:0;
-	margin-left:25px;
-    list-style-type: none;
-    text-align: left; /*set to left, center, or right to align the tabs as desired*/
-}
+/* ul.tabs */
+/* { */
+/*     padding: 7px 0; */
+/*     font-size: 0; */
+/*     margin:0; */
+/* 	margin-left:25px; */
+/*     list-style-type: none; */
+/*     text-align: left; /\*set to left, center, or right to align the tabs as desired*\/ */
+/* } */
         
-ul.tabs li
-{
-    display: inline;
-    margin: 0;
-    margin-left:10px; /*distance between tabs*/
-}
+/* ul.tabs li */
+/* { */
+/*     display: inline; */
+/*     margin: 0; */
+/*     margin-left:10px; /\*distance between tabs*\/ */
+/* } */
         
-ul.tabs li a
-{
-    font: normal 12px arial;
-    text-decoration: none;
-    position: relative;
-    z-index: 1;
-    padding: 17px 45px;
-    border-bottom-color:#B7B7B7;
-    color: #000;
-	font-weight:bold;
-    background: #abd1de;
-    border-radius: 2px 2px 0 0;
-    outline:none;
-}
+/* ul.tabs li a */
+/* { */
+/*     font: normal 12px arial; */
+/*     text-decoration: none; */
+/*     position: relative; */
+/*     z-index: 1; */
+/*     padding: 17px 45px; */
+/*     border-bottom-color:#B7B7B7; */
+/*     color: #000; */
+/* 	font-weight:bold; */
+/*     background: #abd1de; */
+/*     border-radius: 2px 2px 0 0; */
+/*     outline:none; */
+/* } */
         
-ul.tabs li a:visited
-{
-    color: #000;
-}
+/* ul.tabs li a:visited */
+/* { */
+/*     color: #000; */
+/* } */
         
-ul.tabs li a:hover
-{
+/* ul.tabs li a:hover */
+/* { */
    
-    background:#1f404f;
-	color:#fff;
-}
+/*     background:#1f404f; */
+/* 	color:#fff; */
+/* } */
         
-ul.tabs li.selected a
-{
-    /*selected tab style */
-    position: relative;
-    top: 0px;
-    font-weight:bold;
-    background:#1f404f;
-	color:#fff;
-}
+/* ul.tabs li.selected a */
+/* { */
+/*     /\*selected tab style *\/ */
+/*     position: relative; */
+/*     top: 0px; */
+/*     font-weight:bold; */
+/*     background:#1f404f; */
+/* 	color:#fff; */
+/* } */
         
         
-ul.tabs li.selected a:hover
-{
-    /*selected tab style */
-    text-decoration: none;
-}
+/* ul.tabs li.selected a:hover */
+/* { */
+/*     /\*selected tab style *\/ */
+/*     text-decoration: none; */
+/* } */
         
-div.tabcontent
-{
-    display: block;
-}
+/* div.tabcontent */
+/* { */
+/*     display: block; */
+/* } */
 
-div.tabcontents
-{
-    padding-top: 50px;
-	margin-top:20px;
-    border-radius: 0 2px 2px 2px;
-}
-.tab_content_bg
-{
-	background:#b7c9cd;
-	width:400px;
-	height:133px;
-	display:inline;
-	float:left;
-	margin-top:30px;
-	font-size:12px;
-	line-height:18px;
-	text-align:justify;
-}
+/* div.tabcontents */
+/* { */
+/*     padding-top: 50px; */
+/* 	margin-top:20px; */
+/*     border-radius: 0 2px 2px 2px; */
+/* } */
+/* .tab_content_bg */
+/* { */
+/* 	background:#b7c9cd; */
+/* 	width:400px; */
+/* 	height:133px; */
+/* 	display:inline; */
+/* 	float:left; */
+/* 	margin-top:30px; */
+/* 	font-size:12px; */
+/* 	line-height:18px; */
+/* 	text-align:justify; */
+/* } */
 .blank_txt
 {
 	padding:30px;
@@ -767,21 +767,19 @@ width: 128px;
 					fill:#25587E;
 				font-weight:bold;
 			}
-
-			}
 			#chart {
-				height: 90%;
-				margin: 0 auto;
+				height: 600px;
+				/*margin: 0 auto;
 				width: 90%;
-				display: block;
-			}
-			svg {
-				/*margin-left: 0%;
-				margin-right: 10%;
 				display: block;*/
+			}
+			/*svg {
+				margin-left: 0%;
+				margin-right: 10%;
+				display: block;
 				position: absolute;
 				height:900px;
-			}
+			}*/
 			.orgitdown .orgitdownButton1 a {
 				background-image:url(/static/gstudio/js/orgitdown/orgitdown/sets/org/images/save.jpeg);
 				margin-left:10px;
@@ -1322,4 +1320,20 @@ select
 }*/
 
 
+.title
+{
+	margin-bottom:0px;
+	padding-bottom:0px;
+	border-bottom:0px;
+	padding-bottom:0px;
+	margin-bottom:0px;
+}
 
+/* css for tagcloud---------------------------------*/
+.tags .tag_1 { font-size: 1em; color: #001e2d; }
+.tags .tag_2 { font-size: 1.125em; color: #00334c; }
+.tags .tag_4 { font-size: 2em; color: #005b89; }
+.tags .tag_5 { font-size: 2.25em; color: #0070a8; }
+.tags .tag_6 { font-size: 3em; color: #0099e5; }
+	
+#tag{ width: 50%; } 
