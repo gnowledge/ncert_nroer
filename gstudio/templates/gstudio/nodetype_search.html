@@ -1,5 +1,7 @@
 {% extends "gstudio/nodetype_list.html" %}
 {% load i18n gstudio_tags %}
+{% load adminmedia grp_tags %}
+{% load tagging_tags %}
 
 {% block title %}{% trans "Search results for" %} {% if pattern %}'{{ pattern }}'{% endif %}{% if page_obj %}{% ifnotequal page_obj.number 1 %} | {% trans "Page" %} {{ page_obj.number }}{% endifnotequal %}{% endif %}{% endblock %}
 
@@ -20,32 +22,6 @@ $("#graphcss").hide();
 });
 </script>
 <h1>{% trans "Search results  for" %} {% if pattern %}'{{ pattern }}'{% endif %}</h1>
-
-{% if error %}
-<p class="error">{{ error }}</p>
-{% endif %}
-
-{% if object_list %}
-
-{% endif %}
-
-{% for object in object_list %}
-	{% ifequal object.title|truncatewords:"3" 'page box of ...' %}
-	
-	{% else %}
-	{% ifequal object.title|truncatewords:"3" 'message box of ...' %}
-	{% else %}
-	
-  {% with object.html_content|truncatewords_html:100|safe as object_content %}
-  {% include "gstudio/_nodetype_detail.html" %}
-  {% endwith %}
-{% endifequal %}
-{% endifequal %}
-
-{% empty %}
-<p class="notice">{% trans "Nothing found." %}</p>
-{% endfor %}
-
 <div class="search">
   <form method="get" id="main_searchform" action="{% url gstudio_nodetype_search %}">
     <p>
@@ -57,8 +33,75 @@ $("#graphcss").hide();
     </p>
   </form>
 </div>
-
-{% if is_paginated %}
- <br/><center> <font size="5">{% gstudio_pagination page_obj %}</font></center>
+{% if error %}
+<p class="error">{{ error }}</p>
 {% endif %}
+
+{% if object_dic %}
+
+{% endif %}
+{% for key,value in object_dic.items %}
+        {% if key == 'Image' %}
+               {% if value %}
+               <h2><b>Images</b></h2>
+		   {% for image1 in value %}
+		   <a  class="preview" title="{{image1.title}}" href="/gstudio/resources/images/show/{{image1.id}}"><img src="{% admin_media_prefix %}img/{{image1.ref.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail">&nbsp;&nbsp;</a>
+		  
+		 {% endfor %}
+
+	{% endif %}
+	{% endif %}       
+
+	{% if key == 'ImgCollection' %}
+               {% if value %}
+               <h2><b>Image Collections:</b></h2>
+	        {% include "gstudio/searchDetail.html" %}
+	       {% endif %}     
+	{% endif %}	
+	       
+	{% if key == 'Document' %}
+              {% if value %}
+               <h2><b>Document:</b></h2>
+	        {% include "gstudio/searchDetail.html" %}
+	       {% endif %}     
+	{% endif %}	
+
+     {% if key == 'DocCollection' %}
+               {% if value %}
+               <h2><b>Document Collections:</b></h2>
+	        {% include "gstudio/searchDetail.html" %}
+	       {% endif %}     
+	{% endif %}	
+
+	{% if key == 'Video' %}
+               {% if value %}
+               <h2><b>Videos</b></h2>
+	       {% for video in value %}
+	       <a href="/gstudio/resources/videos/show/{{video.id}}/">
+		 <img src="http://wetube.gnowledge.org/{{video.slug}}/icon128.jpg" alt="{{ video.title }}" style="border-radius: 10px 10px 10px 10px;" title="{{ video.title }}">
+	       </a>
+	       {% endfor %}
+	       {% endif %}     
+	{% endif %}
+
+	{% if key == 'Page' %}
+               {% if value %}
+               <h2><b>Pages</b></h2>
+	        {% include "gstudio/searchDetail.html" %}
+	       {% endif %}     
+	{% endif %}	     
+
+	{% if key == 'Collection' %}
+               {% if value %}
+               <h2><b>Page Collections:</b></h2>
+	       {% include "gstudio/searchDetail.html" %}
+	       {% endif %}     
+	{% endif %}
+	     
+
+{% empty %}
+<p class="notice">{% trans "Nothing found." %}</p>
+{% endfor %}
+
+</div>
 {% endblock %}

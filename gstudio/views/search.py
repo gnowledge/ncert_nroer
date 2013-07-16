@@ -66,28 +66,108 @@
 """Views for Gstudio nodetypes search"""
 from django.utils.translation import ugettext as _
 from django.views.generic.list_detail import object_list
-
 from gstudio.models import Nodetype
 from gstudio.settings import PAGINATION
 
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from gstudio.models import *
+from gstudio.methods import *
 
 def nodetype_search(request):
     """Search nodetypes matching with a pattern"""
     error = None
     pattern = None
+    nodetypes_dic = ""
     nodetypes = Nodetype.published.none()
 
     if request.GET:
         pattern = request.GET.get('pattern', '')
+	print "length of patter:",len(pattern)
         if len(pattern) < 3:
+	    print "inside len if"	
             error = _('The pattern is too short')
+	    print error	
         else:
-            nodetypes = Nodetype.published.search(pattern)
+            nodetypes_dic =GetSearchdic(pattern)
     else:
         error = _('No pattern to search found')
 
-    return object_list(request, queryset=nodetypes,
-                       paginate_by=PAGINATION,
-                       template_name='gstudio/nodetype_search.html',
-                       extra_context={'error': error,
-                                      'pattern': pattern})
+    variables = RequestContext(request,{"object_dic":nodetypes_dic,'error': error,'pattern': pattern})
+    print "error-",error,pattern	
+    template  =	'gstudio/nodetype_search.html'
+    return render_to_response(template, variables)  			    
+    # return object_list(request, queryset=nodetypes,
+    #                    paginate_by=PAGINATION,
+    #                    template_name='gstudio/nodetype_search.html',
+    #                    extra_context={'error': error,
+    #                                   'pattern': pattern})
+	
+
+
+def GetSearchdic(pattern):
+	a=Nodetype.published.search(pattern).exclude(title__icontains="page box of").exclude(title__icontains="message box of")
+	lstimg=[]
+	lstvid=[]
+	lstpg=[]
+	lstdoc=[]
+	lstoth=[]
+	lstcol=[]
+	lstimgcol=[]
+	lstdoccol=[]
+	dic={}
+	for each in a:
+	   if 'type' not in each.reftype:	
+                obj=each.ref.objecttypes.all()
+                if obj:	
+                     	if(obj[0].title=="Image"):
+                            	lstimg.append(each)
+                     	elif(obj[0].title=="Document"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Audio"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Graphics"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Multimedia"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Presentation"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="PDF"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Spreadsheet"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Html"):
+                              	lstdoc.append(each)
+                     	elif(obj[0].title=="Video"):            
+                               	lstvid.append(each)
+		     	else:
+			       	lstoth.append(each)	
+                else:
+		   check=System.objects.filter(id=each.id)
+		   if check:			                  
+                   	obj=each.ref.system.systemtypes.all()
+		   	if obj:	
+		      		if(len(obj)>1):
+					obj.exclude(title__icontains="Wikipage")
+					if(obj[0].title=="Collection"):
+                        	       		lstcol.append(each)
+				else:
+                     			if(obj[0].title=="Wikipage"):
+                        		      	lstpg.append(each)
+					elif(obj[0].title=="Imagecollection"):
+                        		       	lstimgcol.append(each)
+					elif(obj[0].title=="Documentcollection"):
+                        		      	lstdoccol.append(each)
+		     			else:
+					      	lstoth.append(each)
+	dic["Image"]=lstimg
+	dic["Document"]=lstdoc
+	dic["Page"]=lstpg
+	dic["Video"]=lstvid
+	dic["others"]=lstoth
+	dic["Collection"]=lstcol
+	dic["DocCollection"]=lstdoccol
+	dic["ImgCollection"]=lstimgcol
+        return dic         
