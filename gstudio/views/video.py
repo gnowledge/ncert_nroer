@@ -30,6 +30,8 @@ from django.contrib.auth import authenticate
 from django.template.defaultfilters import slugify
 import hashlib
 import threading
+from tagging.models import Tag, TaggedItem
+
 report = "true"
 global md5_checksum
 md5_checksum = ""
@@ -516,13 +518,26 @@ def show(request,videoid):
 	gbobject = Gbobject.objects.get(id=videoid)
 	relation = ""
 	if gbobject.get_relations():
-		if gbobject.get_relations()['is_favourite_of']:
+		if 'is_favourite_of' in gbobject.get_relations():
 			rel = gbobject.get_relations()['is_favourite_of'][0]
 			print rel
 			reluser = rel._left_subject_cache.title
 			if str(reluser) == str(request.user)+str("video"):
 				relation = "rel"
-	vars=RequestContext(request,{'video':gbobject,'relation':relation})
+
+	tag = Tag.objects.get_for_object(gbobject)
+	otherRelatedVideo = []
+	for each in tag:
+	    for each1 in each.items.all():
+	        tagItem = each1.object
+	        check  = tagItem.objecttypes.all()
+	        if check.filter(title__contains="Video"):
+	            if not tagItem.id == gbobject.id:
+	                dictOfObject = {}
+	                dictOfObject= {"id":tagItem.id,"title":tagItem.title,"slug":tagItem.slug}
+			otherRelatedVideo.append(dictOfObject)
+	
+	vars=RequestContext(request,{'video':gbobject,'relation':relation,'otherRelatedVideo':otherRelatedVideo})
 	template="gstudio/transcript.html"
 	return render_to_response(template,vars)
 

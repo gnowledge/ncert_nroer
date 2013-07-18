@@ -1,5 +1,5 @@
 
- $.noConflict();
+
    var isWikipage=false;
    var editWikipage=false;
    var objid;
@@ -47,8 +47,10 @@ function moveDown() {
 
     
   jQuery(document).ready(function($) {
-        $('#btnUp').click(moveUp);
-     	 $('#btnDown').click(moveDown);
+//        $('#btnUp').click(moveUp);
+	    $(document).on('click','#btnUp',moveUp);
+//     	 $('#btnDown').click(moveDown);
+	    $(document).on('click','#btnDown',moveDown);
         $("#addcontent").one("click",function(){
  	
 	   isSection=true;
@@ -94,7 +96,11 @@ function moveDown() {
 
 
 	});
-        $("#cancel").one("click",function() {
+//        $("#cancel").one("click",function() {
+    $(document).on('click','#cancel',function(){
+            $("#coll").show();
+            $(".addtodrawer").css({"display":""});
+
 	    $("#collection").hide();
 	});
       $(".editseccontent").one("click",function(){
@@ -166,7 +172,8 @@ function moveDown() {
 	   $(".chkbox").hide();
 	   $(".deletesec").hide();
        });
-       $(".editpagecontent").one("click",function(){
+//      $(".editpagecontent").live("click",function(){
+	    $(document).on('click','.editpagecontent',function(){
 	    $(this).replaceWith('<textarea id="gnoweditor" style="visibility:hidden;width:450px"></textarea>');
 	    editWikipage=true;
       	    $("#chart").hide();
@@ -205,6 +212,15 @@ function moveDown() {
 	  $("#collection").show();
 	 
        });
+        $(".addtoimgdrawer").click(function(){
+          $("#imagecollections").css({"position":"absolute","margin-top":"285px"})
+          $("#imagediv").css({"position":"relative","margin-top":"335px"})
+          $(".addtoimgdrawer").hide();
+          var getdrawer=$("#drawer").val();
+          $("#collectionimg").show();
+
+      });
+
 
 
       $("#resetdrawer").click(function(){
@@ -212,7 +228,8 @@ function moveDown() {
       });
 
      
-        $('#btnRight').click(function(e) {
+      //  $('#btnRight').click(function(e) {
+    $(document).on('click','#btnRight',function(){
         var selectedOpts = $('#lstBox1 option:selected');
         if (selectedOpts.length == 0) {
             alert("Nothing to move.");
@@ -223,7 +240,8 @@ function moveDown() {
         $(selectedOpts).remove();
         e.preventDefault();
     });
-      $('#btnLeft').click(function(e) {
+//      $('#btnLeft').click(function(e) {
+    $(document).on('click','#btnLeft',function(){
         var selectedOpts = $('#lstBox2 option:selected');
         if (selectedOpts.length == 0) {
             alert("Nothing to move.");
@@ -236,7 +254,8 @@ function moveDown() {
     });
 
    	
-       $(".savepagecontent").one("click",function(){
+//       $(".savepagecontent").one("click",function(){
+    $(document).on('click','.savepagecontent',function(){
 	   var org_data = $("#gnoweditor").val();
 	   var elmts = document.getElementsByClassName("reptext");
 	   var encode_data = encodeURIComponent(org_data);
