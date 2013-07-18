@@ -18,6 +18,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.template.loader import get_template
+from django.template import Context
 from demo.settings import *
 from gstudio.models import *
 from objectapp.models import *
@@ -25,11 +27,57 @@ from gstudio.methods import *
 import hashlib
 from django.template.defaultfilters import slugify
 import os
+import mimetypes
 
 report = "true"
+def createcolln(request):
+    listcl=request.GET["listofcollns"]
+    print "listdoccl=",listcl
+    coltitle=request.GET["coltitle"]
+    editcoln=request.GET["editcoln"]
+    colid=request.GET["colid"]
+    if editcoln=='1':
+        print "inside doceditcol"
+        col=System.objects.get(id=colid)
+        col.gbobject_set.clear()
+        i=0
+        if listcl != "null":
+                listcl=listcl+","
+                listcl=eval(listcl)
+                while i < len(listcl):
+                        objs=Gbobject.objects.get(id=listcl[i])
+                        print "objs",objs
+                        col.gbobject_set.add(objs)
+                        i=i+1
+        col.save()
+        p=col.gbobject_set.all()
+        print "complelst",p
+        t=get_template('gstudio/estngdoccollns.html')
+        html = t.render(Context({'doc':col,'user':request.user}))
+        return HttpResponse(html)
+    else:
+        syscol=Systemtype.objects.get(title='Documentcollection')
+        col=System()
+        col.title=coltitle
+        col.save()
+        col.systemtypes.add(syscol)
+        t='gstudio/doccollns.html'
+        if listcl != "" and listcl != "null":
+                i=0
+                listcl=listcl+","
+                listcl=eval(listcl)
+                while i < len(listcl):
+                        objs=Gbobject.objects.get(id=listcl[i])
+                        col.gbobject_set.add(objs)
+                        i=i+1
+                col.save()
+        return render_to_response(t,RequestContext(request))
+
+
 def docu(request):
 	p=Objecttype.objects.get(title="Document")
 	q=p.get_nbh['contains_members']
+        documents=getdocuments()
 	if request.method=="POST":
 		title = request.POST.get("title1","")
 		user = request.POST.get("user","")
@@ -57,7 +105,7 @@ def docu(request):
 					    d=each.right_subject_id
 					    x=Gbobject.objects.get(id=d)
 					    list1.append(x)
-			variables = RequestContext(request,{'documents':list1,'fav':fav})
+			variables = RequestContext(request,{'documents':list1,'fav':fav,'test1':documents})
 			template = "gstudio/docu.html"
 			return render_to_response(template, variables)	
 	
@@ -69,7 +117,7 @@ def docu(request):
 			os.system("rm -f "+MEDIA_ROOTNEW+'/'+ti)
 			p=Objecttype.objects.get(title="Document")
 			q=p.get_nbh['contains_members']
-			vars=RequestContext(request,{'documents':q,'val':sdoc})
+			vars=RequestContext(request,{'documents':q,'val':sdoc,'test1':documents})
 			template="gstudio/docu.html"
 			return render_to_response(template, vars)
 		if sub3 != "":
@@ -78,14 +126,14 @@ def docu(request):
 				vido_new = vidon.get_nbh['contains_members']
 				vido = vido_new.filter(title__contains=sdoc)
 				vido2 = vido.order_by(sub3)
-				variables = RequestContext(request,{'documents':vido2,'val':sdoc})
+				variables = RequestContext(request,{'documents':vido2,'val':sdoc,'test1':documents})
 				template = "gstudio/docu.html"
 				return render_to_response(template, variables)
 			else:
 				vidon = Objecttype.objects.get(title="Document")
 				vido_new = vidon.get_nbh['contains_members']
 				vido=vido_new.order_by(sub3)
-				variables = RequestContext(request,{'documents':vido,'val':sdoc})
+				variables = RequestContext(request,{'documents':vido,'val':sdoc,'test1':documents})
 				template = "gstudio/docu.html"
 				return render_to_response(template, variables)
 	
@@ -110,12 +158,12 @@ def docu(request):
 					reportid = imageeachid
 				else:
 					create_object(f,user,content,str(request.user),title)
-			vars=RequestContext(request,{'documents':q,'reportid':reportid})
+			vars=RequestContext(request,{'documents':q,'reportid':reportid,'test1':documents})
 			template="gstudio/docu.html"
 			return render_to_response(template, vars)	
 	s=Nodetype.objects.get(title="Document")
 #	t=s.get_nbh['contains_members']
-	vars=RequestContext(request,{'documents':q,'docomment':s})
+	vars=RequestContext(request,{'documents':q,'docomment':s,'test1':documents})
 	template="gstudio/docu.html"
 	return render_to_response(template, vars)
 
@@ -173,8 +221,26 @@ def create_object(file,log,content,usr,title):
 	s=Author.objects.get(username=log)
 	p.authors.add(s)
 	p.save()
-	q=Objecttype.objects.get(title="Document")
-	p.objecttypes.add(Objecttype.objects.get(id=q.id))
+	filetype = mimetypes.guess_type(MEDIA_ROOTNEW2+"/"+str(slugfile))[0]
+	if not filetype == None:
+		if "audio" in filetype:
+			p.objecttypes.add(Objecttype.objects.get(title="Audio"))
+		elif "image" in filetype:                              
+			p.objecttypes.add(Objecttype.objects.get(title="Graphics"))
+	        elif "video" in filetype or "flash" in filetype:                              
+			p.objecttypes.add(Objecttype.objects.get(title="Multimedia"))
+         	elif "presentation"  in filetype or "powerpoint" in filetype:                              
+			p.objecttypes.add(Objecttype.objects.get(title="Presentation"))
+         	elif "pdf"  in filetype:                              
+			p.objecttypes.add(Objecttype.objects.get(title="PDF"))
+         	elif "spreadsheet"  in filetype:                              
+			p.objecttypes.add(Objecttype.objects.get(title="Spreadsheet"))
+         	elif "html"  in filetype:                              
+			p.objecttypes.add(Objecttype.objects.get(title="Html"))
+	        else :
+			p.objecttypes.add(Objecttype.objects.get(title="Document"))
+	else:
+		p.objecttypes.add(Objecttype.objects.get(title="Document"))							
 	p.save()
 	new_ob = content
 	ext='.org'
@@ -268,7 +334,7 @@ def show(request,documentid):
 	gbobject = Gbobject.objects.get(id=documentid)
 	relation = ""
 	if gbobject.get_relations():
-		if gbobject.get_relations()['is_favourite_of']:
+		if 'is_favourite_of' in gbobject.get_relations():
 			rel = gbobject.get_relations()['is_favourite_of'][0]
 			print rel
 			reluser = rel._left_subject_cache.title

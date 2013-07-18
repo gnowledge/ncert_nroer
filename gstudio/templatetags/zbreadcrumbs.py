@@ -1,5 +1,6 @@
 
 
+
 # Copyright (c) 2011,  2012 Free Software Foundation
 
 #     This program is free software: you can redistribute it and/or modify
@@ -103,9 +104,53 @@ def day_crumb(creation_date):
     day = creation_date.strftime('%d')
     return Crumb(day, reverse('gstudio_nodetype_archive_day',
                               args=[year, month, day]))
+def get_title(obj):
+   """ returns object's objecttype and url """
+   test = ""
+   classname = obj.__class__.__name__
+   if classname == "System":
+   	test = [each.title for each in obj.systemtypes.all()]
+   	if "Wikipage" in test:
+	     return "Pages","/gstudio/user/wikipage"
+   	if "Meeting" in test:
+	     return "Loom","/gstudio/user/"
+   else:
+        test = [each.title for each in obj.objecttypes.all()]
+   	if "Image" in test:
+	     return "Images","/gstudio/resources/images"
+   	elif "Document" in test:
+	     return "Documents","/gstudio/resources/documents"
+   	elif "Video" in test:
+	     return "Videos","/gstudio/resources/videos"
+   	elif "Audio" in test:
+	     return "Documents","/gstudio/resources/documents"
+   	elif "Graphics" in test:
+	     return "Documents","/gstudio/resources/documents"
+   	elif "Multimedia" in test:
+	     return "Documents","/gstudio/resources/documents"
+	elif "Presentation" in test:
+	     return "Documents","/gstudio/resources/documents"
+   	elif "PDF" in test:
+	     return "Documents","/gstudio/resources/documents"
+   	elif "Spreadsheet" in test:
+	     return "Documents","/gstudio/resources/documents"
+	elif "Html" in test:
+	     return "Documents","/gstudio/resources/documents"
+	elif "Interactivemedia" in test:
+	     return "Documents","/gstudio/resources/documents"
+        else:
+	     test1 = [each.title for each in obj.system.systemtypes.all() ]	          	
+       	     if "Imagecollection" in test1:
+	         return "Images","/gstudio/resources/images"
+   	     elif "Documentcollection" in test1:
+	          return "Documents","/gstudio/resources/documents"
+   	     elif "Videocollection" in test1:
+	          return "Video","/gstudio/resources/videos"  	
 
+    
 
 GSTUDIO_ROOT_URL = lambda: reverse('gstudio_nodetype_archive_index')
+
 
 MODEL_BREADCRUMBS = {'Tag': lambda x: [Crumb(_('Tags'),
                                              reverse('gstudio_tag_list')),
@@ -120,7 +165,11 @@ MODEL_BREADCRUMBS = {'Tag': lambda x: [Crumb(_('Tags'),
                      'Nodetype': lambda x: [year_crumb(x.creation_date),
                                          month_crumb(x.creation_date),
                                          day_crumb(x.creation_date),
-                                         Crumb(x.title)]}
+                                         Crumb(x.title)],
+                     'System': lambda x: [Crumb(get_title(x)[0],get_title(x)[1]),
+                                          Crumb(x.title)],
+                     'Gbobject': lambda x: [Crumb(get_title(x)[0],get_title(x)[1]),
+                                          Crumb(x.title)]}
 
 DATE_REGEXP = re.compile(
     r'.*(?P<year>\d{4})/(?P<month>\d{2})?/(?P<day>\d{2})?.*')
@@ -132,10 +181,11 @@ def retrieve_breadcrumbs(path, model_instance, root_name='gstudio'):
     breadcrumbs = []
 
     if root_name:
-        breadcrumbs.append(Crumb(root_name, GSTUDIO_ROOT_URL()))
+        breadcrumbs.append(Crumb("Home", "/home"))
 
     if model_instance is not None:
         key = model_instance.__class__.__name__
+	print key,model_instance,"dsfds"
         if key in MODEL_BREADCRUMBS:
             breadcrumbs.extend(MODEL_BREADCRUMBS[key](model_instance))
             return breadcrumbs

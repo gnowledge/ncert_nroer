@@ -24,7 +24,7 @@ $.ajax({
 
 $(window).load(function() {
 	getVideo();
-      $("#content").css({
+$("#content").css({
     "width": "100%",});});
 $(window).load(function() {
  $("#chart").hide();});
@@ -84,7 +84,7 @@ margin-bottom:6%;
 }
 #divpost
 {
-position:absolute;
+position:relative;
 margin-left:52%;
 }
 #showingprocess
@@ -232,7 +232,7 @@ document.getElementById('headvideo').style.visibility="visible";
 	<input type="hidden" name="vidid" value={{video.id}}>
 </form>
 <td>
- {% if not forloop.last and forloop.counter|divisibleby:"8" %}
+ {% if not forloop.last and forloop.counter|divisibleby:"5" %}
 </tr>
 {% endif %}
 {% endfor %}
