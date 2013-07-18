@@ -28,11 +28,110 @@ import shutil
 import codecs
 from gstudio.models import *
 from objectapp.models import *
+from gstudio.methods import *
 rlist={}
 import os
 from settings import PYSCRIPT_URL_GSTUDIO
 from demo.settings import FILE_URL,PYSCRIPT_URL_GSTUDIO,HTML_FILE_URL
 from gstudio.methods import sendMail_RegisterUser,sendMail_NonMember
+import unicodedata
+
+def Deldoccolln(request):
+    try:
+        obid=request.GET["obid"]
+        a=System.objects.get(id=obid)
+        a.delete()
+        listcolls={}
+        syst=Systemtype.objects.get(title='Documentcollection')
+        a=syst.member_systems.all()
+        for each in a:
+            listcolls[each.id]=each.title
+        listcolls={}
+    except:
+        return render_to_response("gstudio/doccollns.html",{'user':request.user})
+    return render_to_response("gstudio/doccollns.html",{'user':request.user})
+
+
+def Delimgcolln(request):
+    try:
+        obid=request.GET["obid"]
+        a=System.objects.get(id=obid)
+        a.delete()
+        listcolls={}
+        syst=Systemtype.objects.get(title='Documentcollection')
+        a=syst.member_systems.all()
+        for each in a:
+            listcolls[each.id]=each.title
+        listcolls={}
+    except:
+        return render_to_response("gstudio/imagecollns.html",{'user':request.user})
+    return render_to_response("gstudio/imagecollns.html",{'user':request.user})
+
+def getobjs(request):
+    dic={}
+    tosearch=""
+    rt=request.GET["reltype"]
+    oth=request.GET["otherrelns"]
+    print "rt=",rt,"oth",oth
+    allobs=[]
+    rttitle=Relationtype.objects.get(id=rt).title
+    allobs=""
+    if oth == "0":
+        if rttitle=='has_video':
+            tosearch='Video'
+        elif rttitle=='has_image':
+            tosearch='Image'
+        elif rttitle=='has_document':
+            tosearch='Document'
+        elif rttitle=='has_html':
+            tosearch='Html'
+        elif rttitle=='has_spreadsheet':
+            tosearch='Spreadsheet'
+        elif rttitle=='has_pdf':
+            tosearch='PDF'
+        elif rttitle=='has_presentation':
+            tosearch='Presentation'
+        elif rttitle=='has_multimedia':
+            tosearch='Multimedia'
+        elif rttitle=='has_graphics':
+            tosearch='Graphics'
+        elif rttitle=='has_audio':
+            tosearch='Audio'
+        else:
+            tosearch=""
+        if tosearch:
+            ob=Objecttype.objects.get(title=tosearch)
+            allobs=ob.get_nbh['contains_members']
+            allobs=allobs.exclude(title__icontains='page box of').exclude(title__icontains='message box of')
+
+    else:
+        wiki=Systemtype.objects.get(title='Wikipage')
+        allobs=wiki.member_systems.all()
+
+    # vid=Nodetype.objects.get(title='Video')                                                                                               
+    # img=Nodetype.objects.get(title='Image')                                                                                               
+    # doc=Nodetype.objects.get(title='Document')                                                                                            
+    # col=Systemtype.objects.get(title='Collection')                                                                                         
+    # wiki=Systemtype.objects.get(title='Wikipage')                                                                                          
+    # meet=Systemtype.objects.get(title='Meeting')                                                                                              
+    if allobs:
+        for each in allobs:
+            dic[unicodedata.normalize('NFKD', each.title).encode('ascii','ignore')+"-"+str(each.id)]=each.id
+
+        # if not ('page box of' in each.title or 'message box of' in each.title):
+        #         print "tosearch",tosearch,"obtypes",obtypes
+        #         if tosearch in obtypes:
+        #             print "intype"
+        #             obtype=rttitle
+        #             dic[unicodedata.normalize('NFKD', each.title).encode('ascii','ignore')+"-"+obtype+str(each.id)]=each.id
+        #         else:
+        #             print "outtype"
+        #             obtype="textdocument_types"
+
+        # except:
+        #     pass
+    jdictionary = json.dumps(dic)
+    return HttpResponse(jdictionary)
 
 
 def AjaxAttribute(request):
@@ -723,6 +822,130 @@ def ajaxloadGbobjectsHome(request):
 	     
     variables = RequestContext(request, {"gbobjects":gbobjects})
     template = "gstudio/tags/loadGbobjectsHome.html"
+    return render_to_response(template,variables)
+
+
+def ajaxgetCollections(request):
+    objectid= ""
+    resultDict = {}
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nidObjectGet = NID.objects.get(id=objectid)
+	nidObjectSystem = nidObjectGet.ref.system
+	for each in nidObjectSystem.gbobject_set.all():
+	    resultDict[each.id]=each.title
+    else :
+        return HttpResponse("failed")
+					
+    return HttpResponse(json.dumps(resultDict))
+                
+                
+def ajaxgetConceptPageText(request):
+    nidObject=""
+    objectid= ""
+    resultDict = {}
+    nidObjectSystem = ""
+    collection=False
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nidObjectGet = NID.objects.get(id=objectid)
+	nidObjectSystem = nidObjectGet.ref.system
+	collsys=nidObjectSystem.systemtypes.all()
+        iscoll=collsys.filter(title="Collection")
+        if iscoll:
+            collection=True
+	Section = nidObjectSystem.system_set.all()[0].gbobject_set.all()
+	ot=nidObjectSystem.gbobject
+	test1=get_pdrawer()
+
+    else :
+        return HttpResponse("failed")
+    variables = RequestContext(request, {"page_ob":nidObjectSystem,"collection":collection,'ot' : ot,'section' : Section,'object':nidObjectSystem,'test1':test1})
+    template = "metadashboard/test2.html"
+    return render_to_response(template,variables)
+
+def ajaxgetConceptPageResources(request):
+    nidObject=""
+    objectid= ""
+    resultDict = {}
+    nidObjectSystem = ""
+    collection=False
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nidObjectGet = NID.objects.get(id=objectid)
+	nidObjectSystem = nidObjectGet.ref.system
+	collsys=nidObjectSystem.systemtypes.all()
+        iscoll=collsys.filter(title="Collection")
+        if iscoll:
+            collection=True
+	Section = nidObjectSystem.system_set.all()[0].gbobject_set.all()
+	ot=nidObjectSystem.gbobject
+	test1=get_pdrawer()
+
+    else :
+        return HttpResponse("failed")
+    variables = RequestContext(request, {"page_ob":nidObjectSystem,"collection":collection,'ot' : ot,'section' : Section,'object':nidObjectSystem,'test1':test1})
+    template = "metadashboard/wikiResources.html"
+    return render_to_response(template,variables)
+
+def ajaxgetConceptPageComments(request):
+    nidObject=""
+    objectid= ""
+    resultDict = {}
+    nidObjectSystem = ""
+    collection=False
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nidObjectGet = NID.objects.get(id=objectid)
+	nidObjectSystem = nidObjectGet.ref.system
+	collsys=nidObjectSystem.systemtypes.all()
+        iscoll=collsys.filter(title="Collection")
+        if iscoll:
+            collection=True
+	Section = nidObjectSystem.system_set.all()[0].gbobject_set.all()
+	ot=nidObjectSystem.gbobject
+	test1=get_pdrawer()
+
+    else :
+        return HttpResponse("failed")
+    variables = RequestContext(request, {"page_ob":nidObjectSystem,"collection":collection,'ot' : ot,'section' : Section,'object':nidObjectSystem,'test1':test1})
+    template = "metadashboard/wikicomment.html"
+    return render_to_response(template,variables)
+                
+        
+def ajaxgetConceptPageGraphText(request):
+    nidObject=""
+    objectid= ""
+    resultDict = {}
+    nidObjectSystem = ""
+    collection=False
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nbhdata=get_nbh_of_nbh(objectid)
+    else :
+        return HttpResponse("failed")
+    variables = RequestContext(request, {'nbhdata':nbhdata})
+    template = "metadashboard/graphText.html"
     return render_to_response(template,variables)
                     
                 
