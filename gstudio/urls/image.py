@@ -30,4 +30,5 @@ urlpatterns = patterns('gstudio.views.image',
                        url(r'checkpageexist/$','checkpageexist',name='checkpageexist'),
                        url(r'createwikinew/$','createwikinew',name='createwikinew'),
                        url(r'refpriorpost/$','refpriorpost',name='refpriorpost'),
+                       url(r'createcolln/$','createcolln',name='createcolln'),
                        )

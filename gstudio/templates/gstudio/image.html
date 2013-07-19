@@ -1,15 +1,74 @@
 <html>
 <body>
 {% extends "gstudio/base.html" %}
+{% load gstudio_tags %}
 {% load pagination_tags %}
 {% load adminmedia grp_tags %}
 {% load i18n %}
  {% block title %}Images{% endblock %}
 {% block content %}
-<script src="/static/gstudio/js/jquery.form.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+<script src="/static/gstudio/js/jquery.form.js" type="text/javascript"></script>
 <script type="text/javascript" >
+$(document).on('click',"#lstvalue",function(){
+        
+        var arr=[];
+        var arr1=[];
+        opts = lstBox2.options, len = opts.length;
+        if (len == 0){
+                   arr=[];
+                   arr1=[];
+
+        }
+        else{
+                   arr1=[];
+                   for (var i = 0; i < len; i++)
+                   {
+                           arr[i] = "'"+opts[i].value+"'";
+                           arr1[i]=opts[i].id;
+                            }
+         }
+         var abc1=arr1.join(',');
+         if (abc1){
+                            var abc=abc1;
+
+         }
+         else{
+                           var abc=null;
+         }
+
+
+       //  var collection= document.getElementById("iscollection").value;
+         var listofcollns=abc
+         var colid=""
+         var coltitle=document.getElementById("imgcolname").value;
+         if (coltitle == ""){alert("Please type collection name");
+                      $("#imgcolname").focus();}
+ else{
+         $("#collectionimg").hide();
+
+				       $(".addtoimgdrawer").css({"display":""});
+				       $("#imagecollections").css({"position":"absolute","margin-top":"-5px"})
+				       $("#imagediv").css({"position":"relative","margin-top":"60px"})
+
+				          $("#coll").show();
+				       $("#lstBox2").empty();
+                                 $("#imgcolname").val("");
+
+                             $.ajax({
+                              url: '/gstudio/resources/images/createcolln/',
+                              data:{'listofcollns':abc,'coltitle':coltitle,'editcoln':0,'colid':colid},
+                              success: function(data) {
+                              $("#imagecollections").html(data);
+
+                              },
+
+       });}
+
+    });
+
+
   $(function(){
           $("#mydropdown").change(function(event){
             $("option:selected", $(this)).each(function(){
@@ -23,10 +82,37 @@
           });
         });
 $(window).load(function(){
+$(".delimgcolln").click(function(){
+       $("#coll").css({"margin-top":"0px;","display":""});
+  var obid = this.id;
+  r = confirm("Please confirm delete ")
+        if (r==true)
+        {
+         $("#lstBox2").empty();
+         $("#imgcolname").val("");
+        $.ajax({
+        url: '/gstudio/ajax/deleteimgcolln/',
+ data: {obid:obid},
+beforeSend: function() {
+              $("#ajax_load_image").show();
+              $("#content").css({"opacity":"0.1",})
+                      },
+success: function(data){
+        $('#imagecollections').html(data);
+                     },
+complete: function(){
+        $("#ajax_load_image").hide();
+$("#content").css({"opacity":"",})
+                  }
+});
+}
+});
+
 var isImage=false;
 $("#content").css({"width": "100%"});});
 $(window).load(function() {
- $("#chart").hide();});			
+ $("#chart").hide();
+$("#collectionimg").hide();});
 $(window).load(function() {
  $("#graphcss").hide();
 // $(".gbobject-image").hide();
@@ -70,7 +156,7 @@ jQuery(document).ready(function($) {
 });
 </script>
 <script type="text/javascript" >
-jQuery.noConflict();
+
 jQuery(document).ready(function($) {
 $(".gbobject-image1").live({
 mouseenter: function() {
@@ -202,11 +288,106 @@ Description:&nbsp;&nbsp;<b></b>
 </div>
 {% endif %}
 </div>
-<br>
+
 {% if reportid %}
 <h2><font color="red">this image is already uploaded on this site</font></h2>
 <a href="/gstudio/resources/images/show/{{ reportid }}/"> <font size="4">to see this image click here</font></a><br/><br/><br/>
 {% endif %}
+<div id="imagecollections">
+{% get_image_collections as col %}
+{% if col %}
+<font size="4" color="black">Image Collections</font><br/>
+{% for key,value in col.items %}
+<a href="/gstudio/resources/images/show/{{key}}/">
+{{value}}</a>&nbsp;;
+{% if user.is_authenticated %}
+<a class="delimgcolln" id="{{key}}" value="{{key}}" title="delete {{value}}">
+<img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/>
+</a>
+{% endif %}
+
+
+{% endfor %}
+{% endif %}
+</div>
+<div id="coll">
+
+            {% for each in test %}
+              {% if each.system.gbobject_set.exists %}
+                    <li class="list"><abbr title="Collection"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/folder.png"><abbr> <a href={{each.get_view_object_url}}> {{each.title}}</a></li>
+                {% else %}
+                    <li class="list"><abbr title="Page"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/doc.png"></abbr><a href={{each.get_view_object_url}}> {{each.title}}</a></li>
+                    {% endif %}
+            {% endfor %}
+
+               {% if collection %}
+                 {% if user.is_authenticated %}
+
+                 <input type="button" class="addtoimgdrawer" value="Edit Collection" name="addtodrawer"/>
+                 <input type="button" class="htmlexport" value="View"/>
+                 {% endif %}
+
+                 {% else %}
+                 {% if user.is_authenticated %}
+<br/>
+  <input type="button" class="addtoimgdrawer" value="Create Collection" name="addtodrawer"/>
+
+                 {% endif %}
+
+                 {% endif %}
+</div>
+
+<div id="collectionimg" style="display:none;">
+        <b>Collection Name:</b>
+        <input type="text" id="imgcolname" value=""><br/>
+        <table  id="drawertable" >
+         <tr>
+         <td style='width:160px;'>
+                 <b>Pages:
+                  <select multiple="multiple" id='lstBox1' class="selectOptionCollection">
+                  {% for key,value in test1.items %}
+                    <option id={{key}}>{{value}}</option>
+
+                  {% endfor %}
+                   </select>
+         </td>
+         <td style='width:50px;text-align:center;vertical-align:middle;'>
+       <input type='button' id='btnUp' value ='  ^  '/><br/>
+       <input type='button' id='btnRight' value ='  >  '/><br/>
+       <input type='button' id='btnLeft' value ='  <  '/><br/>
+       <input type='button' id='btnDown' value ='  v  '/><br/>
+
+    </td>
+    <td style='width:160px;'>
+        <b>Added to Drawer: </b><br/>
+        <select multiple="multiple" name="lstb2" id='lstBox2' class="selectOptionCollection">
+          {% for each in test %}
+             <option id={{each.id}}>{{each.title}}</a></option>
+          {% endfor %}
+          </option>
+</select>
+  </td><br>
+    </tr>
+    <tr>
+    <td>
+ <input type="button"  value="Reset" id="resetdrawer"/>
+      <input type="button"  value="Submit" id="lstvalue"/>
+      <input type="button"  value="Cancel" id="cancel"/>
+
+
+ </td>
+
+</tr>
+</table>
+
+
+ <input id="drawer"   name="texttags" style="visibility:hidden">
+
+ <input type="button" id="showcollection" value="Show Drawer" style="visibility:hidden"/>
+
+</div>
+
+
  <div>
 {% if fav %}
 <h2 style="">Favourite Images</h2>

@@ -185,7 +185,6 @@ def retrieve_breadcrumbs(path, model_instance, root_name='gstudio'):
 
     if model_instance is not None:
         key = model_instance.__class__.__name__
-	print key,model_instance,"dsfds"
         if key in MODEL_BREADCRUMBS:
             breadcrumbs.extend(MODEL_BREADCRUMBS[key](model_instance))
             return breadcrumbs

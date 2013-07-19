@@ -25,6 +25,13 @@ lst1=[]
 count=0
 response_set=[]
 
+def check_collection(obid):
+    sys=System.objects.get(id=obid)
+    if 'Imagecollection' or 'Documentcollection' in sys.systemtypes.all():
+        return True
+    else:
+        return False
+
 def getdocuments():
     dicdoc={}
     docot=Objecttype.objects.get(title='Document')
