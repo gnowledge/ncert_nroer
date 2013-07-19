@@ -18,10 +18,13 @@
       $("#content").css({
     "width": "600px",});});
 $(window).load(function() {
- $("#chart").hide();});
-$(window).load(function() {
- 
- $("#graphcss").hide();   
+ $("#chart").hide();
+  $("#graphcss").hide();   
+{% if "html" in doc.objecttypes.all|slugify %}
+ $("#htmlcontent").load("/static/img/{{doc.altnames}}");
+{% endif %}
+
+
   });
 jQuery(document).ready(function($) {
     $("#editcontent").click(function(){
@@ -53,12 +56,16 @@ jQuery(document).ready(function($) {
 
 
 <br/>
-
-<h2><font id="fonttitleid" >{{doc.title}}</font></h2>
 {% if user.is_authenticated %}
+<h2><font id="fonttitleid" >{{doc.title}}</font></h2>
 {% edit_title doc.id doc.title %}
 {% endif %}
 <br/>
+{% if "html" in doc.objecttypes.all|slugify %}
+<div id="htmlcontent">
+</div>
+{% endif %}
+
 <font color = 'black'>Posted By : </font>
 {% for author in doc.authors.all %}
   <font >{{author}}</font>
