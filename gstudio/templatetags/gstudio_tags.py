@@ -50,8 +50,10 @@ from django.http import HttpResponseRedirect
 from gstudio.CNL import *
 from gstudio.methods import check_release_or_not
 import os
-from settings import STATIC_URL
+from settings import STATIC_URL,ADMIN_MEDIA_PREFIX
+import tarfile
 from gstudio.methods import *
+import contextlib
 register = Library()
 
 VECTORS = None
@@ -59,8 +61,129 @@ VECTORS_FACTORY = lambda: VectorBuilder(Nodetype.published.all(),
                                         ['title', 'excerpt', 'content'])
 CACHE_NODETYPES_RELATED = {}
 
+@contextlib.contextmanager
+def cd_change(tmp_location):
+    cd = os.getcwd()
+    os.chdir(tmp_location)
+    try:
+        yield
+    finally:
+        os.chdir(cd)
+
+@register.assignment_tag
+def get_related_images(imageid):
+    try:
+        gbobject=Gbobject.objects.get(id=imageid)
+        tag = Tag.objects.get_for_object(gbobject)
+        otherRelatedimages = []
+        for each in tag:
+            print "alliteS",each.items.all()
+            for each1 in each.items.all():
+                tagItem = each1.object
+                print "tagitem",tagItem
+                check  = tagItem.objecttypes.all()
+                if check.filter(title__contains="Image"):
+                    if not tagItem.id == gbobject.id:
+                        print tagItem,"tagit"
+                        otherRelatedimages.append(tagItem)
+    except:
+        pass
+    return otherRelatedimages
+
+@register.assignment_tag
+def get_doc_download(docid):
+    try:
+        sys=System.objects.get(id=docid)
+        filn="static/img/" + sys.title + ".tar.gz"
+        os.system("rm -rf /tmp/nroer/docdownload/")
+        os.system("mkdir /tmp/nroer/docdownload/")
+        strn="rm "+filn
+        print "delest",strn
+        os.system(strn)
+        tar=tarfile.open(filn,"w:gz")
+        mems=get_gbobjects(docid)
+        print "mems",mems
+        for each in mems:
+            fna="img/"+str(each.altnames)
+            fname=os.path.join("static/",fna)
+            strn="cp "+ fname +" /tmp/nroer/docdownload/"
+            print strn,"cpystr"
+            os.system(strn)
+        with cd_change("/tmp/nroer/docdownload/"):
+            for files in os.listdir('.'):
+                tar.add(files)
+        tar.close()
+        print "filname",filn
+    except:
+        pass
+    return filn
+
+@register.inclusion_tag('gstudio/editdoccollns.html')
+def show_edit_doc_collection(doccolid,user):
+    template='gstudio/editdoccollns.html'
+    print template,"t"
+    listcolls={}
+    syst=Objecttype.objects.get(title='Document')
+    a=syst.get_nbh['contains_members']
+    for each in a:
+        listcolls[each.id]=each.title
+    sys=System.objects.get(id=doccolid)
+    testlst=get_gbobjects(doccolid)
+    return {'template':template,'test':testlst,'user':user,'test1':listcolls,'doc':sys}
+
+@register.inclusion_tag('gstudio/editcollection.html')
+def show_edit_collection(imgcolid,user):
+    template='gstudio/editcollection.html'
+    listcolls={}
+    syst=Objecttype.objects.get(title='Image')
+    a=syst.get_nbh['contains_members']
+    for each in a:
+        listcolls[each.id]=each.title
+    sys=System.objects.get(id=imgcolid)
+    testlst=get_gbobjects(imgcolid)
+    print "editlist",testlst
+    return {'template':template,'test':testlst,'user':user,'test1':listcolls,'image':sys}
+
+@register.assignment_tag
+def check_if_collection(sysid):
+    a=Systemtype.objects.get(title='Imagecollection')
+    b=Systemtype.objects.get(title='Documentcollection')
+    fl=0
+    for each in a.member_systems.all():
+        if each.id == sysid:
+            fl=1
+    for each1 in b.member_systems.all():
+        if each1.id == sysid:
+            fl=1
+    return fl
+@register.assignment_tag
+def show_image_collections(imgcolid):
+    listcol=get_gbobjects(imgcolid)
+    return listcol
+
+@register.assignment_tag
+def show_doc_collections(doccolid):
+    listcol=get_gbobjects(doccolid)
+    return listcol
+@register.assignment_tag
+def get_document_collections():
+    print "inside getdoccoll"
+    listcolls={}
+    syst=Systemtype.objects.get(title='Documentcollection')
+    a=syst.member_systems.all()
+    for each in a:
+        listcolls[each.id]=each.title
+    return listcolls
 
 
+@register.assignment_tag
+def get_image_collections():
+    listcolls={}
+    syst=Systemtype.objects.get(title='Imagecollection')
+    a=syst.member_systems.all()
+    for each in a:
+        listcolls[each.id]=each.title
+    return listcolls
 
 
 @register.inclusion_tag('gstudio/tags/dummy.html')
@@ -316,17 +439,18 @@ def gstudio_pagination(context, page, begin_pages=3, end_pages=3,
 
 
 @register.inclusion_tag('gstudio/tags/dummy.html', takes_context=True)
-def gstudio_breadcrumbs(context, separator='/', root_name='Nodetype',
+def gstudio_breadcrumbs(context, separator='>>', root_name='Home',
                        template='gstudio/tags/breadcrumbs.html',):
     """Return a breadcrumb for the application"""
     path = context['request'].path
     page_object = context.get('object') or context.get('metatype') or \
-                  context.get('tag') or context.get('author')
+                  context.get('tag') or context.get('author') or context.get('image') or context.get('video')or context.get('doc') or context.get('meet_ob')
     breadcrumbs = retrieve_breadcrumbs(path, page_object, root_name)
-
+    print breadcrumbs,"brcrbs",path,page_object,root_name
     return {'template': template,
             'separator': separator,
             'breadcrumbs': breadcrumbs}
+
 
 @register.simple_tag
 def get_gravatar(email, size=80, rating='g', default=None):

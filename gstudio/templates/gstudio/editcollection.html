@@ -1,0 +1,130 @@
+{% load gstudio_tags %}
+
+<script type="text/javascript" >
+
+var length = 0;
+$(document).on('click',"#lstvalue",function(){
+        $(".addtodrawer").show()
+        var arr=[];
+        var arr1=[];
+        $("#collection").hide();
+        opts = lstBox2.options, len = opts.length;
+        if (len == 0){
+                   arr=[];
+                   arr1=[];
+      }
+        else{
+                   arr1=[];
+                   for (var i = 0; i < len; i++)
+                   {
+                           arr[i] = "'"+opts[i].value+"'";
+                           arr1[i]=opts[i].id;
+                            }
+         }
+         var abc1=arr1.join(',');
+         if (abc1){
+                            var abc=abc1;
+
+         }
+         else{
+                           var abc=null;
+         }
+
+         alert(abc);
+         var listofcollns=abc
+         coltitle="{{image.title}}"
+         colid="{{image.id}}"
+                              $.ajax({
+                              url: '/gstudio/resources/images/createcolln/',
+                              data:{'listofcollns':abc,'coltitle':coltitle,'editcoln':1,'colid':colid},
+                              
+                              success: function(data) {
+                              $("#imgcolln").html(data);
+                             },
+			     
+
+		  
+       });
+     
+});
+
+    
+
+
+
+
+
+       // $(document).ready(function(){
+       // $( "#drawer{{page_ob.id}}" ).autocomplete({
+       // source: pagedrawer
+       // });
+      //  });
+</script>
+
+
+
+<br/>
+
+<div id="coll">
+
+                {% if user.is_authenticated %}
+
+                 <input type="button" class="addtodrawer" value="Edit Collection" name="addtodrawer"/>
+
+                 {% endif %}
+
+
+</div>
+<div id="coll1">
+
+</div>
+
+
+<div id="collection" style="display:none;">
+
+        <table style="width:370px" id="drawertable" width="500px">
+         <tr>
+<td style='width:160px;'>
+                 <b>Pages: <input type="text" id="collectionsearch" value=""></b><br/>
+                  <select multiple="multiple" id='lstBox1' >
+                  {% for key,value in test1.items %}
+                    <option id={{key}}>{{value}}</option>
+
+                  {% endfor %}
+
+                </select>
+         </td>
+         <td style='width:50px;text-align:center;vertical-align:middle;'>
+       <input type='button' id='btnUp' value ='  ^  '/><br/>
+       <input type='button' id='btnRight' value ='  >  '/><br/>
+       <input type='button' id='btnLeft' value ='  <  '/><br/>
+       <input type='button' id='btnDown' value ='  v  '/><br/>
+
+    </td>
+    <td style='width:160px;'>
+        <b>Added to Drawer: </b><br/>
+<select multiple="multiple" name="lstb2" id='lstBox2'>
+{{test}}
+          {% for each in test %}
+             {{each.id}}id {{each.title}}
+             <option id={{each.id}}>{{each.title}}</a></option>
+          {% endfor %}
+          </option>
+        </select>
+    </td><br>
+    </tr>
+    <tr>
+    <td>
+      <input type="button"  value="Reset" id="resetdrawer"/>
+      <input type="button"  value="Submit" id="lstvalue"/>
+      <input type="button"  value="Cancel" id="cancel"/>
+
+
+ </td>
+
+</tr>
+</table>
+</div>
+ <input id="drawer{{page_ob.id}}"  class="getdrawer" name="texttags" style="visibility:hidden">
+         <input type="button" id="showcollection" value="Show Drawer" style="visibility:hidden"/>
+

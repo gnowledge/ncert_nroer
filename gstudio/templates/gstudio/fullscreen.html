@@ -14,7 +14,7 @@
       $(window).load(function() {
       $("#content").css({
     "width": "600px",});
-	$("img").css({"max-width":"1000px",})
+	$("img").css({"max-width":"725px",})
 	});
 var editImage=false;
 jQuery(document).ready(function($) {
@@ -74,7 +74,7 @@ $(document).ready(function(){
 <font color = 'black'>Posted At : </font><font >{{image.creation_date}}</font>
 <br/>
 <font color = 'black'>Description:</font>
-{%autoescape on%}
+{% autoescape on %}
 {% with image.html_content|safe as image_content %}
      {{image_content}}
 {% endwith %}
@@ -93,6 +93,145 @@ $(document).ready(function(){
 </form>
 
 <br/>
+<div id="imgcolln">
+{% check_if_collection image.id as colln %}
+
+{% if colln %}
+{% show_image_collections image.id as imgcolln %}
+
+{% if imgcolln %}
+<font size="3">Images in this Album:</font><br/>
+ {% for vals in imgcolln %}
+         <li class="list"><abbr title="Collection"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/doc.png"></abbr><a href=\
+"{{vals.get_view_object_url}}">{{vals.title}}</a><img src="{% admin_media_prefix %}img/{{vals.thumb}}-thumbnail" crop="center" quality="90" \
+style="none"><br/>
+  {% endfor %}
+<br/>
+
+{% show_edit_collection image.id user%}
+<div id="relcoll" width="100px" style="float:right;margin-top:-300px;">
+{% get_related_images image.id as related_images %}
+
+{% if related_images %}
+<table width="100%" border="1">
+<thead>
+Related Images and Albums:</thead>
+<tr>
+
+{% for valim in related_images %}
+<td>
+                   <a  class="preview" title="{{valim.title}}" href="/gstudio/resources/images/show/{{valim.id}}"><img src="{% admin_media_p\
+refix %}img/{{valim.ref.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbna\
+il">&nbsp;&nbsp;<br/><center>{{valim.title}}</center></a>
+</td>
+{% endfor %}
+</tr>
+</table>
+{% endif %}
+</div>
+<br/>
+<div id="imagecollnGallery">
+<table width="100%">
+    <tr>
+{% for image1 in imgcolln %}
+        <td class="gbobject-image1" id = "{{image1.id}}"><a href="/gstudio/resources/images/show/{{image1.id}}"><img src="{% admin_media_pre\
+fix %}img/{{image1.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"><\
+/a>
+<form method="post" action="">{% csrf_token %}
+{% for author in image1.authors.all %}
+        {% ifequal author.username user.username %}&nbsp;
+ <input type="hidden" name="fulid" value={{image1.id}}>
+        <!--  <input type="submit" value="Show" name="Show">-->
+        <input type="hidden" name="pict" id="imgid" value={{image1.id}}>
+        <input type="hidden" name="user" value={{user.username}}>
+        <input type="button" id="delete" name="delete" value="Delete" onclick="ajaxmakesure({{image1.id}})" style="margin-top:5px;width:60px\
+\                                                                                                                                            
+">
+
+        {% endifequal %}
+{% endfor %}
+</form>
+      </td>
+
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
+    </tr>
+    <tr>
+<td colspan="5">
+                                 {%  with x=forloop.counter|add:"-5"|stringformat:"s" %}
+                                 {% with y=forloop.counter|stringformat:"s" %}
+                                  {% with count=x|add:":"|add:y %}
+                                {% for image in images|slice:count %}
+
+                                        <div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
+
+                                        <center>
+                                        <h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
+
+                                        </h2></center><br/>
+
+                                        <center>
+                                        <a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
+                                        <img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:\
+\                                                                                                                                            
+'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
+                                        </a></center>
+ &nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</\
+a> ]                                        &nbsp;
+
+                                        {% for author in image.authors.all %}
+                                        <font color = 'black'>Posted By : </font> <font >{{author}}</font>
+                                        {% endfor %}
+                                        </div>
+
+                                {% endfor %}
+                                        {% endwith %}
+                                {% endwith%}
+                        {% endwith %}
+                        </td>
+                </tr>
+
+   {% endif %}
+{% endfor %}
+    </tr>
+<tr>
+                                <td colspan="5">
+
+                                {% for image in images|slice:"0:40" %}
+
+                                        <div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
+
+                                        <center>
+                                        <h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
+
+                                        </h2></center><br/>
+
+                                        <center>
+            <a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
+                                        <img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:\
+\                                                                                                                                            
+'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
+                                        </a></center>
+                                        &nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</a> ]                                        &nbsp;
+
+ {% for author in image.authors.all %}
+                                        <font color = 'black'>Posted By : </font> <font >{{author}}</font>
+                                        {% endfor %}
+                                        </div>
+
+                                {% endfor %}
+
+
+</td>
+                </tr>
+</table>
+ <h2>                                                                                                                                       </h2>
+</div>
+{% endif %}
+{% endif %}
+</div>
+<br/>
+
+
 {% ifequal image.rating.get_rating 0 %}
 
 <font color = 'black'>Current rating is: &nbsp;<font > No rating yet </font></font>

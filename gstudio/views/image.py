@@ -30,12 +30,52 @@ import hashlib
 from django.template.defaultfilters import slugify
 from django.template.loader import get_template
 from django.template import Context
-
+from gstudio.methods import getimages,check_collection
 
 size = 128, 128
 report = "true"
 md5_checksum = ""
 
+def createcolln(request):
+    listcl=request.GET["listofcollns"]
+    print "listcl=",listcl
+    coltitle=request.GET["coltitle"]
+    editcoln=request.GET["editcoln"]
+    colid=request.GET["colid"]
+    if editcoln=='1':
+        col=System.objects.get(id=colid)
+        col.gbobject_set.clear()
+        i=0
+        if listcl != "null":
+            listcl=listcl+","
+            listcl=eval(listcl)
+            while i < len(listcl):
+                objs=Gbobject.objects.get(id=listcl[i])
+                col.gbobject_set.add(objs)
+                i=i+1
+        col.save()
+        p=col.gbobject_set.all()
+        print "complelst",p
+        t=get_template('gstudio/existngcollns.html')
+        html = t.render(Context({'image':col,'user':request.user}))
+        return HttpResponse(html)
+    else:
+        syscol=Systemtype.objects.get(title='Imagecollection')
+        col=System()
+        col.title=coltitle
+        col.save()
+        col.systemtypes.add(syscol)
+        t='gstudio/imagecollns.html'
+        if listcl != "" and listcl != "null":
+            i=0
+            listcl=listcl+","
+            listcl=eval(listcl)
+            while i < len(listcl):
+                objs=Gbobject.objects.get(id=listcl[i])
+                col.gbobject_set.add(objs)
+                i=i+1
+            col.save()
+        return render_to_response(t,RequestContext(request))
 
 def refpriorpost(request):
     ret={}
@@ -75,8 +115,7 @@ def createwikinew(request):
         priorgbobject = gbid1.prior_nodes.all()
         posteriorgbobject = gbid1.posterior_nodes.all()
         t = get_template('gstudio/repriorpost.html')
-        html = t.render(Context({'priorgbobject':priorgbobject,'posteriorgbobject':posteriorgbobject,'objectid':titleid,'optionpriorpost':"p\
-riorpost"}))
+        html = t.render(Context({'priorgbobject':priorgbobject,'posteriorgbobject':posteriorgbobject,'objectid':titleid,'optionpriorpost':"priorpost"}))
         return HttpResponse(html)
 
 
@@ -97,6 +136,7 @@ def checkpageexist(request):
 def image(request):
 	p=Objecttype.objects.get(title="Image")
 	q=p.get_nbh['contains_members']
+        imgobjs=getimages()
 	if request.method=="POST":
 		title = request.POST.get("title1","")
 		content= unicode(request.POST.get("contenttext",""))
@@ -129,7 +169,7 @@ def image(request):
 					    d=each.right_subject_id
 					    x=Gbobject.objects.get(id=d)
 					    list1.append(x)
-			variables = RequestContext(request,{'images':list1,'fav':fav})
+			variables = RequestContext(request,{'images':list1,'fav':fav,'test1':imgobjs})
 			template = "gstudio/image.html"
 			return render_to_response(template, variables)	
 		
@@ -153,7 +193,7 @@ def image(request):
 					vido_new = vidon.get_nbh['contains_members']
 					vido = vido_new.filter(title__icontains=simg)
 					vido2 = vido.order_by(sub3)
-					variables = RequestContext(request,{'images':vido2,'val':simg})
+					variables = RequestContext(request,{'images':vido2,'val':simg,'test1':imgobjs})
 					template = "gstudio/image.html"
 					return render_to_response(template, variables)
 				else:
@@ -161,14 +201,14 @@ def image(request):
 					vido_new = vidon.get_nbh['contains_members']
 					vido = vido_new.filter(creation_date__icontains=simg)
 					vido2 = vido.order_by(sub3)
-					variables = RequestContext(request,{'images':vido2,'val':simg})
+					variables = RequestContext(request,{'images':vido2,'val':simg,'test1':imgobjs})
 					template = "gstudio/image.html"
 					return render_to_response(template, variables)
 			else:
 				vidon = Objecttype.objects.get(title="Image")
 				vido_new = vidon.get_nbh['contains_members']
 				vido=vido_new.order_by(sub3)
-				variables = RequestContext(request,{'images':vido,'val':simg})
+				variables = RequestContext(request,{'images':vido,'val':simg,'test1':imgobjs})
 				template = "gstudio/image.html"
 				return render_to_response(template, variables)
 
@@ -205,7 +245,7 @@ def image(request):
 	# 		vars=RequestContext(request,{'images':q,'reportid':reportid,'report':report})
 	# 		template="gstudio/image.html"
 	# 		return render_to_response(template, vars)	
-	vars=RequestContext(request,{'images':q,'val':""})
+	vars=RequestContext(request,{'images':q,'val':"",'test1':imgobjs})
 	template="gstudio/image.html"
 	return render_to_response(template, vars)
 def postImage(request):
