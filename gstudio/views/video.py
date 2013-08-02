@@ -31,7 +31,7 @@ from django.template.defaultfilters import slugify
 import hashlib
 import threading
 from tagging.models import Tag, TaggedItem
-
+import json
 report = "true"
 global md5_checksum
 md5_checksum = ""
@@ -604,9 +604,10 @@ def getVideo(request):
 	lock.acquire()
 	try:
 		api=ox.api.API("http://wetube.gnowledge.org/api")
-		countVideo = api.find({"query":{"conditions":[{"key":"*","value":"nroer","operator":"="}],"operator":"&"},"range":[0,1],"sort":[{"key":"name","operator":"+"}],"group":"project"})
-		totalVideoNo=countVideo['data']['items'][0]['items']
-		allVideo = api.find({"keys":["id","title","director","id","posterRatio","year"],"query":{"conditions":[{"key":"*","value":"nroer","operator":"="}],"operator":"&"},"range":[0,totalVideoNo],"sort":[{"operator":"+","key":"title"}]})
+		countVideo = api.find({"query":{"operator":"&","conditions":[{"operator":"==","key":"project","value":"NROER"}]}})
+		totalVideoNo=countVideo['data']['items']
+		allVideo = api.find({"keys":["id","title","director","id","posterRatio","year"],"query":{"conditions":[{"operator":"==","key":"project","value":"NROER"}],"operator":"&"},"range":[0,totalVideoNo],"sort":[{"operator":"+","key":"title"}]})
+
 		allVideosData=allVideo['data']['items']
 		objecttypeVideo=Objecttype.objects.get(title="Video")
 		videosObject=objecttypeVideo.get_nbh['contains_members']
@@ -625,3 +626,29 @@ def getVideo(request):
 	finally:
 		lock.release()
 	return HttpResponse("sucess")
+
+
+def getCollectionItems(request):
+	'''
+	By taking tagname, fetching Tag's items from wetube and return gobject's id,title,slug corresponding to Tag's items 
+	'''
+	tagId = []
+	resultTag = []
+	videoObject = ""
+	if request.is_ajax() and request.method =="POST":
+		tagName=request.POST['tagName']
+		api=ox.api.API("http://wetube.gnowledge.org/api")
+		countTagitems = api.find({"query":{"operator":"&","conditions":[{"operator":"==","key":"project","value":"NROER"},{"key":"keywords","value":tagName,"operator":"=="}]}})
+		totalTagNo=countTagitems['data']['items']
+		Tagitems = api.find({"keys":["id","title"],"query":{"operator":"&","conditions":[{"operator":"==","key":"project","value":"NROER"},{"key":"keywords","value":tagName,"operator":"=="}]},"range":[0,totalTagNo],"sort":[{"operator":"+","key":"title"}]})
+
+		for each in Tagitems['data']['items']:
+			tagId.append(each['id'])
+		for each in tagId:
+			videoObject = NID.objects.filter(slug=each)
+			if videoObject:
+				nidObject = NID.objects.get(slug=each)
+				resultTag.append({'id':nidObject.id,"slug":each,"title":nidObject.title})
+					
+	return HttpResponse(json.dumps(resultTag))             
+
