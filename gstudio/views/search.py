@@ -85,18 +85,14 @@ def nodetype_search(request):
 
     if request.GET:
         pattern = request.GET.get('pattern', '')
-	print "length of patter:",len(pattern)
         if len(pattern) < 3:
-	    print "inside len if"	
             error = _('The pattern is too short')
-	    print error	
         else:
             nodetypes_dic =GetSearchdic(pattern)
     else:
         error = _('No pattern to search found')
 
     variables = RequestContext(request,{"object_dic":nodetypes_dic,'error': error,'pattern': pattern})
-    print "error-",error,pattern	
     template  =	'gstudio/nodetype_search.html'
     return render_to_response(template, variables)  			    
     # return object_list(request, queryset=nodetypes,

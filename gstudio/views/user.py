@@ -20,6 +20,50 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from gstudio.methods import *
+from django.template.defaultfilters import slugify
+from django.contrib.sites.models import Site
+
+
+
+
+
+def addconcept(request):
+        newob=""
+        if request.method=="POST":
+            	title = request.POST["subtitle"]
+                subj=request.POST["subject"]
+                tags=request.POST["tags"]
+                sys=Systemtype.objects.get(title='Wikipage')
+                newob=System()
+                newob.title=title
+                newob.status=1
+                newob.tags=tags
+                newob.slug=slugify(title)
+                user=request.user.id
+                print user,request.user
+                auth=Author.objects.get(id=user)
+                newob.save()
+                newob.authors.add(auth)
+                newob.sites.add(Site.objects.get_current())
+                newob.member_set.add(auth)
+                newob.systemtypes.add(sys)
+                newob.save()
+                newob1=System()
+                newob1.title = "page box of " + title
+                newob1.slug = "page_box_of_" + slugify(title)
+                newob1.save()
+                newob1.systemtypes.add(Systemtype.objects.get(title="page_box"))
+                newob.system_set.add(newob1)
+                cols=System.objects.get(title=subj)
+                gbob=Gbobject.objects.get(id=newob.id)
+                cols.gbobject_set.add(gbob)
+                return HttpResponse("sucess")
+        else:
+                variables = RequestContext(request,{"pageob":newob})
+                template = "gstudio/contri_concept.html"
+                return render_to_response(template,variables)
+
+
 
 def userdashboard(request):#,username):
    # if request.user.username == username :

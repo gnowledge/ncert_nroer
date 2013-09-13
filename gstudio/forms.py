@@ -23,15 +23,31 @@ from registration.forms import *
 from recaptcha import fields as recaptcha_fields
 
 from registration.forms import RegistrationForm
+from passwords.fields import PasswordField
+from django.contrib.auth.forms import PasswordChangeForm, AuthenticationForm, SetPasswordForm
 
 class RecaptchaRegistrationForm(RegistrationForm):
     recaptcha = recaptcha_fields.ReCaptchaField()
 
+class UserChangeform(PasswordChangeForm):
+    new_password1 = PasswordField(label="New password") 
+    recaptcha = recaptcha_fields.ReCaptchaField()
+
+class UserResetform(SetPasswordForm):
+    new_password1 = PasswordField(label="New password") 
+    recaptcha = recaptcha_fields.ReCaptchaField()
+
+
+class UserLogin(AuthenticationForm):
+    recaptcha = recaptcha_fields.ReCaptchaField()
+	
 
 class UserRegistrationForm(RegistrationForm):
+    password1 = PasswordField(label="Password")
     first_name = forms.CharField()
     last_name = forms.CharField()
     recaptcha = recaptcha_fields.ReCaptchaField()
+
 
 class MetatypeForm(ModelForm):
 

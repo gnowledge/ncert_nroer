@@ -114,6 +114,7 @@ from objectapp.url_shortener import get_url_shortener
 from objectapp.signals import ping_directories_handler
 from objectapp.signals import ping_external_urls_handler
 from objectapp.settings import OBJECTAPP_VERSIONING
+from unidecode import unidecode
 
 if OBJECTAPP_VERSIONING:
     import reversion
@@ -368,18 +369,18 @@ class Gbobject(Node):
             # check if relation already exists
             if relation.relationtype.title not in rel_dict['left-subjecttypes'].keys():
                 # create a new list field and add to it
-                rel_dict['left-subjecttypes'][str(relation.relationtype.title)] = []
+                rel_dict['left-subjecttypes'][relation.relationtype.title] = []
             # add
-            rel_dict['left-subjecttypes'][str(relation.relationtype.title)].append(relation) 
+            rel_dict['left-subjecttypes'][relation.relationtype.title].append(relation) 
 
         for relation in right_relset:
             # check if relation exists
             if relation.relationtype.inverse not in rel_dict['right_subjecttypes'].keys():
                 # create a new list key field and add to it
-                rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)] = []
+                rel_dict['right_subjecttypes'][relation.relationtype.inverse] = []
                 # add to the existing key
             
-            rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)].append(relation)
+            rel_dict['right_subjecttypes'][relation.relationtype.inverse].append(relation)
 
         relation_set.update(rel_dict['left-subjecttypes'])
         relation_set.update(rel_dict['right_subjecttypes'])
@@ -404,31 +405,44 @@ class Gbobject(Node):
         rel_dict['right_subjecttypes'] ={}
 
 
-        
+        print left_relset,"rig=",right_relset
         for relation in left_relset:
             relc={}
             # check if relation already exists
            
             if relation.relationtype.title not in rel_dict['left-subjecttypes'].keys():
                 # create a new list field and add to it
-                rel_dict['left-subjecttypes'][str(relation.relationtype.title)] = {}
+                rel_dict['left-subjecttypes'][relation.relationtype.title] = []
             # add
             obj=Gbobject.objects.get(id=relation.right_subject_id)
-            relc[obj.title]=obj.get_view_object_url
-            if not obj.title in rel_dict['left-subjecttypes'][str(relation.relationtype.title)]:
-                rel_dict['left-subjecttypes'][str(relation.relationtype.title)].update(relc) 
+            relc['title']=obj.title
+            relc['id']=relation.id
+            
+            relc['url']=obj.get_view_object_url
+            if relation.relationtype.title=='has_image':
+                relc['image']=obj.image
+            if relation.relationtype.title=='has_video':
+                relc['slug']=obj.slug
+            if not obj.title in rel_dict['left-subjecttypes'][relation.relationtype.title]:
+                rel_dict['left-subjecttypes'][relation.relationtype.title].append(relc) 
         
         for relation in right_relset:
             reld={}
             # check if relation exists
             if relation.relationtype.inverse not in rel_dict['right_subjecttypes'].keys():
                 # create a new list key field and add to it
-                rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)] = {}
+                rel_dict['right_subjecttypes'][relation.relationtype.inverse] = []
                 # add to the existing key
             obj=Gbobject.objects.get(id=relation.left_subject_id)
-            reld[obj.title]=obj.get_view_object_url
-            if not obj.title in rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)]:
-                 rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)].update(reld)
+            reld['title']=obj.title
+            reld['id']=relation.id
+            reld['url']=obj.get_view_object_url
+            if relation.relationtype.title=='has_video':
+                reld['slug']=obj.slug
+            if relation.relationtype.title=='has_image':
+                reld['image']=obj.image
+            if not obj.title in rel_dict['right_subjecttypes'][relation.relationtype.inverse]:
+                 rel_dict['right_subjecttypes'][relation.relationtype.inverse].append(reld)
 
           
            
@@ -544,18 +558,18 @@ class Gbobject(Node):
         nbh['content'] = self.content
         #return  all OTs the object is linked to
         nbh['member_of'] = self.objecttypes.all()
-        nbh['prior_nodes'] = self.prior_nodes.all()
+      #  nbh['prior_nodes'] = self.prior_nodes.all()
 
-        nbh['posterior_nodes'] = self.posterior_nodes.all()
+       # nbh['posterior_nodes'] = self.posterior_nodes.all()
 
         # get all the relations of the object    
         nbh.update(self.get_relations())
         nbh.update(self.get_attributes())
-        taglist=self.get_rendered_nbh['Tags']
-        if taglist:
-            nbh['Tags']=taglist
-        else:
-            nbh['Tags']=[]
+        # taglist=self.get_rendered_nbh['Tags']
+        # if taglist:
+        #     nbh['Tags']=taglist
+        # else:
+        #     nbh['Tags']=[]
         # encapsulate the dictionary with its node name as key
         return nbh
 
@@ -587,24 +601,29 @@ class Gbobject(Node):
 	
 
 	for key in predicate_id.keys():
+               
+               
+               
 		if nbh[key]:
                     try:
-				
+                        
                         g_json["node_metadata"].append({"_id":str(predicate_id[key]),"screen_name":key})
                         
-                        g_json["relations"].append({"from":self.id ,"type":str(key),"value":1,"to":predicate_id[key] })
+                        g_json["relations"].append({"from":self.id ,"type":key,"value":1,"to":predicate_id[key] })
 
                         if not isinstance(nbh[key],basestring) and len(nbh[key])<=10:
+                           
                             for item in nbh[key]:
+                             
                                 if isinstance(item,unicode):
-                                    g_json["node_metadata"].append({"_id":(str(attr_counter)+"b"),"screen_name":str(item)})
-                                    g_json["relations"].append({"from":predicate_id[key] ,"type":str(key) ,"value":1,"to":(str(attr_counter)+"b") })
+                                    g_json["node_metadata"].append({"_id":(str(attr_counter)+"b"),"screen_name":item})
+                                    g_json["relations"].append({"from":predicate_id[key] ,"type":key ,"value":1,"to":(str(attr_counter)+"b") })
                                     attr_counter-=1
                                     
                                 elif item.reftype!="Relation":
                                     # create nodes
                                     g_json["node_metadata"].append({"_id":str(item.id),"screen_name":item.title,"title":self.title, "url":item.get_view_object_url,"refType":item.reftype})
-                                    g_json["relations"].append({"from":predicate_id[key] ,"type":str(key), "value":1,"to":item.id  })
+                                    g_json["relations"].append({"from":predicate_id[key] ,"type":key, "value":1,"to":item.id  })
                                     
                                 else:
                                     
@@ -618,10 +637,13 @@ class Gbobject(Node):
                                         itemid=item.left_subject.id
                                         flag=0						
                                     getit=Gbobject.objects.get(id=itemid)
+               
+                                   
                                     g_json["node_metadata"].append({"_id":str(item1.id),"screen_name":item1.title,"title":self.title, "url":getit.get_view_object_url,"refType":item.reftype,"inverse":item.relationtype.inverse,"flag":flag})
                                         
+                                   
                                         
-                                    g_json["relations"].append({"from":predicate_id[key] ,"type":str(key), "value":1,"to":item1.id  })
+                                    g_json["relations"].append({"from":predicate_id[key] ,"type":key, "value":1,"to":item1.id  })
                         else:
                             if not isinstance(nbh[key],basestring):
                                 g_json["node_metadata"].append({"_id":(str(attr_counter))+"a","screen_name":str(len(nbh[key]))+" nodes...","title":str(key),"url":"/nodetypes/graphs/graph_label/"+str(self.id)+"/"+str(key)})
@@ -851,15 +873,15 @@ class Gbobject(Node):
         nbh['attributes']=attributes
         nbh['history']=history     	
         #get Tags
-        obtags=self.tags
-        nbh['Tags']=[]
-        obls=[]
-        while obtags:
-            part=obtags.partition(",")
-            if part[0]:
-                obls.append(part[0])
-            obtags=part[2]
-            nbh['Tags']=obls
+        # obtags=self.tags
+        # nbh['Tags']=[]
+        # obls=[]
+        # while obtags:
+        #     part=obtags.partition(",")
+        #     if part[0]:
+        #         obls.append(part[0])
+        #     obtags=part[2]
+        #     nbh['Tags']=obls
         return nbh
 
 
@@ -989,6 +1011,12 @@ class Gbobject(Node):
                 super(Gbobject, self).save(*args, **kwargs) # Call the "real" save() method.     
 
     @property
+    def get_album_url(self, *args, **kwargs):
+        alburl='/gstudio/resources/imagecollection/colln/'
+        alburl=alburl+self.id.__str__()
+        return alburl
+
+    @property
     def get_view_object_url(self, *args, **kwargs):
         object_id = ""
         objmem = self.ref.get_nbh['member_of']
@@ -999,6 +1027,20 @@ class Gbobject(Node):
            if objectname == "Image":
                return '/gstudio/resources/images/show/'+ str(self.id)
            elif objectname == "Document":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "Audio":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "Graphics":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "Multimedia":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "Presentation":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "PDF":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "Spreadsheet":
+               return '/gstudio/resources/documents/show/'+str(self.id)
+           elif objectname == "Html":
                return '/gstudio/resources/documents/show/'+str(self.id)
            elif objectname == "Video":
                return '/gstudio/resources/videos/show/'+str(self.id)

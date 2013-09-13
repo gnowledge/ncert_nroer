@@ -6,7 +6,7 @@
       		     <a href="{{each.ref.get_view_object_url}}">{{each.title}}</a>
           	  </h2>
                <img src="/static/gstudio/img/home/tag.jpg" />
-                {% tags_for_object each.ref as tag_list %}
+                {% tags_for_object each.ref.gbobject as tag_list %}
                	{% for tag in tag_list %}
                 <span><a href="{% url objectapp_tag_detail tag %}"title="Tag {{ tag }}" rel="tag">{{ tag }}</a></span>
                 <span>{% if not forloop.last %},{% endif %}</span>

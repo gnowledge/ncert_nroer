@@ -88,7 +88,7 @@ from gstudio.moderator import NodetypeCommentModerator
 from gstudio.url_shortener import get_url_shortener
 from gstudio.signals import ping_directories_handler
 from gstudio.signals import ping_external_urls_handler
-
+from unidecode import unidecode
 import json
 if GSTUDIO_VERSIONING:
     import reversion
@@ -335,7 +335,7 @@ class NID(models.Model):
 
             for i in attributetype:
                 if str(i.applicable_nodetypes) == 'OT':
-                    returndict.update({str(i.title):i.id})
+                    returndict.update({i.title:i.id})
 
             return returndict.keys()
         except:
@@ -377,7 +377,7 @@ class NID(models.Model):
         for i in range(len(titledict)):
             listval.append(Relationtype.objects.get(title = titledict.keys()[i]))
             obj=Relationtype.objects.get(title=titledict.keys()[i])
-            inverselist.append(str(obj.inverse))
+            inverselist.append(str(unidecode(obj.inverse)))
 
         for j in range(len(pt)):
             for i in range(len(listval)):
@@ -734,9 +734,7 @@ class Nodetype(Node):
     template = models.CharField(
         _('template'), max_length=250,
         default='gstudio/nodetype_detail.html',
-        choices=[('gstudio/nodetype_detail.html', _('Default template'))] + \
-        NODETYPE_TEMPLATES,
-        help_text=_('template used to display the nodetype'))
+        choices=[('gstudio/nodetype_detail.html', _('Default template'))] + NODETYPE_TEMPLATES,help_text=_('template used to display the nodetype'))
     rurl=models.URLField(_('rurl'),verify_exists=True,null=True, blank=True)
     objects = models.Manager()
     published = NodetypePublishedManager()
@@ -1087,17 +1085,17 @@ class Nodetype(Node):
             # check if relation already exists
             if relation.relationtype.title not in rel_dict['left-subjecttypes'].keys():
                 # create a new list field and add to it
-                rel_dict['left-subjecttypes'][str(relation.relationtype.title)] = []
+                rel_dict['left-subjecttypes'][str(unidecode(relation.relationtype.title))] = []
             # add 
-            rel_dict['left-subjecttypes'][str(relation.relationtype.title)].append(relation) 
+            rel_dict['left-subjecttypes'][str(unidecode(relation.relationtype.title))].append(relation) 
 
         for relation in right_relset:
             # check if relation exists
             if relation.relationtype.inverse not in rel_dict['right_subjecttypes'].keys():
                 # create a new list key field and add to it
-                rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)] = []
+                rel_dict['right_subjecttypes'][str(unidecode(relation.relationtype.inverse))] = []
                 # add to the existing key
-            rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)].append(relation)
+            rel_dict['right_subjecttypes'][str(unidecode(relation.relationtype.inverse))].append(relation)
 
         relation_set.update(rel_dict['left-subjecttypes'])
         relation_set.update(rel_dict['right_subjecttypes'])
@@ -1271,7 +1269,7 @@ class Nodetype(Node):
 
     def __unicode__(self):
         objref=str(self.ref)
-        reftitle=str(self.ref.title)
+        reftitle=self.ref.title
         objref=objref.replace(reftitle,"")
         objtype=objref.strip()
         return objtype + " " + self.title

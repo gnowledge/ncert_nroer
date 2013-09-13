@@ -21,11 +21,11 @@
 </form>
         </td>  
 	     
-    {% if not forloop.last and forloop.counter|divisibleby:"8" %}
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
     </tr>
     <tr>
-				<td colspan="8">
- 				 {%  with x=forloop.counter|add:"-8"|stringformat:"s" %}
+				<td colspan="5">
+ 				 {%  with x=forloop.counter|add:"-5"|stringformat:"s" %}
  				 {% with y=forloop.counter|stringformat:"s" %}
  				  {% with count=x|add:":"|add:y %}
  				{% for image in images|slice:count %}
@@ -59,7 +59,7 @@
 {% endfor %}
     </tr>
 <tr>
-				<td colspan="8">
+				<td colspan="5">
  				 
  				{% for image in images|slice:"0:40" %}
  					 				

@@ -9,7 +9,89 @@
 <script src="{% admin_media_prefix %}jquery/jquery-1.6.2.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+
 <script type="text/javascript" >
+jQuery(document).ready(function($) {
+$(".deldoccolln").click(function(){
+        var obid = this.id;
+        r = confirm("Please confirm delete ")
+        if (r==true)
+        {
+         $("#lstBox2").empty();
+         $("#doccolname").val("");
+        $.ajax({
+        url: '/gstudio/ajax/deletedoccolln/',
+        data: {obid:obid},
+        beforeSend: function() {
+              $("#ajax_load_image").show();
+              $("#content").css({"opacity":"0.1",})
+                      },
+        success: function(data){
+                $('#docucollections').html(data);
+                     },
+        complete: function(){
+                $("#ajax_load_image").hide();
+                $("#content").css({"opacity":"",})
+                  }
+});
+
+  }
+});
+$("#lstdocvalue").click(function(){
+        $("#coll").show();
+        $("#coll").css({"margin-top":"40px","display":""});
+        $(".addtoimgdrawer").css({"display":""});
+        $("#docucollections").css({"position":"absolute","margin-top":"-15px"})
+        $("#lowerdiv").css({"position":"relative","margin-top":"5px"})
+        var arr=[];
+        var arr1=[];
+        $("#collectionimg").hide();
+        opts = lstBox2.options, len = opts.length;
+        if (len == 0) {
+                   arr=[];
+                   arr1=[];
+
+        }
+        else{
+                   arr1=[];
+                   for (var i = 0; i < len; i++)
+                   {
+                           arr[i] = "'"+opts[i].value+"'";
+                           arr1[i]=opts[i].id;
+                   }
+         }
+         var abc1=arr1.join(',');
+         if (abc1) {
+                            var abc=abc1;
+
+         }
+         else {
+                           var abc=null;
+         }
+
+         var listofcollns=abc
+         var colid=""
+         coltitle=""
+         var coltitle=document.getElementById("doccolname").value;
+         alert(coltitle);
+         if (coltitle == ""){alert("Please type collection name");
+                      $("#doccolname").focus();}
+         else{
+                             $("#lstBox2").empty()
+                             $("#doccolname").val("");
+                             $.ajax({
+                              url: '/gstudio/resources/docu/createcolln/',
+                              data:{'listofcollns':abc,'coltitle':coltitle,'editcoln':0,'colid':colid},
+
+                              success: function(data) {
+                              $("#docucollections").html(data);
+                              },
+
+       });}
+
+    });
+})
+
 var isVideotitle=false;
 $(window).load(function() {
 $("#content").css({
@@ -20,8 +102,7 @@ $(window).load(function() {
 $("#graphcss").hide();   
 });
 var i = 0;
-var availableTags = [];
-$.merge(availableTags, {% get_add_tag %})
+
 jQuery(document).ready(function($) {
       
     $("#commenteditor").click(function(){
@@ -79,6 +160,11 @@ jQuery(document).ready(function($) {
 	    $(".commentsavecontent").trigger('click');
 	    });
 });
+var availableTags = [];
+$.merge(availableTags, {% get_add_tag %})
+$( "#tags{{document.id}}" ).autocomplete({
+            source: availableTags
+        });
 
 </script>
 <style type="text/css">
@@ -99,7 +185,7 @@ margin-left:52%;
 </style> 
 
 {% autopaginate documents 8 %}
-<h2 style="">Document Library</h2>
+<h2 style="">Document/Audio/Interactive object  Library</h2>
 <br>
 <div id="upperdiv">
 
@@ -120,7 +206,7 @@ margin-left:52%;
 <input type="submit" value="Search">
 </form>
 {% if user.is_authenticated %}
-<br/><br/><br/>
+<br/>
 <form method="post" action="/gstudio/resources/documents">
 {% csrf_token %}
 <input type="hidden" name="user" value={{user.username}}>
@@ -146,6 +232,86 @@ Description:&nbsp;&nbsp;<b></b>
 </div>
 {% endif %}
 </div>
+<div id="docucollections">
+{% get_document_collections as col%}
+{% if col %}
+<font size="4" color="black">Document Collection</font><br/>
+{% for key,value in col.items %}
+<a href="/gstudio/resources/documents/show/{{key}}/">{{value}}&nbsp;;</a>
+{% if user.is_authenticated %}
+<a class="deldoccolln" id="{{key}}" value="{{key}}" title="delete {{value}}">
+<img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/>
+</a>
+{% endif %}
+
+{% endfor %}
+{% endif %}
+</div>
+
+
+<div id="coll">
+
+<br/>
+<br/>
+
+
+                        {% if user.is_authenticated %}
+
+                            <input type="button" class="addtoimgdrawer" value="Create Collection" name="addtodrawer"/>
+
+                        {% endif %}
+
+
+</div>
+<div id="collectionimg" style="display:none;">
+  <b>Collection Name:</b>
+        <input type="text" id="doccolname" value=""><br/>
+	<table  id="drawertable" >
+         <tr>
+         <td style='width:160px;'>
+                 <b>Pages:<input type="text" id="collectionsearch" value=""></b><br/>
+                  <select multiple="multiple" id='lstBox1' class="selectOptionCollection">
+                  {% for key,value in test1.items %}
+                    <option id={{key}}>{{value}}</option>
+
+		              {% endfor %}
+
+                    </select>
+         </td>
+         <td style='width:50px;text-align:center;vertical-align:middle;'>
+       <input type='button' id='btnUp' value ='  ^  '/><br/>
+       <input type='button' id='btnRight' value ='  >  '/><br/>
+       <input type='button' id='btnLeft' value ='  <  '/><br/>
+       <input type='button' id='btnDown' value ='  v  '/><br/>
+
+    </td>
+    <td style='width:160px;'>
+        <b>Added to Drawer: </b><br/>
+        <select multiple="multiple" name="lstb2" id='lstBox2' class="selectOptionCollection">
+          {% for each in test %}
+             <option id={{each.id}}>{{each.title}}</a></option>
+          {% endfor %}
+  </option>
+</select>
+    </td><br>
+    </tr>
+ <tr>
+    <td>
+
+      <input type="button"  value="Reset" id="resetdrawer"/>
+      <input type="button"  value="Submit" id="lstdocvalue"/>
+      <input type="button"  value="Cancel" id="cancel"/>
+
+ </td>
+
+</tr>
+</table>
+</div>
+
+ <input id="drawer"   name="texttags" style="visibility:hidden">
+
+ <input type="button" id="showcollection" value="Show Drawer" style="visibility:hidden"/>
+
 <br>
 <br>
 <br>
@@ -253,13 +419,6 @@ Description:&nbsp;&nbsp;<b></b>
 </div>
 <br/>
 {% if user.is_authenticated %}
-<script type="text/javascript" >
-$(document).ready(function(){
-        $( "#tags{{document.id}}" ).autocomplete({
-            source: availableTags
-        });
- });
-</script>
 <form method="post" action="">{% csrf_token %}
 <input type="hidden" name="docid" value={{document.id}}>
 <input id="tags{{document.id}}" name="texttags">

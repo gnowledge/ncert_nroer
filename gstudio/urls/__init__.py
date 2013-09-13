@@ -26,6 +26,9 @@ from gstudio.forms import RecaptchaRegistrationForm
 
 urlpatterns = patterns(
     '',
+    url(r'^addconcept','gstudio.views.user.addconcept'),
+    url(r'^getconceptsubjs','gstudio.views.ajaxviews.getconceptsubjects'),
+    url(r'^templatetags/getsrc_addreln','gstudio.views.ajaxviews.getobjs'),
     url(r'^tags/', include('gstudio.urls.tags',)),
     url(r'^feeds/', include('gstudio.urls.feeds')),
     url(r'^authors/', include('gstudio.urls.authors')),
@@ -45,6 +48,7 @@ urlpatterns = patterns(
     url(r'topicadd1/', include('gstudio.urls.topicadd1')), 
     url(r'sectionadd1/', include('gstudio.urls.sectionadd1')),
     url(r'^login', include('gstudio.urls.login')),
+    url(r'user/addconcept/$','gstudio.views.user.addconcept'),#/(\w+)
     url(r'user/$','gstudio.views.user.userdashboard'),#/(\w+)
     url(r'user/wikipage/$','gstudio.views.user.wikidashboard'),#/(\w+)
     url(r'groupadd/', include('gstudio.urls.groupadd')),
@@ -53,8 +57,10 @@ urlpatterns = patterns(
     url(r'page/',include('gstudio.urls.page')),
     url(r'^resources/addreln/',include('gstudio.urls.addreln')),
     url(r'^resources/images/',include('gstudio.urls.image')), 
+    url(r'^resources/imagecollection/',include('gstudio.urls.image')), 
     url(r'^resources/videos/',include('gstudio.urls.video')), 
-    url(r'^resources/documents',include('gstudio.urls.docu')),
+    url(r'^resources/documents/',include('gstudio.urls.docu')),
+    url(r'^resources/docu/',include('gstudio.urls.docu')),
     url(r'^resources/loom/',include('gstudio.urls.loom')),
     url(r'^userpreference/',include('gstudio.urls.userpreference')),
 

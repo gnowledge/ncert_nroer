@@ -1,6 +1,4 @@
 
-
-
 # Copyright (c) 2011,  2012 Free Software Foundation
 
 #     This program is free software: you can redistribute it and/or modify
@@ -114,16 +112,21 @@ def get_title(obj):
 	     return "Pages","/gstudio/user/wikipage"
    	if "Meeting" in test:
 	     return "Loom","/gstudio/user/"
+        if "Imagecollection" in test:
+            return "Images","/gstudio/resources/images"
+        
    else:
         test = [each.title for each in obj.objecttypes.all()]
    	if "Image" in test:
 	     return "Images","/gstudio/resources/images"
    	elif "Document" in test:
-	     return "Documents","/gstudio/resources/documents"
+	     return "Document Collection","/collection/Document/"
+#	     return "Documents","/gstudio/resources/documents"
    	elif "Video" in test:
 	     return "Videos","/gstudio/resources/videos"
    	elif "Audio" in test:
-	     return "Documents","/gstudio/resources/documents"
+	     return "Audio Collection","/collection/Audio/"
+#	     return "Documents","/gstudio/resources/documents"
    	elif "Graphics" in test:
 	     return "Documents","/gstudio/resources/documents"
    	elif "Multimedia" in test:

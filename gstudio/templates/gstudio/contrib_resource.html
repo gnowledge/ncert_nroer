@@ -1,0 +1,51 @@
+{% extends "gstudio/base.html" %}
+{% load i18n mptt_tags %}
+
+{% block meta-description %}{% trans "Metatype list" %}{% endblock %}
+
+{% block title %}{% trans "Contribute Resources" %}{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+<script type="text/javascript">
+function message()
+{
+alert("Please login to continue");
+
+}
+</script>
+<div>
+<div align="center"><img src="/static/img/ciet.ncert/poster.jpg" border="0" usemap="#Map">
+<map name="Map" id="Map">
+ <area shape="rect" coords="124,640,252,720" alt="Add Document" onClick="message()"/>
+<area shape="rect" coords="294,583,394,731"  alt="Add Images" onClick="message()"/>
+<area shape="rect" coords="418,605,587,697"  alt="Add Interactive Object" onClick="message()" />
+<area shape="rect" coords="156,771,247,876"  alt="Add Audios" onClick="message()"/>
+<area shape="rect" coords="291,776,435,904"  alt="Add Videos" onClick="message()"/>
+<area shape="rect" coords="461,739,574,867"  alt="Add Concepts" onClick="message()"/>
+<area shape="rect" coords="143,1161,184,1181" alt="Visit" onClick="message()"/>
+<area shape="rect" coords="192,1010,476,1052" alt="How to Participate?" onClick="message()"/>
+</map></div>
+
+</div>
+
+{% else %}
+<div>
+<div align="center"><img src="/static/img/ciet.ncert/poster.jpg" border="0" usemap="#Map">
+<map name="Map" id="Map">
+ <area shape="rect" coords="124,640,252,720" href="/gstudio/resources/documents/#divpost" alt="Add Document" onClick="message()"/>
+<area shape="rect" coords="294,583,394,731" href="/gstudio/resources/images/#divpost" alt="Add Images" />
+<area shape="rect" coords="418,605,587,697" href="/gstudio/resources/documents/#divpost" alt="Add Interactive Object" />
+<area shape="rect" coords="156,771,247,876" href="/gstudio/resources/documents/#divpost" alt="Add Audios" />
+<area shape="rect" coords="291,776,435,904" href="/gstudio/resources/videos/#divpost" alt="Add Videos" />
+<area shape="rect" coords="461,739,574,867" href="/gstudio/user/addconcept" alt="Add Concepts" />
+<area shape="rect" coords="143,1161,184,1181" href="http://creativecommons.org/" alt="Visit" />
+<area shape="rect" coords="192,1010,476,1052" href="/gstudio/resources/videos/show/40441/" alt="How to Participate?" />
+</map></div>
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

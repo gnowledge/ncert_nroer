@@ -1,6 +1,10 @@
 {% load gstudio_tags %}
 
 <script type="text/javascript" >
+$("#collectionsearch").keyup(function () {
+            $("#lstBox1 option").show();
+            $("#lstBox1 option:not(option:contains('" + $("#collectionsearch").val() + "'))").hide();
+        });
 
 var length = 0;
 $(document).on('click',"#lstvalue",function(){

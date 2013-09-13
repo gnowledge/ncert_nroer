@@ -7,10 +7,13 @@
     <link href="/static/gstudio/css/tabcontent.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
  function getCollectionPage(pageid,pageTitle){
- $(".conceptpage").show();
+	document.getElementById("chart").innerHTML = "";
+        $("#chart").html('<img id="chart_ajax_image_custom" width="50" style="padding-left:275px" src="/static/grappelli/img/ajax-loader1.gif">');
+        $(".conceptpage").show();
         $("#titleOfPage").show();
 	$("#titleOfPage").text(pageTitle);
 	objectid = pageid
+
 	fgraph();
        {% if user.is_authenticated %}
 	$.ajax({
@@ -19,10 +22,10 @@
 	type: 'POST',
 	data: {objectid:pageid,csrfmiddlewaretoken: '{{ csrf_token }}'},
 	beforeSend: function() {
-                $("#ajax_load_image").show();
+      $("#view5").html('<img id="ajax_image_custom" width="50" style="padding-left:275px" src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif">');
                               },
 	success: function(result){
-		$("#ajax_load_image").hide();
+		
 		$("#view5").html(result);
                 
 	     },
@@ -37,6 +40,7 @@ $.ajax({
 	type: 'POST',
 	data: {objectid:pageid,csrfmiddlewaretoken: '{{ csrf_token }}'},
 	beforeSend: function() {
+        $("#view3").html('<img id="ajax_image_custom" width="50" style="padding-left:275px" src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif">');
                               },
 	success: function(result){
 		$("#view3").html(result);
@@ -51,8 +55,10 @@ $.ajax({
 	type: 'POST',
 	data: {objectid:pageid,csrfmiddlewaretoken: '{{ csrf_token }}'},
 	beforeSend: function() {
+        $("#view4").html('<img id="ajax_image_custom" width="50" style="padding-left:275px" src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif">');        
                               },
 	success: function(result){
+                
 		$("#view4").html(result);
 		
 	     },
@@ -68,8 +74,10 @@ $.ajax({
 	type: 'POST',
 	data: {objectid:pageid,csrfmiddlewaretoken: '{{ csrf_token }}'},
 	beforeSend: function() {
+        $("#view2").html('<img id="ajax_image_custom" width="50" style="padding-left:275px" src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif">');        
                               },
 	success: function(result){
+
 		$("#view2").html(result);
 		
 	     },
@@ -101,7 +109,7 @@ jQuery(document).ready(function($) {
 	var pageTitle = $(this).attr("title");
 	var to = $(this).parent('div').attr("id")
 	if(to != "Fifth"){
-        $(".collection"+to+"Column").show();
+//        $(".collection"+to+"Column").show();
 	$.ajax({
 	url: '/gstudio/ajax/getCollections/',
 	type: 'POST',
@@ -130,8 +138,10 @@ jQuery(document).ready(function($) {
 		$(".hide_collection").hide();
 		getCollectionPage(pageid,pageTitle);
 		
-       
-}
+        }
+	else{
+	        $(".collection"+to+"Column").show();
+	}
 	},
         complete: function(){
 
@@ -290,9 +300,9 @@ function hideCollection(){
 <tr>
 <td id="td1">
 <div class="collectionFirstColumn" style="top: 0px; bottom: 0px; width: 180px; left: 0px;">
-<div class="collectionFirstColumnTitle" style="width: 100%; height: 16px;background: lightgray;border:1px solid"><b><center>Collection</center></b></div>
+<div class="collectionFirstColumnTitle" style="width: 100%; height: 16px;background: lightgray;border:1px solid"><center><b>Level</b></center></div>
 <div class="collectionFirstContent" id="Second" style="left: 0px; right: 0px;  height: 276px; width: 180px; top: 0px;overflow: scroll;" >
-<!--<div style="top: 0px; bottom: 0px;  height: 80px; left: 0px;" >-->
+
 <div class="getCollections" id="19021"  title="Secondary and Higher Secondary Level" >
 <a href="#">Secondary and Higher Secondary Level</a>
 </div>
@@ -300,14 +310,13 @@ function hideCollection(){
 <a href="#">  Elementary Education</a>
 </div>
 
-<!--</div>-->
 </div>
 </div>
 </td>
 <td>
 
 <div class="collectionSecondColumn"  style="top: 0px; bottom: 0px; width: 180px; left: 0px;display: none;">
-<div class="collectionSecondColumnTitle" style="width: 100%; height: 16px;background: lightgray;border:1px solid"><b><center>Subject</center></b></div>
+<div class="collectionSecondColumnTitle" style="width: 100%; height: 16px;background: lightgray;border:1px solid"><center><b>Subject</b></center></div>
 <div class="collectionSecondContent" id="Third" style="left: 0px; right: 0px;  height: 276px; width: 180px; top: 0px;overflow: scroll;" >
 
 
@@ -319,7 +328,7 @@ function hideCollection(){
 <td>
 
 <div class="collectionThirdColumn"  style="top: 0px; bottom: 0px; width: 180px; left: 0px;display: none;">
-<div class="collectionThirdColumnTitle" style="width: 100%; height: 16px;background: lightgray;border:1px solid"><center><b>Topic</b></center></div>
+<div class="collectionThirdColumnTitle" style="width: 100%; height: 16px;background: lightgray;border:1px solid"><center><b>Concept</b></center></div>
 <div class="collectionThirdContent" id="Fourth" style="left: 0px; right: 0px;  height: 276px; width: 180px; top: 0px;overflow: scroll;" >
 
 
@@ -346,7 +355,7 @@ function hideCollection(){
 <h1 id="titleOfPage" style="display:none"> </h1>
 <div class="conceptpage" style="display:none">
     <div style="width: 100%; margin: 0 auto; padding: 0px 0 0px; font: 1.0em arial;">
-        <ul class="tabs" persist="true">
+            <ul class="tabs" persist="true">
             <li onclick="getGraph();"><a href="#" rel="view1">Concept View</a></li>
              <li><a href="#" rel="view2">Related Topics</a></li>
             <li><a href="#" rel="view3">Resources</a></li>
@@ -355,24 +364,23 @@ function hideCollection(){
 	        <li><a href="#" rel="view5">Edit</a></li>
 		    {% endif%}
         </ul>
-        <div class="tabcontents">
+       <div class="tabcontents">
             <div id="view1" class="tabcontent">
 		<div id="chart"></div>
               
             </div>
             <div id="view2" class="tabcontent">
-		
+
 	    </div>	
             <div id="view3" class="tabcontent">
-                
-            </div>
+       
+	    </div>
             <div id="view4" class="tabcontent">
-		
-             
+	
 	    </div>
        {% if user.is_authenticated %}
            <div id="view5" class="tabcontent">
-        	
+         
            </div>
        {% endif %}
 	</div>

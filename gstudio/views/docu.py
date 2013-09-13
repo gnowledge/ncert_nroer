@@ -28,56 +28,23 @@ import hashlib
 from django.template.defaultfilters import slugify
 import os
 import mimetypes
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+from itertools import chain
+from operator import attrgetter
 
 report = "true"
-def createcolln(request):
-    listcl=request.GET["listofcollns"]
-    print "listdoccl=",listcl
-    coltitle=request.GET["coltitle"]
-    editcoln=request.GET["editcoln"]
-    colid=request.GET["colid"]
-    if editcoln=='1':
-        print "inside doceditcol"
-        col=System.objects.get(id=colid)
-        col.gbobject_set.clear()
-        i=0
-        if listcl != "null":
-                listcl=listcl+","
-                listcl=eval(listcl)
-                while i < len(listcl):
-                        objs=Gbobject.objects.get(id=listcl[i])
-                        print "objs",objs
-                        col.gbobject_set.add(objs)
-                        i=i+1
-        col.save()
-        p=col.gbobject_set.all()
-        print "complelst",p
-        t=get_template('gstudio/estngdoccollns.html')
-        html = t.render(Context({'doc':col,'user':request.user}))
-        return HttpResponse(html)
-    else:
-        syscol=Systemtype.objects.get(title='Documentcollection')
-        col=System()
-        col.title=coltitle
-        col.save()
-        col.systemtypes.add(syscol)
-        t='gstudio/doccollns.html'
-        if listcl != "" and listcl != "null":
-                i=0
-                listcl=listcl+","
-                listcl=eval(listcl)
-                while i < len(listcl):
-                        objs=Gbobject.objects.get(id=listcl[i])
-                        col.gbobject_set.add(objs)
-                        i=i+1
-                col.save()
-        return render_to_response(t,RequestContext(request))
 
 
 def docu(request):
 	p=Objecttype.objects.get(title="Document")
 	q=p.get_nbh['contains_members']
+	q = q.filter(status=2)
         documents=getdocuments()
+        htmlot=Objecttype.objects.get(title='Html')
+        html=htmlot.member_objects.all()
+        audioot=Objecttype.objects.get(title='Audio')
+        audio=audioot.member_objects.all()
 	if request.method=="POST":
 		title = request.POST.get("title1","")
 		user = request.POST.get("user","")
@@ -98,6 +65,7 @@ def docu(request):
 		if fav != "" :
 			list1=[]
 			t=Gbobject.objects.filter(title=user+"document")
+                        
 			if t:
 			    t=Gbobject.objects.get(title=user+"document")
 			    if t.get_relations():
@@ -105,7 +73,7 @@ def docu(request):
 					    d=each.right_subject_id
 					    x=Gbobject.objects.get(id=d)
 					    list1.append(x)
-			variables = RequestContext(request,{'documents':list1,'fav':fav,'test1':documents})
+                        variables = RequestContext(request,{'documents':list1,'fav':fav,'test1':documents})
 			template = "gstudio/docu.html"
 			return render_to_response(template, variables)	
 	
@@ -117,23 +85,28 @@ def docu(request):
 			os.system("rm -f "+MEDIA_ROOTNEW+'/'+ti)
 			p=Objecttype.objects.get(title="Document")
 			q=p.get_nbh['contains_members']
-			vars=RequestContext(request,{'documents':q,'val':sdoc,'test1':documents})
+                        vars=RequestContext(request,{'documents':q,'val':sdoc,'test1':documents})
 			template="gstudio/docu.html"
 			return render_to_response(template, vars)
 		if sub3 != "":
 			if sdoc != "":
 				vidon = Objecttype.objects.get(title="Document")
 				vido_new = vidon.get_nbh['contains_members']
-				vido = vido_new.filter(title__contains=sdoc)
+                                vido = vido_new.filter(title__contains=sdoc).filter(status=2)
+                                htmls=html.filter(title__contains=sdoc)
 				vido2 = vido.order_by(sub3)
-				variables = RequestContext(request,{'documents':vido2,'val':sdoc,'test1':documents})
+                                audios=audio.filter(title__contains=sdoc)
+                                vido2=list(chain(vido2,htmls,audios))
+                                variables = RequestContext(request,{'documents':vido2,'val':sdoc,'test1':documents})
 				template = "gstudio/docu.html"
 				return render_to_response(template, variables)
 			else:
 				vidon = Objecttype.objects.get(title="Document")
 				vido_new = vidon.get_nbh['contains_members']
+				vido_new = vido_new.filter(status=2)
 				vido=vido_new.order_by(sub3)
-				variables = RequestContext(request,{'documents':vido,'val':sdoc,'test1':documents})
+                                vido=list(chain(vido,html,audio))
+                                variables = RequestContext(request,{'documents':vido,'val':sdoc,'test1':documents})
 				template = "gstudio/docu.html"
 				return render_to_response(template, variables)
 	
@@ -158,11 +131,13 @@ def docu(request):
 					reportid = imageeachid
 				else:
 					create_object(f,user,content,str(request.user),title)
-			vars=RequestContext(request,{'documents':q,'reportid':reportid,'test1':documents})
+                        vars=RequestContext(request,{'documents':q,'reportid':reportid,'test1':documents})
 			template="gstudio/docu.html"
 			return render_to_response(template, vars)	
 	s=Nodetype.objects.get(title="Document")
 #	t=s.get_nbh['contains_members']
+        q=list(sorted(chain(q,html,audio),key=attrgetter('creation_date')))
+        q.reverse()
 	vars=RequestContext(request,{'documents':q,'docomment':s,'test1':documents})
 	template="gstudio/docu.html"
 	return render_to_response(template, vars)
@@ -210,7 +185,7 @@ def create_object(file,log,content,usr,title):
 			final=final+'-'
 		else:
 			final = final+each1	
-	p.slug=final
+	p.slug=slugify(final)
 	contorg=unicode(content)
 	p.content_org=contorg.encode('utf8')
 	p.status=2
@@ -219,6 +194,11 @@ def create_object(file,log,content,usr,title):
 	p.sites.add(Site.objects.get_current())
 	p.save()
 	s=Author.objects.get(username=log)
+	if s.is_superuser == True:
+		p.status=2
+	else:
+		p.status=1	
+
 	p.authors.add(s)
 	p.save()
 	filetype = mimetypes.guess_type(MEDIA_ROOTNEW2+"/"+str(slugfile))[0]
@@ -331,18 +311,21 @@ def show(request,documentid):
 			objects = Gbobject.objects.get(id=removefavid)
 			objects.get_relations()['is_favourite_of'][0].delete()
 
-	gbobject = Gbobject.objects.get(id=documentid)
-	relation = ""
-	if gbobject.get_relations():
-		if 'is_favourite_of' in gbobject.get_relations():
-			rel = gbobject.get_relations()['is_favourite_of'][0]
-			print rel
-			reluser = rel._left_subject_cache.title
-			if str(reluser) == str(request.user)+str("document"):
-				relation = "rel"
-	vars=RequestContext(request,{'doc':gbobject,'relation':relation})
-	template="gstudio/fulldocument.html"
-	return render_to_response(template,vars)
+	gbobject = Gbobject.objects.filter(id=documentid)
+        if gbobject:
+            gbobject = Gbobject.objects.get(id=documentid)
+	    relation = ""
+	    if gbobject.get_relations():
+		    if 'is_favourite_of' in gbobject.get_relations():
+			    rel = gbobject.get_relations()['is_favourite_of'][0]
+			    reluser = rel._left_subject_cache.title
+			    if str(reluser) == str(request.user)+str("document"):
+				    relation = "rel"
+	    vars=RequestContext(request,{'doc':gbobject,'relation':relation})
+	    template="gstudio/fulldocument.html"
+	    return render_to_response(template,vars)
+        else:
+		raise Http404
 
 
 
@@ -393,3 +376,47 @@ def md5Checksum(filePath):
             break
         m.update(data)
     return m.hexdigest()
+
+def createcolln(request):
+    listcl=request.GET["listofcollns"]
+    print "listdoccl=",listcl
+    coltitle=request.GET["coltitle"]
+    editcoln=request.GET["editcoln"]
+    colid=request.GET["colid"]
+    if editcoln=='1':
+        print "inside doceditcol"
+        col=System.objects.get(id=colid)
+        col.gbobject_set.clear()
+        i=0
+        if listcl != "null":
+                listcl=listcl+","
+                listcl=eval(listcl)
+                while i < len(listcl):
+                        objs=Gbobject.objects.get(id=listcl[i])
+                        print "objs",objs
+                        col.gbobject_set.add(objs)
+                        i=i+1
+        col.save()
+        p=col.gbobject_set.all()
+        print "complelst",p
+        t=get_template('gstudio/estngdoccollns.html')
+        html = t.render(Context({'doc':col,'user':request.user}))
+        return HttpResponse(html)
+    else:
+        syscol=Systemtype.objects.get(title='Documentcollection')
+        col=System()
+        col.title=coltitle
+        col.slug=slugify(coltitle)
+        col.save()
+        col.systemtypes.add(syscol)
+        t='gstudio/doccollns.html'
+        if listcl != "" and listcl != "null":
+                i=0
+                listcl=listcl+","
+                listcl=eval(listcl)
+                while i < len(listcl):
+                        objs=Gbobject.objects.get(id=listcl[i])
+                        col.gbobject_set.add(objs)
+                        i=i+1
+                col.save()
+        return render_to_response(t,RequestContext(request))

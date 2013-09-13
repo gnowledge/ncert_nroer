@@ -30,7 +30,7 @@ class LanguageStoreNotAvailable(Exception):
 
 class NoticeType(models.Model):
     
-    label = models.CharField(_("label"), max_length=40)
+    label = models.CharField(_("label"), max_length=250)
     display = models.CharField(_("display"), max_length=50)
     description = models.CharField(_("description"), max_length=100)
     

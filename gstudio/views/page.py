@@ -19,12 +19,21 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from gstudio.models import *
 from gstudio.methods import *
+from django.http import Http404
    
 def pagedashboard(request,pageid):
    pageid = int(pageid)
    flag= False
    collection=False
-   page_ob = System.objects.get(id=pageid)
+   page_ob = System.objects.filter(id=pageid)
+   if page_ob:
+      page_ob = System.objects.get(id=pageid)
+      if "Wikipage" in [each.title for each in page_ob.systemtypes.all()]:
+         pass 
+      else:
+         raise Http404
+   else:
+       raise Http404
    test=""
    test=get_gbobjects(page_ob.id)
    test1=get_pdrawer()
@@ -84,12 +93,12 @@ def pagedashboard(request,pageid):
    page_ob = System.objects.get(id=pageid)
    collsys=page_ob.systemtypes.all()
    iscoll=collsys.filter(title="Collection")
-   dictobj=getobjs()
+   #dictobj=getobjs()
    if iscoll:
       collection=True
-   nbhdata=get_nbh_of_nbh(pageid)#calling function from method to get nbhood data
+   #nbhdata=get_nbh_of_nbh(pageid)#calling function from method to get nbhood data
    
-   variables = RequestContext(request, {'ot' : ot,'section' : Section,'page_ob' : page_ob,'object':page_ob,'admin_m':admin_m,"flag" : flag,"admin_id" : admin_id,'post':post,'test':test,'collection':collection,'test1':test1,'dictobj':dictobj,'nbhdata':nbhdata})
+   variables = RequestContext(request, {'ot' : ot,'section' : Section,'page_ob' : page_ob,'object':page_ob,'admin_m':admin_m,"flag" : flag,"admin_id" : admin_id,'post':post,'test':test,'collection':collection,'test1':test1})
   
    template = "metadashboard/pgedashboard.html"
    return render_to_response(template, variables)

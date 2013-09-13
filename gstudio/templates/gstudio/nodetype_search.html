@@ -38,8 +38,18 @@ $("#graphcss").hide();
 {% endif %}
 
 {% if object_dic %}
-
+{% for key,value in object_dic.items %}
+	{% if key == 'Page' %}
+               {% if value %}
+               <h2><b>Pages</b></h2>
+	        {% include "gstudio/searchDetail.html" %}
+	       {% endif %}     
+	{% endif %}
+{% empty %}
+<p class="notice">{% trans "Nothing found." %}</p>
+{% endfor %}
 {% endif %}
+{% if commentout %}
 {% for key,value in object_dic.items %}
         {% if key == 'Image' %}
                {% if value %}
@@ -61,7 +71,7 @@ $("#graphcss").hide();
 	       
 	{% if key == 'Document' %}
               {% if value %}
-               <h2><b>Document:</b></h2>
+               <h2><b>Documents:</b></h2>
 	        {% include "gstudio/searchDetail.html" %}
 	       {% endif %}     
 	{% endif %}	
@@ -102,6 +112,5 @@ $("#graphcss").hide();
 {% empty %}
 <p class="notice">{% trans "Nothing found." %}</p>
 {% endfor %}
-
-</div>
+{% endif %}
 {% endblock %}

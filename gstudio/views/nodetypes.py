@@ -67,7 +67,7 @@ from gstudio.views.decorators import protect_nodetype
 from gstudio.views.decorators import update_queryset
 
 
-nodetype_index = update_queryset(object_list, Nodetype.objects.all)
+nodetype_index = update_queryset(object_list, System.objects.all)
 
 nodetype_year = update_queryset(archive_year, Nodetype.published.all)
 
@@ -95,5 +95,5 @@ def nodetype_shortlink(request, object_id):
           edit_nodetype(id_no,rep,usr)
       
   
-    nodetype = get_object_or_404(Nodetype, pk=object_id)
+    nodetype = get_object_or_404(System, pk=object_id)
     return redirect(nodetype, permanent=True)
