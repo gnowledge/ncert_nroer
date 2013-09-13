@@ -1,4 +1,6 @@
 {% load gstudio_tags %}
+
+
  <script type="text/javascript" >
 var availableTags = [];
 var arr=[];
@@ -42,14 +44,14 @@ $(".savesubsec1").hide();
      
 <div>
 {% if user.is_authenticated %}
-	<form method="post" action="">{% csrf_token %}
+	<form method="post"  action="/gstudio/page/gnowsys-page/{{page_ob.id}}/">{% csrf_token %}
 	<input type="hidden" class="reptext" name="replytosection" id="sectionreply" style="visibility:hidden;"/></br>
 	<input type="hidden" class="editval" name="edit" value="empty"/>
 	<input type="hidden" value="{{page_ob.id}}" name = "iden" id="ptitle">
 	<input type="hidden" value="{{page_ob.title}}">
         <input type="hidden" value="{{collection}}" id="iscollection">
-	<input type="hidden" value="{{user.username}}" name ="usr">
-	<input type="hidden" value="{{user.id}}" name = "idusr">
+	<input type="hidden" class="username" value="{{user.username}}" name ="usr">
+	<input type="hidden" class="userid" value="{{user.id}}" name = "idusr">
 	<input type="button" class="editpagecontent" name="{{page_ob.content_org}}" value="Edit Content"/></br>
 	<input type="button" class="savepagecontent" name="{{page_ob.id}}" value="Save"/></br>
 	<input type="submit" class="pagedit" value="Submit"/>
@@ -149,7 +151,7 @@ $(".savesubsec1").hide();
 	{% addpriorpost page_ob.id user %}
 
 	<!-- Add relations for a page -->
-	{% add_res_relation page_ob %}
+	{% add_res_relation page_ob user %}
 	<br/>
 
 

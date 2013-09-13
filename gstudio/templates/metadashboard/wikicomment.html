@@ -33,6 +33,9 @@
   {% else %}
     {% if page_ob.comments_are_open %}
   <p>{% trans "No comments yet." %}</p>
+{% if not user.is_authenticated %}
+   <p><a href="/accounts/login/">Login</a> for comments</p>
+{% endif %}
     {% else %}
   <p>{% trans "Comments are closed." %}</p>
     {% endif %}

@@ -30,7 +30,7 @@ from django.contrib.comments.models import CommentFlag
 from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import smart_unicode
 from django.contrib.comments import get_model as get_comment_model
-
+from unidecode import unidecode
 from tagging.models import Tag
 from tagging.utils import calculate_cloud
 
@@ -71,6 +71,22 @@ def cd_change(tmp_location):
         os.chdir(cd)
 
 @register.assignment_tag
+def get_slug_of_video(videoid):
+    print "videoid",videoid
+    slug=""
+    vid=Gbobject.objects.filter(id=videoid)
+    if vid:
+        Gbobject.objects.get(id=videoid)
+        slug=vid.slug
+    print "videoslug",vid.slug
+    return slug
+
+@register.assignment_tag
+def get_image_object(objectid):
+    obj=Gbobject.objects.get(id=objectid)
+    return obj
+
+@register.assignment_tag
 def get_related_images(imageid):
     try:
         gbobject=Gbobject.objects.get(id=imageid)
@@ -89,6 +105,46 @@ def get_related_images(imageid):
     except:
         pass
     return otherRelatedimages
+
+@register.assignment_tag
+def get_related_docus(docid):
+    try:
+        gbobject=Gbobject.objects.get(id=docid)
+        tag = Tag.objects.get_for_object(gbobject)
+        otherRelateddocs = []
+        for each in tag:
+            print "alliteS",each.items.all()
+            for each1 in each.items.all():
+                tagItem = each1.object
+                print "tagitem",tagItem
+                check  = tagItem.objecttypes.all()
+                if check.filter(title__contains="Document"):
+                    if not tagItem.id == gbobject.id:
+                        print tagItem,"tagit"
+                        otherRelateddocs.append(tagItem)
+    except:
+        pass
+    return otherRelateddocs
+
+@register.assignment_tag
+def get_first_object(imgcolln):
+    col=imgcolln[0]
+    return col
+
+@register.assignment_tag
+def split_images(imglst):
+    split=[]
+    lnimg=len(imglst)
+    j=0
+    while j < lnimg:
+        i=0
+        ins=[]
+        while i < 3 and j < lnimg :
+            ins.append(imglst[j])
+            i=i+1
+            j=j+1
+        split.append(ins)
+    return split
 
 @register.assignment_tag
 def get_doc_download(docid):
@@ -112,6 +168,7 @@ def get_doc_download(docid):
         with cd_change("/tmp/nroer/docdownload/"):
             for files in os.listdir('.'):
                 tar.add(files)
+                print "adding"
         tar.close()
         print "filname",filn
     except:
@@ -165,6 +222,7 @@ def show_image_collections(imgcolid):
 def show_doc_collections(doccolid):
     listcol=get_gbobjects(doccolid)
     return listcol
+
 @register.assignment_tag
 def get_document_collections():
     print "inside getdoccoll"
@@ -184,6 +242,7 @@ def get_image_collections():
     for each in a:
         listcolls[each.id]=each.title
     return listcolls
+
 
 
 @register.inclusion_tag('gstudio/tags/dummy.html')
@@ -444,13 +503,12 @@ def gstudio_breadcrumbs(context, separator='>>', root_name='Home',
     """Return a breadcrumb for the application"""
     path = context['request'].path
     page_object = context.get('object') or context.get('metatype') or \
-                  context.get('tag') or context.get('author') or context.get('image') or context.get('video')or context.get('doc') or context.get('meet_ob')
+                  context.get('tag') or context.get('author') or context.get('image') or context.get('video')or context.get('doc') or context.get('meet_ob')  
     breadcrumbs = retrieve_breadcrumbs(path, page_object, root_name)
     print breadcrumbs,"brcrbs",path,page_object,root_name
     return {'template': template,
             'separator': separator,
             'breadcrumbs': breadcrumbs}
-
 
 @register.simple_tag
 def get_gravatar(email, size=80, rating='g', default=None):
@@ -594,32 +652,88 @@ def put_home_title():
    return var
 
 @register.inclusion_tag('gstudio/addreln.html')
-def add_res_relation(meetingob):
+def add_res_relation(meetingob,user):
   template='gstudio/addreln.html'
  
-  return {'template':template,'meetingob':meetingob}
+  return {'template':template,'meetingob':meetingob,'user':user}
+
+@register.simple_tag
+def get_available_level():
+    listlev=[]
+    lev=System.objects.get(id=19021)
+    s=unidecode(lev.title)
+    listlev.append(str(s))
+    lev=System.objects.get(id=18968)
+    s=unidecode(lev.title)
+    listlev.append(str(s))
+    lev=System.objects.get(id=39965)
+    s=unidecode(lev.title)
+    listlev.append(str(s))
+    return listlev
+
+
+@register.simple_tag
+def get_available_subjs():
+    listsubjs=[]
+    wikis=Systemtype.objects.get(title='Collection')
+    wiki=wikis.member_systems.all()
+    for each in wiki:
+#unicodedata.normalize('NFKD', a.title).encode('ascii','ignore')
+#        s=unicodedata.normalize('NFKD', each.title).encode('ascii','ignore')+" - with inverse - "+unicodedata.normalize('NFKD',each.inverse).encode('ascii','ignore')
+        s=unidecode(each.title)
+        listsubjs.append(str(s))
+    return listsubjs
+
 
 @register.simple_tag
 def get_available_rts():
-    listrts=[]
+    listrts={}
     for each in Relationtype.objects.all():
-        s=each.title
-        listrts.append(str(s))
-    return str(listrts)
+#unicodedata.normalize('NFKD', a.title).encode('ascii','ignore')
+#        s=unicodedata.normalize('NFKD', each.title).encode('ascii','ignore')+" - with inverse - "+unicodedata.normalize('NFKD',each.inverse).encode('ascii','ignore')
+        s=unidecode(each.title)+" - with inverse - "
+        listrts[str(s)]=each.id
+    return listrts
 
 @register.simple_tag
 def get_available_objects():
-    listsubjs=[]
+    listsubjs={}
+    # obtype=""
+    # vid=Nodetype.objects.get(title='Video')
+    # img=Nodetype.objects.get(title='Image')
+    # doc=Nodetype.objects.get(title='Document')
+    # col=Systemtype.objects.get(title='Collection')
+    # wiki=Systemtype.objects.get(title='Wikipage')
+    # meet=Systemtype.objects.get(title='Meeting')
     for each in Gbobject.objects.all():
-        s=each.title
-        listsubjs.append(each.__str__())
+        obtypes=each.objecttypes.all()
+        if not ('page box of' in each.title or 'message box of' in each.title):
+            # if vid in obtypes:
+            #     obtype="is a video"
+            # if img in obtypes:
+            #     obtype="is an image"
+            # if doc in obtypes:
+            #     obtype="is a document"
+            # checksys=System.objects.filter(id=each.id).count()
+            # if checksys > 0:
+            #     sysob=System.objects.get(id=each.id)
+            #     systype=sysob.systemtypes.all()
+            #     if col in systype:
+            #         obtype="is a collection"
+            #     elif wiki in systype:
+            #         obtype="is a text document"
+            #     elif meet in systype:
+            #         obtype="is a Thread"
+            s=each.id 
+            listsubjs[each.id]=s
     return str(listsubjs)
 
 
 @register.inclusion_tag('gstudio/edittitle.html')
 def edit_title(objectid,objecttitle):
+  gbobject = Gbobject.objects.get(id=objectid)  
   template='gstudio/edititle.html'
-  return {'template':template,'objectid':objectid,'objecttitle':objecttitle}
+  return {'template':template,'objectid':objectid,'objecttitle':objecttitle,'gbobject':gbobject}
 
 @register.simple_tag
 def get_add_tag():
@@ -650,8 +764,9 @@ def addpriorpost(objectid,user):
 
 @register.inclusion_tag('gstudio/addingtag.html')
 def addtag(viewtag,objectid,user):
+  gbobject = Gbobject.objects.get(id=objectid)
   template='gstudio/addingtag.html'
-  return {'viewtag':viewtag,'objectid':objectid,'user':user}
+  return {'viewtag':viewtag,'objectid':objectid,'user':user,'gbobject':gbobject}
 
 @register.simple_tag
 def get_pri_post_page():

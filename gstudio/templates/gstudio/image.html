@@ -6,15 +6,32 @@
 {% load adminmedia grp_tags %}
 {% load i18n %}
  {% block title %}Images{% endblock %}
+
 {% block content %}
+<script src="/static/gstudio/js/jquery.form.js" type="text/javascript"></script>
+<script src="/static/gstudio/js/main.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
-<script src="/static/gstudio/js/jquery.form.js" type="text/javascript"></script>
 <script type="text/javascript" >
+
+
+$("#collectionsearch").keyup(function () {
+            alert("aa");
+       //     $("#lstBox1 option").show();
+       //     $("#lstBox1 option:not(option:contains('" + $("#collectionsearch").val() + "'))").hide();
+        });
+
+
+
+
 $(document).on('click',"#lstvalue",function(){
-        
+
+           $("#coll input").show();
+           $("#imagecollections").show();
+          $("#imagediv").css({"position":"relative","margin-top":"60px"})
         var arr=[];
         var arr1=[];
+        $("#collectionimg").hide();
         opts = lstBox2.options, len = opts.length;
         if (len == 0){
                    arr=[];
@@ -46,14 +63,7 @@ $(document).on('click',"#lstvalue",function(){
          if (coltitle == ""){alert("Please type collection name");
                       $("#imgcolname").focus();}
  else{
-         $("#collectionimg").hide();
-
-				       $(".addtoimgdrawer").css({"display":""});
-				       $("#imagecollections").css({"position":"absolute","margin-top":"-5px"})
-				       $("#imagediv").css({"position":"relative","margin-top":"60px"})
-
-				          $("#coll").show();
-				       $("#lstBox2").empty();
+                              $("#lstBox2").empty();
                                  $("#imgcolname").val("");
 
                              $.ajax({
@@ -69,6 +79,9 @@ $(document).on('click',"#lstvalue",function(){
     });
 
 
+
+</script>
+<script type="text/javascript">
   $(function(){
           $("#mydropdown").change(function(event){
             $("option:selected", $(this)).each(function(){
@@ -85,7 +98,7 @@ $(window).load(function(){
 $(".delimgcolln").click(function(){
        $("#coll").css({"margin-top":"0px;","display":""});
   var obid = this.id;
-  r = confirm("Please confirm delete ")
+        r = confirm("Please confirm delete ")
         if (r==true)
         {
          $("#lstBox2").empty();
@@ -107,11 +120,10 @@ $("#content").css({"opacity":"",})
 });
 }
 });
-
 var isImage=false;
 $("#content").css({"width": "100%"});});
 $(window).load(function() {
- $("#chart").hide();
+ $("#chart").hide();		
 $("#collectionimg").hide();});
 $(window).load(function() {
  $("#graphcss").hide();
@@ -134,6 +146,7 @@ jQuery(document).ready(function($) {
 			
 	});
 	$("#save").click(function(){
+        alert("saveimage");
         var org_data = $("#gnoweditor").val();
 	var encode_data = encodeURIComponent(org_data);
 	var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " "));       
@@ -156,7 +169,7 @@ jQuery(document).ready(function($) {
 });
 </script>
 <script type="text/javascript" >
-
+jQuery.noConflict();
 jQuery(document).ready(function($) {
 $(".gbobject-image1").live({
 mouseenter: function() {
@@ -288,28 +301,38 @@ Description:&nbsp;&nbsp;<b></b>
 </div>
 {% endif %}
 </div>
-
+<br>
 {% if reportid %}
 <h2><font color="red">this image is already uploaded on this site</font></h2>
 <a href="/gstudio/resources/images/show/{{ reportid }}/"> <font size="4">to see this image click here</font></a><br/><br/><br/>
 {% endif %}
+
+
+<br/>
 <div id="imagecollections">
+<br/>
 {% get_image_collections as col %}
 {% if col %}
 <font size="4" color="black">Image Collections</font><br/>
 {% for key,value in col.items %}
 <a href="/gstudio/resources/images/show/{{key}}/">
 {{value}}</a>&nbsp;;
-{% if user.is_authenticated %}
+
+{% for author in image1.authors.all %}
+	{% ifequal author.username user.username %}
 <a class="delimgcolln" id="{{key}}" value="{{key}}" title="delete {{value}}">
 <img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/>
 </a>
-{% endif %}
+        {% endifequal %}
+{% endfor %}
 
 
 {% endfor %}
 {% endif %}
 </div>
+
+
+
 <div id="coll">
 
             {% for each in test %}
@@ -317,7 +340,7 @@ Description:&nbsp;&nbsp;<b></b>
                     <li class="list"><abbr title="Collection"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/folder.png"><abbr> <a href={{each.get_view_object_url}}> {{each.title}}</a></li>
                 {% else %}
                     <li class="list"><abbr title="Page"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/doc.png"></abbr><a href={{each.get_view_object_url}}> {{each.title}}</a></li>
-                    {% endif %}
+		    {% endif %}
             {% endfor %}
 
                {% if collection %}
@@ -329,8 +352,8 @@ Description:&nbsp;&nbsp;<b></b>
 
                  {% else %}
                  {% if user.is_authenticated %}
-<br/>
-  <input type="button" class="addtoimgdrawer" value="Create Collection" name="addtodrawer"/>
+
+                 <input type="button" class="addtoimgdrawer" value="Create Collection" name="addtodrawer"/>
 
                  {% endif %}
 
@@ -349,7 +372,8 @@ Description:&nbsp;&nbsp;<b></b>
                     <option id={{key}}>{{value}}</option>
 
                   {% endfor %}
-                   </select>
+
+		    </select>
          </td>
          <td style='width:50px;text-align:center;vertical-align:middle;'>
        <input type='button' id='btnUp' value ='  ^  '/><br/>
@@ -365,8 +389,8 @@ Description:&nbsp;&nbsp;<b></b>
              <option id={{each.id}}>{{each.title}}</a></option>
           {% endfor %}
           </option>
-</select>
-  </td><br>
+        </select>
+    </td><br>
     </tr>
     <tr>
     <td>
@@ -388,20 +412,23 @@ Description:&nbsp;&nbsp;<b></b>
 </div>
 
 
- <div>
-{% if fav %}
+
+<!-- <div>
+
+ {% if fav %}
 <h2 style="">Favourite Images</h2>
 {% else %}
 <div class="blank2"></div>
-<h4 style="">Image Gallery</h4>
+
 <br/>
-{% endif %}
+{% endif %}-->
+<h4 style="">Image Gallery</h4>
 <div id="imageGallery">
 {% autopaginate images 40 %}
 <table width="100%">
     <tr>
 {% for image1 in images %}
-        <td class="gbobject-image1" id = "{{image1.id}}"><a href="/gstudio/resources/images/show/{{image1.id}}"><img src="{% admin_media_prefix %}img/{{image1.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"></a>
+        <td class="gbobject-image1" id = "{{image1.id}}"><a  class="preview" title="{{image1.title}}" rel="{% admin_media_prefix %}img/{{image1.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" href="/gstudio/resources/images/show/{{image1.id}}"><img src="{% admin_media_prefix %}img/{{image1.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"></a>
 <form method="post" action="">{% csrf_token %}
 {% for author in image1.authors.all %}
 	{% ifequal author.username user.username %}&nbsp;
@@ -414,72 +441,12 @@ Description:&nbsp;&nbsp;<b></b>
 	{% endifequal %}
 {% endfor %}
 </form>
-        </td>  
+<td>
 	     
     {% if not forloop.last and forloop.counter|divisibleby:"5" %}
     </tr>
-    <tr>
-				<td colspan="5">
- 				 {%  with x=forloop.counter|add:"-5"|stringformat:"s" %}
- 				 {% with y=forloop.counter|stringformat:"s" %}
- 				  {% with count=x|add:":"|add:y %}
- 				{% for image in images|slice:count %}
- 					 				
- 					<div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
-					
-      					<center>
-					<h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
-					
-					</h2></center><br/>
-					
-					<center>
-					<a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
-					<img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
-					</a></center>
-					&nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</a> ]					&nbsp;
-
-					{% for author in image.authors.all %}
- 					<font color = 'black'>Posted By : </font> <font >{{author}}</font>
-					{% endfor %}
-					</div>
-					
- 				{% endfor %}
- 					{% endwith %}
- 				{% endwith%}
- 			{% endwith %}
- 			</td>
- 		</tr>
-		
-     {% endif %}	
-{% endfor %}
-    </tr>
-<tr>
-				<td colspan="5">
- 				 
- 				{% for image in images|slice:"0:40" %}
- 					 				
- 					<div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
-					
-      					<center>
-					<h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
-					
-					</h2></center><br/>
-					
-					<center>
-					<a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
-					<img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
-					</a></center>
-					&nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</a> ]					&nbsp;
-
-					{% for author in image.authors.all %}
- 					<font color = 'black'>Posted By : </font> <font >{{author}}</font>
-					{% endfor %}
-					</div>
-					
- 				{% endfor %}
-				
- 				
- 			</td>
+  {% endif %}
+   {% endfor  %} 
  		</tr>
 </table>
 

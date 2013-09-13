@@ -22,6 +22,7 @@ from django.template.loader import get_template
 from django.template import Context
 from tagging.models import Tag
 from django.template.defaultfilters import slugify
+from unidecode import unidecode
 import json
 
 def checkrt(request):
@@ -117,7 +118,10 @@ def addrelnform(request,meetob):
         ob=Relationtype()
         ob.title=title
         ob.inverse=inverse
-        ob.slug=slug
+        if slug:
+            ob.slug=slugify(unidecode(slug))
+        else:
+            ob.slug=slugify(unidecode(title))
         left_subjecttype=NID.objects.get(title='Page')
         left_applicable_nodetypes =unicode('OT')
         right_subjecttype=NID.objects.get(title='Page')
@@ -136,19 +140,19 @@ def addrelnform(request,meetob):
 
 def addreln(request,meetob):
     a=Relation()
+    if meetob:
+        j=System.objects.get(id=meetob)
     try:
         if request.method == 'GET' :
             relntype=request.GET['relnobj']
             obobj=request.GET['obobject']
-        rt=Relationtype.objects.filter(title=relntype)
+        rt=Relationtype.objects.filter(id=relntype)
         a.left_subject=Gbobject.objects.get(id=meetob)
-        obt=Gbobject.objects.filter(title=obobj)
-#        rt=Relationtype.objects.filter(title=relntype)
-        print rt,obt
+        obt=Gbobject.objects.filter(id=obobj)
         if rt:
-            a.relationtype=Relationtype.objects.get(title=relntype)
+            a.relationtype=Relationtype.objects.get(id=relntype)
         if obt:
-            obt=Gbobject.objects.get(title=obobj)
+            obt=Gbobject.objects.get(id=obobj)
         a.right_subject=obt
         a.save()
         j=System.objects.get(id=meetob)
@@ -168,10 +172,12 @@ def addreln(request,meetob):
 def deleteRelation(request,meetingob):
     if request.method == 'GET' :
         relation_ajax_id=request.GET['relation_ajax_id']
-   
+    print "AA",relation_ajax_id
     relation = Relation.objects.filter(id=relation_ajax_id)
     if relation:
+        print "insif"
 	relation.delete()
+        print "dionedel",meetingob
     j=System.objects.get(id=meetingob);
     t = get_template('gstudio/addrelnform_refresh.html')
     html = t.render(Context({'meetingob':j}))

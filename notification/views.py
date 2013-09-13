@@ -38,6 +38,7 @@ def notices(request):
             and to be displayed on the site.
     """
     notices = Notice.objects.notices_for(request.user, on_site=True)
+    
 
     return render_to_response("gstudio/notification/notice.html", {
         "notices": notices,

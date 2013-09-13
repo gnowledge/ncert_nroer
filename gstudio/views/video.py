@@ -31,6 +31,7 @@ from django.template.defaultfilters import slugify
 import hashlib
 import threading
 from tagging.models import Tag, TaggedItem
+from django.http import Http404
 import json
 report = "true"
 global md5_checksum
@@ -388,7 +389,8 @@ def video(request):
 	# 		a.save()
 		
 	svid=""
-	q=p.get_nbh['contains_members']
+	videolist=p.get_nbh['contains_members']# omiting first 80 videos for temporary Aug 12
+	q=p.get_nbh['contains_members'][80:len(videolist)-1]
 	variables = RequestContext(request,{'vids':q,'val':svid})
 	template = "gstudio/video.html"
 	return render_to_response(template, variables)	
@@ -515,31 +517,40 @@ def show(request,videoid):
 		if contenttext !="":
 			 edit_description(vidid,contenttext,str(request.user))	
 
-	gbobject = Gbobject.objects.get(id=videoid)
-	relation = ""
-	if gbobject.get_relations():
-		if 'is_favourite_of' in gbobject.get_relations():
-			rel = gbobject.get_relations()['is_favourite_of'][0]
-			print rel
-			reluser = rel._left_subject_cache.title
-			if str(reluser) == str(request.user)+str("video"):
-				relation = "rel"
+	gbobject = Gbobject.objects.filter(id=videoid)
+        if gbobject:
+            gbobject = Gbobject.objects.get(id=videoid)
+	    if "Video" in [each.title for each in gbobject.objecttypes.all()]:
+		    relation = ""
+		    if gbobject.get_relations():
+			    if 'is_favourite_of' in gbobject.get_relations():
+				    rel = gbobject.get_relations()['is_favourite_of'][0]
+				    print rel
+				    reluser = rel._left_subject_cache.title
+				    if str(reluser) == str(request.user)+str("video"):
+					    relation = "rel"
 
-	tag = Tag.objects.get_for_object(gbobject)
-	otherRelatedVideo = []
-	for each in tag:
-	    for each1 in each.items.all():
-	        tagItem = each1.object
-	        check  = tagItem.objecttypes.all()
-	        if check.filter(title__contains="Video"):
-	            if not tagItem.id == gbobject.id:
-	                dictOfObject = {}
-	                dictOfObject= {"id":tagItem.id,"title":tagItem.title,"slug":tagItem.slug}
-			otherRelatedVideo.append(dictOfObject)
+		    tag = Tag.objects.get_for_object(gbobject)
+		    otherRelatedVideo = []
+		    for each in tag:
+			    for each1 in each.items.all():
+				    tagItem = each1.object
+				    if tagItem != None: 
+					    check  = tagItem.objecttypes.all()
+					    if check.filter(title__contains="Video"):
+						    if not tagItem.id == gbobject.id:
+							    dictOfObject = {}
+							    dictOfObject= {"id":tagItem.id,"title":tagItem.title,"slug":tagItem.slug}
+							    otherRelatedVideo.append(dictOfObject)
 	
-	vars=RequestContext(request,{'video':gbobject,'relation':relation,'otherRelatedVideo':otherRelatedVideo})
-	template="gstudio/transcript.html"
-	return render_to_response(template,vars)
+		    vars=RequestContext(request,{'video':gbobject,'relation':relation,'otherRelatedVideo':otherRelatedVideo})
+		    template="gstudio/transcript.html"
+		    return render_to_response(template,vars)
+	    else:
+		    raise Http404
+
+        else:
+            raise Http404
 
 
 def edit_description(sec_id,title,usr):

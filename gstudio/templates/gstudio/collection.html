@@ -1,0 +1,27 @@
+{% extends "gstudio/base.html" %}
+{% load gstudio_tags %}
+{% load tagging_tags %}
+{% load adminmedia grp_tags %}
+{% load i18n %}
+ {% block title %}{{objecttype}}{% endblock %}
+{% block content %}
+<h1> {{objecttype}} Collection </h1>
+
+      {% for each in objectList  %}
+       <div style="padding-left:30px">
+      		  <h2 class="nodetype-title">
+      		     <a href="/gstudio/resources/documents/show/{{each.id}}/">{{each.title}}</a>
+          	  </h2>
+               <img src="/static/gstudio/img/home/tag.jpg" />
+                {% tags_for_object each.ref as tag_list %}
+               	{% for tag in tag_list %}
+                <span><a href="{% url objectapp_tag_detail tag %}"title="Tag {{ tag }}" rel="tag">{{ tag }}</a></span>
+                <span>{% if not forloop.last %},{% endif %}</span>
+                {% empty %}
+                <span>{% trans "No tags" %}</span>
+                {% endfor %}
+                </div>
+               {% endfor %}
+
+
+{% endblock %}

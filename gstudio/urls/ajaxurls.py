@@ -46,5 +46,6 @@ urlpatterns = patterns('gstudio.views.ajaxviews',
                        url(r'^getConceptPageGraphText/$', 'ajaxgetConceptPageGraphText', name='ajax_getConceptPageGraphText'),
                        url(r'^deletedoccolln/$','Deldoccolln',name='ajax_deldoccolln'),
                        url(r'^deleteimgcolln/$','Delimgcolln',name='ajax_delimgcolln'),
-
+                       url(r'^notifyuser/$','notifyuser',name='ajax_wikieditnotify'),
+                       
                        )

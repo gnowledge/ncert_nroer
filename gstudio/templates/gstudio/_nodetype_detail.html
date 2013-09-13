@@ -5,7 +5,7 @@
   <div class="nodetype-header span-16 last">
  <h2 class="nodetype-title">
     {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-document'  %}
-      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Document</font>
+      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Document </font>
 
       {% else %}
       {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-image'  %}
@@ -14,6 +14,18 @@
       {% else %}
       {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-video'  %}
       <a href="/gstudio/resources/videos/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Video</font>
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-audio'  %}
+      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Audio</font>
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-graphics'  %}
+      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Graphics</font>
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-multimedia'  %}
+      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Multimedia</font>
+      {% else %}
+      {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-presentation'  %}
+      <a href="/gstudio/resources/documents/show/{{object.id}}">{{object.title}}</a>&nbsp;<font size="2" color="black"> is a Presentation</font>
       {% else %}
       {% ifequal object.ref.get_nbh.member_of|slugify  'nodetype-ot-topic'  %}
 		{% for each in object.ref.in_gbobject_set_of.all %}
@@ -52,7 +64,7 @@ document.write("is a Loom thread" );
 }
 if(c == "wikipage"){
 document.getElementById("{{object.id}}awikiloom").setAttribute("href","/gstudio/page/gnowsys-page/{{object.id}}");
-document.write("is a Wiki page" );
+document.write("is a Text document" );
 }
 
 }
@@ -75,12 +87,16 @@ document.write("is a {{object.nodemodel}}");
 {% endifequal %}
 {% endifequal %}
 {% endifequal %}
+{% endifequal %}
+{% endifequal %}
+{% endifequal %}
+{% endifequal %}
 	{% endifequal %}
        {% endifequal %}
        {% endifequal %}
 <br/><img src="/static/gstudio/img/home/tag.jpg" />
 
-      {% tags_for_object object.ref as tag_list %}
+      {% tags_for_object object.gbobject as tag_list %}
        	   {% for tag in tag_list %}
        	   <span><a href="{% url objectapp_tag_detail tag %}"
               title="Tag {{ tag }}" rel="tag">{{ tag }}</a></span>

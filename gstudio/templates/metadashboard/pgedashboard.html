@@ -30,7 +30,42 @@ $(window).load(function() {
  $(".pagedit").hide()
 $(".savesubsec1").hide();
  $(".submitsubsec1").hide();
-  });
+
+<!--Loading data for Resources by Ajax!-->
+$.ajax({
+	url: '/gstudio/ajax/getConceptPageResources/',
+	type: 'POST',
+	data: {objectid:{{object.id}},csrfmiddlewaretoken: '{{ csrf_token }}'},
+	beforeSend: function() {
+       $("#view3").append('<img id="ajax_image_custom" width="50" style="padding-left:275px" src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif">');
+                              },
+	success: function(result){
+		$("#view3").html(result);
+		
+	     },
+        complete: function(){
+
+		  }
+	});
+<!--Loading data for Related Topic by Ajax!-->
+$.ajax({
+	url: '/gstudio/ajax/getConceptPageGraphText/',
+	type: 'POST',
+	data: {objectid:{{object.id}},csrfmiddlewaretoken: '{{ csrf_token }}'},
+	beforeSend: function() {
+        $("#view2").append('<img id="ajax_image_custom" width="50" style="padding-left:275px"  src="{% admin_media_prefix %}grappelli/img/ajax-loader1.gif">');      
+                              },
+	success: function(result){
+
+		$("#view2").html(result);
+		
+	     },
+        complete: function(){
+
+		  }
+	});
+
+ });
 </script>
       
   <script type="text/javascript" >
@@ -142,15 +177,22 @@ $(".savesubsec1").hide();
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/static/gstudio/js/tabcontent.js" type="text/javascript"></script>
     <link href="/static/gstudio/css/tabcontent.css" rel="stylesheet" type="text/css" />
- <h2>  <font id="fonttitleid" >{{ page_ob.title }} </font> {% if user.is_authenticated %} {% edit_title page_ob.id page_ob.title %} {% endif %}</h2>
-{% with page_ob.html_content|safe as page_ob_content %}
-         <div><i> {{ page_ob_content|striptags|truncatewords:"20" }}</i></div>
+ <h2>  <font id="fonttitleid" >{{ page_ob.title }} </font>
+{% for author in page_ob.authors.all %}
+	{% ifequal author.username user.username %}
+            {% edit_title page_ob.id page_ob.title %} 
+{% endifequal %}
+{% endfor %}
+</h2>
+ {% with page_ob.html_content|safe as page_ob_content %}
+         <div><i>{{ page_ob_content|striptags|truncatewords:"100" }}
+</i></div>
          {% endwith %}
 
     <div style="width: 100%; margin: 0 auto; padding: 0px 0 0px; font: 1.0em arial;">
         <ul class="tabs" persist="true">
             <li onclick="getGraph();"><a href="#" rel="view1">Concept View</a></li>
-             <li><a href="#" rel="view2">Related Topic</a></li>
+             <li><a href="#" rel="view2">Related Topics</a></li>
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
 	        {% if user.is_authenticated %}
@@ -163,10 +205,10 @@ $(".savesubsec1").hide();
               
             </div>
             <div id="view2" class="tabcontent">
-	       {% include "metadashboard/graphText.html"%}
+	      
 	    </div>
             <div id="view3" class="tabcontent">
-               {% include "metadashboard/wikiResources.html" %} 
+              
             </div>
             <div id="view4" class="tabcontent">
              {% include "metadashboard/wikicomment.html"%}

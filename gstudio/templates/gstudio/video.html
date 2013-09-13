@@ -198,7 +198,6 @@ background: green;
 
 {% autopaginate vids 40 %}
 
-
 <h2 style="">Video Library</h2>
 <div id="upperdiv">
 <div id="divsearch">
@@ -276,7 +275,7 @@ document.getElementById('headvideo').style.visibility="visible";
 	<select id="selectvideocollections" multiple="multiple" style="width:250px;height:160px">
 	</select>
 </div>
-<div class="showVideos" style="max-height:300px;min-height:160px;width:400px;overflow-y:auto;padding-left:60px;padding-top:10px;">
+<div class="showVideos" style="max-height:300px;min-height:225px;width:400px;overflow-y:auto;padding-left:60px;padding-top:10px;">
 </div>
 </div>
 <br>
@@ -294,8 +293,9 @@ document.getElementById('headvideo').style.visibility="visible";
 {% if fav %}
 <h2 style="">Favourite Videos</h2><br/>
 {% else %}
-<h2 style="">List of Videos in the library </h2><br/>
 {% endif %}
+<h2 style="">List of Videos in the library </h2><br/>
+
 
 <div id="listvideo">
 <table class="tblClass">
@@ -306,6 +306,7 @@ document.getElementById('headvideo').style.visibility="visible";
 	<input type="hidden" name = "full" value ={{video.slug}}>
 	<a href="/gstudio/resources/videos/show/{{video.id}}/">
 	<img src="http://wetube.gnowledge.org/{{video.slug}}/icon128.jpg" alt="{{ video.title }}" style="border-radius: 10px 10px 10px 10px;" title="{{ video.title }}">
+	<div id="vidtitle">{{ video.title }}</div>
 	</a>
 	{% for author in video.get_nbh.posted_by %}
   	<input type="hidden" name="authorname" value="{{ author }}"  />

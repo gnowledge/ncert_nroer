@@ -23,6 +23,7 @@ from notification import models as notification
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from gstudio.templatetags.gstudio_tags import show_nodesystem
+from django.http import Http404
 
 def notifyactivity(request,activ,sys_id,userid):
         print "activity =",activ
@@ -113,6 +114,16 @@ def groupover(request,sys_id, endtime):
     
 def groupdashboard(request,grpid):
    grpid = int(grpid)
+   meeting_ob = System.objects.filter(id=grpid)
+   if meeting_ob:
+      meeting_ob = System.objects.get(id=grpid)
+      if "Meeting" in [each.title for each in meeting_ob.systemtypes.all()]:
+         pass 
+      else:
+         raise Http404
+   else:
+       raise Http404
+
    (later, meetover, starttime, endtime) = get_time(grpid)
    attob = "true"
  #  if meetover:

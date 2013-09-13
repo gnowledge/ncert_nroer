@@ -46,25 +46,32 @@ jQuery(document).ready(function($) {
 $(".deletepriorpage").click(function(){
 var id1 = {{objectid}},
     id2 = this.id;
-r = confirm("Please confirm delete ")
+    tagname=$(this).attr('value');
+   username="{{user.username}}";
+var response_content = "Request for Delete page, name:"+tagname+" on page";   
+r = confirm("Do you want to send Delete Request ")
 if (r==true)
   {
 tagname = arr;
 $.ajax({
-	url: '/gstudio/ajax/deletepriorpage/',
-	type: 'POST',
-	data: {objectid1:id1,objectid2:id2,csrfmiddlewaretoken: '{{ csrf_token }}' },
-        beforeSend: function() {
+	//url: '/gstudio/ajax/deletepriorpage/',
+	//type: 'POST',
+	//data: {objectid1:id1,objectid2:id2,csrfmiddlewaretoken: '{{ csrf_token }}' },
+url: '/gstudio/ajax/notifyuser/',
+type: 'GET',
+data: {response_content:response_content,pageid:id1,username:username},
+beforeSend: function() {
               $("#ajax_load_image").show();
               $("#content").css({"opacity":"0.1",})
                               },
-	success: function(data){
-		$('#priorpostpages').html(data);
+success: function(data){
+		//$('#priorpostpages').html(data);
+                alert("Request sent to Admin");
 		$("#chart").text("");
 		fgraph();
 		},
-        complete: function(){
-                $("#ajax_load_image").hide();
+complete: function(){
+               $("#ajax_load_image").hide();
 		$("#content").css({"opacity":"",})
 		  }
 });  

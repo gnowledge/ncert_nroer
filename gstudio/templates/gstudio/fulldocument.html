@@ -9,21 +9,19 @@
 <script type="text/javascript" src="/static/gstudio/js/jquery.min.js" ></script>
 <script type="text/javascript" src="/static/gstudio/js/jquery-ui.js" ></script>
 <script type="text/javascript" src="/static/gstudio/js/underscore.js" ></script>
-	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/savedata.js"></script>
-	 <script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/savedata.js"></script>
+<script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
     <script type="text/javascript" >
       $(window).load(function() {
       $("#content").css({
     "width": "600px",});});
 $(window).load(function() {
- $("#chart").hide();
-  $("#graphcss").hide();   
-{% if "html" in doc.objecttypes.all|slugify %}
- $("#htmlcontent").load("/static/img/{{doc.altnames}}");
-{% endif %}
-
+ $("#chart").hide();});
+$(window).load(function() {
+ 
+$("#graphcss").hide();
 
   });
 jQuery(document).ready(function($) {
@@ -50,41 +48,72 @@ jQuery(document).ready(function($) {
 
 });
 </script>
+<!-- script for loading html in div!-->
+<script type="text/javascript">
+ $(window).load(function() {
+  {% if "html" in doc.objecttypes.all|slugify %}
+  $("#htmlcontent").load("/static/img/{{doc.altnames}}");
+  {% endif %} 
+});
 </script>
 
 <link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
-
-
 <br/>
+
+<h2><font id="fonttitleid" size="5" >{{doc.title}}</b></font></h2>
+
+<div class="blank2"></div>
+{% get_related_docus doc.id as related_docs %}
+<div class="right">
+{% if related_docs %}
+<div id="extra_info">
+<div class="side_heading">Related Documents</div>
+{% for each in related_docs %}
+
+         <li class="list"><abbr title="Collection"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/doc.png"></abbr><a href=
+"{{each.get_view_object_url}}">{{each.title}}</a><br/>
+{% endfor %}
+</div>
+{% endif %}
+</div>
+
+<!--<div id="final_content">!-->
 {% if user.is_authenticated %}
-<h2><font id="fonttitleid" >{{doc.title}}</font></h2>
 {% edit_title doc.id doc.title %}
 {% endif %}
 <br/>
 {% if "html" in doc.objecttypes.all|slugify %}
 <div id="htmlcontent">
 </div>
-{% endif %}
-
+{% endif %} 
+{% if doc.authors.all %}
 <font color = 'black'>Posted By : </font>
+{% endif %}
 {% for author in doc.authors.all %}
   <font >{{author}}</font>
 {% endfor %}
 <br>
-{% check_if_collection doc.id as colln %}
+
+
 
 <font color = 'black'>Posted At : </font><font >{{doc.creation_date}}</font>
 <br/>
-<font color = 'black'>Download: </font><a href="{% admin_media_prefix %}img/{{doc.altnames}}">Click to download!!</a>
+{% ifequal doc.ref.get_nbh.member_of|slugify  'nodetype-ot-audio'  %}
+<font color = 'black'>Play: </font>
+<audio controls height="15px">
+  <source src="{% admin_media_prefix %}img/{{doc.altnames}}">
+Your browser does not support the audio element.
+</audio>
+<br/>
+{% endifequal %}
+
 <br>
 <font color = 'black'>Description:</font>
-{%autoescape on%}
+{% autoescape on%}
 {% with doc.html_content|safe as doc_content %}
      {{doc_content}}
 {% endwith %}
 {% endautoescape%}
-
-
 
 
 
@@ -99,6 +128,9 @@ jQuery(document).ready(function($) {
 </form>
 {% endif %}
 
+<br/>
+{% check_if_collection doc.id as colln %}
+
 <div id="doccolln">
 
 {% if colln %}
@@ -106,16 +138,15 @@ jQuery(document).ready(function($) {
 
 {% if doccolln %}
 <font size="3">Documents in this collection:</font><br/>
-{% endif %}
+
   {% for vals in doccolln %}
          <li class="list"><abbr title="Collection"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/doc.png"></abbr><a href=
-"{{vals.get_view_object_url}}">{{vals.title}}</a><img src="{% admin_media_prefix %}img/{{vals.thumb}}-thumbnail" crop="center" quality="90" \
-style
-="none"><br/>
+"{{vals.get_view_object_url}}">{{vals.title}}</a><br/>
   {% endfor %}
 <br/>
-
+{% endif %}
 {% show_edit_doc_collection doc.id user %}
+
 {% endif %}
 
 <br/>
@@ -132,8 +163,6 @@ Can't get source files
 {% endif %}
 
 </div>
-
-
 
 <br/>
 {% ifequal doc.rating.get_rating 0 %}
@@ -233,3 +262,5 @@ Can't get source files
 {% endblock %}
 {% block graph %}
 {% endblock %}
+<!--</div>-->
+<div class="clear"></div>

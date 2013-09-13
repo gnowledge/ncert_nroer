@@ -9,9 +9,106 @@
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/savedata.js"></script>
 <script type="text/javascript" src="/static/gstudio/js/home/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+<!-- include  carouFredSel plugin -->
+<script type="text/javascript" language="javascript" src="/static/gstudio/js/jquery.carouFredSel-6.2.1-packed.js"></script>
 
+
+<style type="text/css">
+.image_carousel {
+padding: 15px 0 15px 40px;
+position: relative;
+}
+.image_carousel img {
+border: 1px solid #ccc;
+background-color: white;
+padding: 9px;
+margin: 7px;
+display: block;
+float: left;
+}
+a.prev, a.next {
+background: url(/static/gstudio/img/miscellaneous_sprite.png) no-repeat transparent;
+width: 45px;
+height: 50px;
+display: block;
+position: absolute;
+top: 85px;
+}
+a.prev {left: -22px;
+background-position: 0 0; }
+a.prev:hover {background-position: 0 -50px; }
+a.prev.disabled {background-position: 0 -100px !important;  }
+a.next {right: -22px;
+background-position: -50px 0; }
+a.next:hover {background-position: -50px -50px; }
+a.next.disabled {background-position: -50px -100px !important;  }
+a.prev.disabled, a.next.disabled {
+cursor: default;
+}
+
+a.prev span, a.next span {
+display: none;
+}
+.pagination {
+text-align: center;
+}
+.pagination a {
+background: url(/static/gstudio/img/miscellaneous_sprite.png) 0 -300px no-repeat transparent;
+width: 15px;
+height: 15px;
+margin: 0 5px 0 0;
+display: inline-block;
+}
+.pagination a.selected {
+background-position: -25px -300px;
+cursor: default;
+}
+.pagination a span {
+display: none;
+}
+.clearfix {
+float: none;
+clear: both;
+}
+
+
+</style>
 <script type="text/javascript" >
-      $(window).load(function() {
+<!-- function notifyeditimg(pageid,username) -->
+<!-- { -->
+<!-- alert("inside fn"); -->
+<!-- var response_content = "Edited Imagecontent" -->
+<!-- var pageid={{image.id}} -->
+<!-- $.ajax({ -->
+<!--         url: '/gstudio/ajax/notifyuser/', -->
+<!--         type: 'GET', -->
+<!--         data: {response_content:response_content,pageid:pageid,username:username}, -->
+<!--         beforeSend: function() { -->
+<!--               alert("bef send"); -->
+<!--               $("#ajax_load_image").show(); -->
+<!--               $("#content").css({"opacity":"0.1",}) -->
+<!--                               }, -->
+<!--         success: function(data){ -->
+<!--                 alert("Edit notification send"); -->
+<!--                 var org_data = $("#gnoweditor").val();        -->
+<!-- 	        var encode_data = encodeURIComponent(org_data); -->
+<!-- 	        var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " ")); -->
+<!--  	        $("#commenttext").val(decode_data); -->
+<!-- 	        $(".orgitdownContainer").hide(); -->
+
+
+
+
+<!--                 }, -->
+<!--         complete: function(){ -->
+<!-- 				    $("#ajax_load_image").hide(); -->
+<!--                 } -->
+<!--  }); -->
+<!-- } -->
+
+     $(window).load(function() {
+
+   
       $("#content").css({
     "width": "600px",});
 	$("img").css({"max-width":"725px",})
@@ -31,12 +128,13 @@ jQuery(document).ready(function($) {
 		
 	});
      $("#save").click(function(){
-            var org_data = $("#gnoweditor").val();       
-	    var encode_data = encodeURIComponent(org_data);
-	    var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " "));
- 	    $("#commenttext").val(decode_data);
-	    $(".orgitdownContainer").hide();
-			   
+            var org_data = $("#gnoweditor").val();    
+            var encode_data = encodeURIComponent(org_data);
+ 	        var decode_data = decodeURIComponent(encode_data.replace(/\+/g, " ")); 
+  	        $("#commenttext").val(decode_data); 
+ 	        $(".orgitdownContainer").hide(); 
+
+            			   
 	});
 
 	
@@ -53,18 +151,44 @@ $(document).ready(function(){
 
 </script>
 
-
 <link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
-<a href="{% admin_media_prefix %}img/{{image.image}}">
-<img src="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024"></a>
-<br/>
-<form method="post" action="">{% csrf_token %}
-<font color = 'black'>Name : </font><font id="fonttitleid" >{{image.title}}</font>
+<h2><font id="fonttitleid" ><b>{{image.title}}</b></font></h2>
 {% if user.is_authenticated %}
 {% edit_title image.id image.title %}
+{% endif %}
+<div class="blank2"></div>
+
+<div class="right">
+
+{% get_related_images image.id as related_images %}
+
+{% if related_images %}
+<div id="extra_info">
+<div class="side_heading">Related Images</div>
+<div class="thumbnail_info">
+{% for valim in related_images %}
+
+                   <a  class="preview" title="{{valim.title}}" href="/gstudio/resources/images/show/{{valim.id}}"><img src="{% admin_media_prefix %}img/{{valim.ref.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"></a>
+
+{% endfor %}
+</div>
+
+</div>
 
 {% endif %}
+
+</div>
+
+
+
+<div id="final_content">
+
+
+<a href="{% admin_media_prefix %}img/{{image.image}}">
+<img src="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="500px"></a>
+
 <br/>
+
 <font color = 'black'>Posted By : </font>
 {% for author in image.authors.all %}
   <font >{{author}}</font>
@@ -81,7 +205,8 @@ $(document).ready(function(){
 {% endautoescape%}
 
 
-
+<form method="POST" action="">
+{% csrf_token %}
 {% if user.is_authenticated %}
 <input type="hidden" name="imgid" value={{image.id}}>
 <input type="button" id="editcontent" value="Edit"/>
@@ -94,144 +219,48 @@ $(document).ready(function(){
 
 <br/>
 <div id="imgcolln">
+
 {% check_if_collection image.id as colln %}
 
 {% if colln %}
+
 {% show_image_collections image.id as imgcolln %}
 
 {% if imgcolln %}
-<font size="3">Images in this Album:</font><br/>
- {% for vals in imgcolln %}
-         <li class="list"><abbr title="Collection"><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/doc.png"></abbr><a href=\
-"{{vals.get_view_object_url}}">{{vals.title}}</a><img src="{% admin_media_prefix %}img/{{vals.thumb}}-thumbnail" crop="center" quality="90" \
-style="none"><br/>
-  {% endfor %}
+
+
+<font size="3">Images in this Album:</font></a><br/>
+<div class="image_carousel">
+
+    <div id="foo2">
+      
+      {% for each in imgcolln %}
+ <a href="{{image.get_album_url}}">
+
+      <img src="{% admin_media_prefix %}img/{{each.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"> </a>
+      {% endfor %}
+
+      </div> 
+    <div class="clearfix"></div>
+    <a class="prev" id="foo2_prev" href="#"><span>prev</span></a>
+    <a class="next" id="foo2_next" href="#"><span>next</span></a>
+    <div class="pagination" id="foo2_pag"></div>
+</div>
+
+
 <br/>
 
 {% show_edit_collection image.id user%}
-<div id="relcoll" width="100px" style="float:right;margin-top:-300px;">
-{% get_related_images image.id as related_images %}
 
-{% if related_images %}
-<table width="100%" border="1">
-<thead>
-Related Images and Albums:</thead>
-<tr>
-
-{% for valim in related_images %}
-<td>
-                   <a  class="preview" title="{{valim.title}}" href="/gstudio/resources/images/show/{{valim.id}}"><img src="{% admin_media_p\
-refix %}img/{{valim.ref.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbna\
-il">&nbsp;&nbsp;<br/><center>{{valim.title}}</center></a>
-</td>
-{% endfor %}
-</tr>
-</table>
 {% endif %}
+{% endif %}
+
 </div>
+
+
+
+
 <br/>
-<div id="imagecollnGallery">
-<table width="100%">
-    <tr>
-{% for image1 in imgcolln %}
-        <td class="gbobject-image1" id = "{{image1.id}}"><a href="/gstudio/resources/images/show/{{image1.id}}"><img src="{% admin_media_pre\
-fix %}img/{{image1.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail"><\
-/a>
-<form method="post" action="">{% csrf_token %}
-{% for author in image1.authors.all %}
-        {% ifequal author.username user.username %}&nbsp;
- <input type="hidden" name="fulid" value={{image1.id}}>
-        <!--  <input type="submit" value="Show" name="Show">-->
-        <input type="hidden" name="pict" id="imgid" value={{image1.id}}>
-        <input type="hidden" name="user" value={{user.username}}>
-        <input type="button" id="delete" name="delete" value="Delete" onclick="ajaxmakesure({{image1.id}})" style="margin-top:5px;width:60px\
-\                                                                                                                                            
-">
-
-        {% endifequal %}
-{% endfor %}
-</form>
-      </td>
-
-    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
-    </tr>
-    <tr>
-<td colspan="5">
-                                 {%  with x=forloop.counter|add:"-5"|stringformat:"s" %}
-                                 {% with y=forloop.counter|stringformat:"s" %}
-                                  {% with count=x|add:":"|add:y %}
-                                {% for image in images|slice:count %}
-
-                                        <div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
-
-                                        <center>
-                                        <h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
-
-                                        </h2></center><br/>
-
-                                        <center>
-                                        <a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
-                                        <img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:\
-\                                                                                                                                            
-'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
-                                        </a></center>
- &nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</\
-a> ]                                        &nbsp;
-
-                                        {% for author in image.authors.all %}
-                                        <font color = 'black'>Posted By : </font> <font >{{author}}</font>
-                                        {% endfor %}
-                                        </div>
-
-                                {% endfor %}
-                                        {% endwith %}
-                                {% endwith%}
-                        {% endwith %}
-                        </td>
-                </tr>
-
-   {% endif %}
-{% endfor %}
-    </tr>
-<tr>
-                                <td colspan="5">
-
-                                {% for image in images|slice:"0:40" %}
-
-                                        <div  align="center" class="gbobject-image" id = "divimage{{image.id}}" style="display:none">
-
-                                        <center>
-                                        <h2><a href="/gstudio/resources/images/show/{{image.id}}/">{{image.title}}</a>
-
-                                        </h2></center><br/>
-
-                                        <center>
-            <a  href="/gstudio/resources/images/show/{{image.id}}/">&nbsp;
-                                        <img id="{% admin_media_prefix %}img/{{image.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:\
-\                                                                                                                                            
-'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}_display_1024" width="300px" align="center" src ="" class="imgbig{{image.id}}">
-                                        </a></center>
-                                        &nbsp;[ <a href="{{ image.get_absolute_url }}" title="{{ image.title }}" rel="bookmark">Show Graph</a> ]                                        &nbsp;
-
- {% for author in image.authors.all %}
-                                        <font color = 'black'>Posted By : </font> <font >{{author}}</font>
-                                        {% endfor %}
-                                        </div>
-
-                                {% endfor %}
-
-
-</td>
-                </tr>
-</table>
- <h2>                                                                                                                                       </h2>
-</div>
-{% endif %}
-{% endif %}
-</div>
-<br/>
-
-
 {% ifequal image.rating.get_rating 0 %}
 
 <font color = 'black'>Current rating is: &nbsp;<font > No rating yet </font></font>
@@ -257,9 +286,9 @@ a> ]                                        &nbsp;
 <form method="post" action="">
 {% csrf_token %}
 
-<input type="hidden" name="favusr" value={{user.username}}>
+<input type="hidden" name="favusr" id="username" value={{user.username}}>
 {% if relation %}
-<input type="hidden" name="removefavid" value={{image.id}}>
+<input type="hidden" name="removefavid" id="imageid" value={{image.id}}>
 <input type="submit" value="Remove from favourites">
 {% else %}
 <input type="hidden" name="favid" value={{image.id}}>
@@ -269,6 +298,27 @@ a> ]                                        &nbsp;
 {% endif %}
 <br>
 <script type="text/javascript" src="/static/gstudio/js/jquery-ui.js" ></script>
+
+<!--script for scrollable image collection!-->
+<script type="text/javascript">
+$("#foo2").carouFredSel({
+circular: false,
+infinite: false,
+auto : false,
+prev: {
+button: "#foo2_prev",
+key: "left"
+},
+next: { 
+button: "#foo2_next",
+key: "right"
+},
+pagination: "#foo2_pag"
+});
+
+</script>
+
+
 <!--ADDING AND DISPLAY TAG-->
 	{% addtag image image.id user %}
 
@@ -327,3 +377,18 @@ a> ]                                        &nbsp;
 {% endblock %}
 {% block graph %}
 {% endblock %}
+</div>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+

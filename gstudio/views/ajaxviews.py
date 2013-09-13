@@ -21,6 +21,7 @@ from django.utils.encoding import smart_str,smart_unicode
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.template.loader import render_to_string
 from gstudio.methods import *
 from django.template.defaultfilters import slugify
 import json
@@ -35,6 +36,61 @@ from settings import PYSCRIPT_URL_GSTUDIO
 from demo.settings import FILE_URL,PYSCRIPT_URL_GSTUDIO,HTML_FILE_URL
 from gstudio.methods import sendMail_RegisterUser,sendMail_NonMember
 import unicodedata
+from unidecode import unidecode
+from notification import models as notification
+from django.core import serializers
+
+
+def getconceptsubjects(request):
+    dic={}
+    sysob=[]
+    rt=request.GET["level"]
+    sys=System.objects.filter(title=rt)
+    if sys:
+        sys=System.objects.get(title=rt)
+    sysobs=sys.gbobject_set.all()
+    for each in sysobs:
+        sysob.append(each.title)
+    dic['val']=sysob
+    listsub=json.dumps(dic)
+    return HttpResponse(listsub,"application/json")
+
+
+def notifyuserimg(pageid,user):
+    sys=Gbobject.objects.get(id=pageid)
+    sysurl=str(sys.get_view_object_url)
+    page=sys.title
+    usr=user.id
+    authr=Author.objects.get(id=usr)
+    objurl=sys.get_view_object_url
+    activ="Edited image description"
+    site=Site.objects.get_current()
+    render = render_to_string("/gstudio/notification/label.html",{'sender':authr.username,'activity':activ,'conjunction':'-','object':page,'url':sysurl,'site':site,'oburl':objurl})
+    bx=Author.objects.get(username='ciet')
+    notification.create_notice_type(render, "Notifictn", "notification")
+    notification.send([bx], render, {"from_user": user})
+    return True
+
+def notifyuser(request):
+    pageid=request.GET["pageid"]
+    username=request.GET["username"]
+    response_content=request.GET["response_content"]
+    sys=System.objects.filter(id=pageid)
+    if sys:
+        sys=System.objects.get(id=pageid)
+    else:
+        sys=Gbobject.objects.get(id=pageid)
+    sysurl=str(sys.get_view_url)
+    page=sys.title
+    objurl=sys.get_view_object_url
+    activ=response_content 
+    #print response_content,pageid,userid,username,activ
+    site=Site.objects.get_current()
+    render = render_to_string("/gstudio/notification/label.html",{'sender':username,'activity':activ,'conjunction':'-','object':page,'url':sysurl,'site':site,'oburl':objurl})
+    bx=Author.objects.get(username='ciet')
+    notification.create_notice_type(render, "Notifictn", "notification")
+    notification.send([bx], render, {"from_user": request.user})
+    return HttpResponse("sucess")
 
 def Deldoccolln(request):
     try:
@@ -75,6 +131,7 @@ def getobjs(request):
     print "rt=",rt,"oth",oth
     allobs=[]
     rttitle=Relationtype.objects.get(id=rt).title
+    unidecdtitle=unidecode(rttitle)
     allobs=""
     if oth == "0":
         if rttitle=='has_video':
@@ -97,6 +154,8 @@ def getobjs(request):
             tosearch='Graphics'
         elif rttitle=='has_audio':
             tosearch='Audio'
+        elif unidecdtitle=='chvi hai':
+            tosearch='Image'
         else:
             tosearch=""
         if tosearch:
@@ -115,8 +174,11 @@ def getobjs(request):
     # wiki=Systemtype.objects.get(title='Wikipage')                                                                                          
     # meet=Systemtype.objects.get(title='Meeting')                                                                                              
     if allobs:
+        print "inallobs"
         for each in allobs:
-            dic[unicodedata.normalize('NFKD', each.title).encode('ascii','ignore')+"-"+str(each.id)]=each.id
+#            dic[unidecodedata.normalize('NFKD', each.title).encode('ascii','ignore')+"-"+str(each.id)]=each.id
+             dic[unidecode(each.title)+"-"+str(each.id)]=each.id
+
 
         # if not ('page box of' in each.title or 'message box of' in each.title):
         #         print "tosearch",tosearch,"obtypes",obtypes
@@ -690,6 +752,8 @@ def IsWiki(request):
     iswiki=Gbobject.objects.filter(title=ptitle)
     if iswiki:
         return HttpResponse("sucess")
+    else:
+	return HttpResponse("decline")
 
 def ajaxDeletePriorpage(request):
 	objectid1 = ""

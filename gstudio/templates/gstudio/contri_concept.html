@@ -1,0 +1,115 @@
+{% extends "gstudio/base.html" %}
+
+{% load gstudio_tags %}
+{% load i18n %}
+
+
+
+{% block title %}{% trans "Add Concept" %}{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+$(document).on('click','#addconcept',function(){
+       
+        var ctitle=$("#ctitle").val();
+        var subj=$("#subjs").val();
+        var tags=$("#tags").val();
+
+        url='/gstudio/addconcept/'
+        $.ajax({
+       url: url,
+       type:'POST',
+       data: {subtitle:ctitle,subject:subj,tags:tags,csrfmiddlewaretoken: '{{ csrf_token }}' },
+       success: function(data){
+alert("Added concept");
+$("#level").val('');
+$("#ctitle").val('');
+$("#subjs").val('');
+$("#tags").val('')
+}
+
+});
+})
+
+function getsubjects(sub){
+        url='/gstudio/getconceptsubjs/'
+        $.ajax({
+       url: url,
+       data: {'level':sub},
+       success: function(data){
+           $.each(data, function(index) {
+           r=data[index]
+           alert("Choose Subject")})
+              $("#subjs").autocomplete({
+                 source:r });
+          }
+});
+}
+var availablesub=[]
+var availablelev=[]
+$.extend(availablelev,{% get_available_level %});
+
+$(document).ready(function(){
+$("#conceptname").hide();
+$("#level").autocomplete({
+            source: availablelev,
+            select: function(event, ui) {
+                     sub=ui.item.value;
+                     getsubjects(sub);
+                     
+              
+
+         }
+        });
+
+       
+})
+
+
+</script>
+
+<div>
+{% csrf_token %}
+<fieldset>
+<legend>Add Concept</legend>
+<table border="0" cellspacing="5">
+<tr>
+<td>Choose Level <br/>
+<input id="level" class="ui-autocomplete-input" name="textlevel" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+</td>
+  
+    <td>Choose Subject<br/>
+<input id="subjs" class="ui-autocomplete-input" name="textsubj" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+
+</td>
+  <tr>
+
+    <td>Concept Name<br/><input id="ctitle" type="text" name="textinput"></td>
+</tr>
+
+  </tr>
+  <tr>
+    <td><div  id="conceptname" style="background:#eaeaea;height:25px;margin-top:4px;line-height:25px;">&nbsp;
+<p>{{pageob.title}}</p>
+
+</div></td>
+   
+  </tr>
+  <tr>
+
+
+<!--ADDING AND DISPLAY TAG-->
+
+  <td colspan="3">Add Tags<br/><input id="tags" type="text"></td>
+
+<td><input id="addconcept" type="button" value="Add Concept"> </td>
+
+
+</tr>
+ 
+</table>
+</fieldset>
+
+</div>
+
+{% endblock %}

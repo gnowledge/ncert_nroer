@@ -118,18 +118,19 @@ $('#pandoravideo').pandoravideo();
 </head>
 <body>
 {% block content %}
-
-<div id="pandoravideo" data-pandora-id={{video.slug}} data-pandora-layers="transcripts, descriptions, keywords, places">
-</div>
-<b>Download:</b>&nbsp;&nbsp;<a href={{video.rurl}} target="_blank">Right click to download</a><br/>
-<div class=middle>
-<div class="contentfield">
-<form method="post" action="">{% csrf_token %}
-<font color='black'>Name:</font>
-<font ><font id="fonttitleid" >{{video.title}}</font></font>
+<br/>
+<h2><font ><font id="fonttitleid" >{{video.title}}</font></font></h2>
 {% if user.is_authenticated %}
 {#{% edit_title video.id video.title %}#}
 {% endif %}
+<br/>
+<div id="pandoravideo" data-pandora-id={{video.slug}} data-pandora-layers="transcripts, descriptions, keywords, places">
+</div>
+<b>Download:</b>&nbsp;&nbsp;<a href={{video.rurl}} target="_blank">Right click and choose "Save Link as.." to Download </a><br/>
+<div class=middle>
+<div class="contentfield">
+<form method="post" action="">{% csrf_token %}
+
 <br/>
 <div class="detailsOfVideo">
 </div>

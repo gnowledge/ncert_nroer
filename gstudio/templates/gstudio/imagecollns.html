@@ -38,11 +38,13 @@ $("#content").css({"opacity":"",})
 {% for key,value in col.items %}
 <a href="/gstudio/resources/images/show/{{key}}/">
 {{value}}</a>&nbsp;;
-{% if user.is_authenticated %}
+{% for author in image1.authors.all %}
+	{% ifequal author.username user.username %
 <a class="delimgcolln" id="{{key}}" value="{{key}}" title="delete {{value}}">
 <img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/>
 </a>
-{% endif %}
+        {% endifequal %}
+{% endfor %}
 
 {% endfor %}
 {% endif %}

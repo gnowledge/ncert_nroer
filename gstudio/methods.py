@@ -25,8 +25,13 @@ lst1=[]
 count=0
 response_set=[]
 
+
 def check_collection(obid):
-    sys=System.objects.get(id=obid)
+    sys=System.objects.filter(id=obid)
+    if sys:
+        System.objects.get(id=obid)
+    else:
+        return False
     if 'Imagecollection' or 'Documentcollection' in sys.systemtypes.all():
         return True
     else:
@@ -307,43 +312,43 @@ def loom_status(pageid):
 
 
 def check_page_exists(pgetocheck):
-  fl=0
-  getobjs=Gbobject.objects.filter(title=pgetocheck)
-  if not getobjs:
-      return fl
-  else:
-      for each in getobjs:
-          sysid=System.objects.filter(id=each.id)
-          if sysid:
-            getob=System.objects.get(id=each.id)
-            for eachtitle in getob.systemtypes.all():
-                if eachtitle.title=='Wikipage':
-                    print "wiki"
-                    fl=1 
-                    return fl
-            fl=2
-            return fl
-          else:
-            fl=2
-            return fl
-      return fl
+    fl=0
+    getobjs=Gbobject.objects.filter(title=pgetocheck)
+    if not getobjs:
+        return fl
+    else:
+        for each in getobjs:
+            sysid=System.objects.filter(id=each.id)
+            if sysid:
+                getob=System.objects.get(id=each.id)
+                for eachtitle in getob.systemtypes.all():
+                    if eachtitle.title=='Wikipage':
+                        print "wiki"
+                        fl=1 
+                        return fl
+                fl=2
+                return fl
+            else:
+                fl=2
+                return fl
+        return fl
 
 
 def get_threadbox_of_twist(twistid):
- thid=""
- for each in System.objects.all():
+    thid=""
+    for each in System.objects.all():
         sys_set=each.system_set.all()
         if sys_set:
                sys_set=each.system_set.all()[0]
                for eachsys in sys_set.gbobject_set.all():
                       if eachsys.id==twistid:
                              return sys_set
- return thid
+    return thid
 
 def delete(idnum):
- del_ob = Gbobject.objects.get(id=idnum)
- del_ob.delete()
- return True
+    del_ob = Gbobject.objects.get(id=idnum)
+    del_ob.delete()
+    return True
 
 def get_pdrawer():
     pagedrawer = []
@@ -785,7 +790,13 @@ def create_wikipage(title,idusr,content_org,usr,collection,list1):
  sys1.save()
  sys1.systemtypes.add(Systemtype.objects.get(title="page_box"))
  sys.system_set.add(sys1)
- sys.member_set.add(Author.objects.get(id=idusr))
+ auth=Author.objects.get(id=idusr)
+ if auth.is_superuser == True:
+ 	sys.status=2
+ else:
+ 	sys.status=1	
+ sys.save()
+ sys.member_set.add(auth)
  sys.sites.add(Site.objects.get_current())
  sys1.sites.add(Site.objects.get_current())
  return sys.id

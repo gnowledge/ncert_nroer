@@ -31,10 +31,18 @@ from django.template.defaultfilters import slugify
 from django.template.loader import get_template
 from django.template import Context
 from gstudio.methods import getimages,check_collection
+from django.http import Http404
+from gstudio.views.ajaxviews import notifyuserimg
+from django.shortcuts import render
 
 size = 128, 128
 report = "true"
 md5_checksum = ""
+
+def imagecollection(request,imgid):
+    image=System.objects.get(id=imgid)
+    imgcolln=get_gbobjects(imgid)
+    return render_to_response("gstudio/imagecollection.html",RequestContext(request,{'imgcolln':imgcolln,'image':image}))
 
 def createcolln(request):
     listcl=request.GET["listofcollns"]
@@ -63,6 +71,7 @@ def createcolln(request):
         syscol=Systemtype.objects.get(title='Imagecollection')
         col=System()
         col.title=coltitle
+        col.slug=slugify(coltitle)
         col.save()
         col.systemtypes.add(syscol)
         t='gstudio/imagecollns.html'
@@ -76,6 +85,7 @@ def createcolln(request):
                 i=i+1
             col.save()
         return render_to_response(t,RequestContext(request))
+
 
 def refpriorpost(request):
     ret={}
@@ -136,6 +146,7 @@ def checkpageexist(request):
 def image(request):
 	p=Objecttype.objects.get(title="Image")
 	q=p.get_nbh['contains_members']
+	q = q.filter(status=2)
         imgobjs=getimages()
 	if request.method=="POST":
 		title = request.POST.get("title1","")
@@ -191,7 +202,7 @@ def image(request):
 				if sub3 == "title":
 					vidon = Objecttype.objects.get(title="Image")
 					vido_new = vidon.get_nbh['contains_members']
-					vido = vido_new.filter(title__icontains=simg)
+					vido = vido_new.filter(title__icontains=simg).filter(status=2)
 					vido2 = vido.order_by(sub3)
 					variables = RequestContext(request,{'images':vido2,'val':simg,'test1':imgobjs})
 					template = "gstudio/image.html"
@@ -199,7 +210,7 @@ def image(request):
 				else:
 					vidon = Objecttype.objects.get(title="Image")
 					vido_new = vidon.get_nbh['contains_members']
-					vido = vido_new.filter(creation_date__icontains=simg)
+					vido = vido_new.filter(creation_date__icontains=simg).filter(status=2)
 					vido2 = vido.order_by(sub3)
 					variables = RequestContext(request,{'images':vido2,'val':simg,'test1':imgobjs})
 					template = "gstudio/image.html"
@@ -207,6 +218,7 @@ def image(request):
 			else:
 				vidon = Objecttype.objects.get(title="Image")
 				vido_new = vidon.get_nbh['contains_members']
+				vido_new = vido_new.filter(status=2)
 				vido=vido_new.order_by(sub3)
 				variables = RequestContext(request,{'images':vido,'val':simg,'test1':imgobjs})
 				template = "gstudio/image.html"
@@ -278,6 +290,7 @@ def postImage(request):
 						i=i+1
 			p=Objecttype.objects.get(title="Image")
 			q=p.get_nbh['contains_members']
+			q = q.filter(status=2)
 			vars=RequestContext(request,{'images':q,'reportid':reportid,'report':report})
 			template="gstudio/image_refresh.html"
 			return render_to_response(template, vars)
@@ -350,6 +363,11 @@ def create_object(f,log,title,content,usr):
 	p.sites.add(Site.objects.get_current())
 	p.save()
 	s=Author.objects.get(username=log)
+	if s.is_superuser == True:
+		p.status=2
+	else:
+		p.status=1	
+
 	p.authors.add(s)
 	p.save()
 	q=Objecttype.objects.get(title="Image")
@@ -398,7 +416,10 @@ def rate_it(topic_id,request,rating):
 	return True
 
 def show(request,imageid):
+        print "insideshow"
+        print request.method
 	if request.method=="POST":
+                print "inspost"
 		rating = request.POST.get("star1","")
 		imgid = request.POST.get("imgid","")
 		addtags = request.POST.get("addtags","")
@@ -415,8 +436,8 @@ def show(request,imageid):
 			i.tags = i.tags+ ","+(texttags)
 			i.save()
 		if contenttext !="":
-			 edit_description(imgid,contenttext,str(request.user))
-
+                        notifyuserimg(imgid,request.user)
+                        edit_description(imgid,contenttext,str(request.user))
 		if favid!="":
                         e=0
                         r = Objecttype.objects.get(title="user")
@@ -445,25 +466,44 @@ def show(request,imageid):
 			objects = Gbobject.objects.get(id=removefavid)
 			objects.get_relations()['is_favourite_of'][0].delete()
 		if titlecontenttext !="":
+                        print "edit"
 			new_ob = Gbobject.objects.get(id=int(imgid))
 			new_ob.title = titlecontenttext
 			new_ob.save()
 
-	gbobject = Gbobject.objects.get(id=imageid)
-	relation = ""
-	if gbobject.get_relations():
-		if gbobject.get_relations()['is_favourite_of']:
-			rel = gbobject.get_relations()['is_favourite_of'][0]
-			print rel
-			reluser = rel._left_subject_cache.title
-			if str(reluser) == str(request.user)+str("image"):
-				relation = "rel"
-	vars=RequestContext(request,{'image':gbobject,'relation':relation})
-	template="gstudio/fullscreen.html"
-	return render_to_response(template,vars)
+	gbobject = Gbobject.objects.filter(id=imageid)
+        if gbobject:
+            print "nextprint"
+            relation=""
+            gbobject = Gbobject.objects.get(id=imageid)
+	    if "Image" in [each.title for each in gbobject.objecttypes.all()] or "Imagecollection" in [each.title for each in gbobject.system.systemtypes.all()]:
+		relation = ""
+		if gbobject.get_relations():
+			if 'is_favourite_of' in gbobject.get_relations():
+				rel = gbobject.get_relations()['is_favourite_of'][0]
+                                try:
+                                    reluser = rel._left_subject_cache.title
+                                except:
+                                    reluser=""
+                                    pass
+				if str(reluser) == str(request.user)+str("image"):
+					relation = "rel"
+		vars=RequestContext(request,{'image':gbobject,'relation':relation})
+		template="gstudio/fullscreen.html"
+		#return render_to_response(template,vars)
+                return render(request,template,{'image':gbobject,'relation':relation})
+            else:
+    	        raise Http404
 
+        else:
+            raise Http404
+	
 def edit_description(sec_id,title,usr):
-	new_ob = Gbobject.objects.get(id=int(sec_id))
+        print "descedt"
+        if check_collection(sec_id):
+            new_ob=System.objects.get(id=sec_id)
+        else:
+            new_ob = Gbobject.objects.get(id=int(sec_id))
 	contorg=unicode(title)
 	ssid=new_ob.get_ssid.pop()
 	fname=str(ssid)+"-"+usr
@@ -600,6 +640,7 @@ def imageDelete(request):
 			os.system("rm -f "+MEDIA_ROOTNEW+'/'+ti)
 		p=Objecttype.objects.get(title="Image")
 		q=p.get_nbh['contains_members']
+		q = q.filter(status=2)
 		vars=RequestContext(request,{'images':q,})
 		template="gstudio/image_refresh.html"
 		return render_to_response(template, vars)

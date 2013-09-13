@@ -1,7 +1,6 @@
 {% load gstudio_tags %}
 
 <script type="text/javascript" >
-$.noConflict();
 var length = 0;
 $(document).on('click',"#lstdocvalue",function(){
         $(".addtodrawer").show()
@@ -50,11 +49,7 @@ $(document).on('click',"#lstdocvalue",function(){
        });
 
 });
- $(document).ready(function(){
-        $( "#drawer{{doc.id}}" ).autocomplete({
-				       source: pagedrawer
-        });
-        });
+
 </script>
 
 

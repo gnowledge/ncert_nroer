@@ -18,7 +18,7 @@ $("#titlecommenttext").val(decode_data);
 $.ajax({
 url: '/gstudio/resources/images/edittitle/',
 <!-- type:"POST", -->
-data: {title:decode_data,titleid:{{objectid}}},
+data: {title:decode_data,titleid:"{{objectid}}"},
 success: function(data){
 $("#fonttitleid").html(data);
 //document.location.reload(true)
