@@ -32,7 +32,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from itertools import chain
 from operator import attrgetter
-
+import subprocess
 report = "true"
 
 
@@ -164,7 +164,15 @@ def save_file(file, path=""):
 				imageeachid = each.subject.id
 	if flag == 1:
 		report = "false"
-		
+	
+        #code to convert mp3 file to ogg file                                                                                       
+        file1=MEDIA_ROOTNEW2+"/"+str(slugfile)
+        filetype = mimetypes.guess_type(MEDIA_ROOTNEW2+"/"+str(slugfile))[0]
+        if file1.endswith(".mp3"):
+                if not filetype == None:
+                        if "audio" in filetype:
+                                subprocess.call(["ffmpeg2theora",file1])
+        #end code     
         return report,imageeachid
 
 

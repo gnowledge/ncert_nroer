@@ -101,6 +101,7 @@ jQuery(document).ready(function($) {
 {% ifequal doc.ref.get_nbh.member_of|slugify  'nodetype-ot-audio'  %}
 <font color = 'black'>Play: </font>
 <audio controls height="15px">
+   <source src="{% admin_media_prefix %}img/{{doc.altnames|cut:'.mp3'}}.oga">
   <source src="{% admin_media_prefix %}img/{{doc.altnames}}">
 Your browser does not support the audio element.
 </audio>

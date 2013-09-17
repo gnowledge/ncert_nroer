@@ -160,11 +160,21 @@ jQuery(document).ready(function($) {
 	    $(".commentsavecontent").trigger('click');
 	    });
 });
+
+$("#submitpostid").click(function(){
+            var filename=$("#inputfile").val();
+            if (filename.substr(-4)==".mp3")
+              {
+                 alert("You are uploading mp3 file that is proprietary audio file. We  convert your file to  ogg file formate. for faster upload please upload ogg file.");
+              }
+       });
+
 var availableTags = [];
 $.merge(availableTags, {% get_add_tag %})
 $( "#tags{{document.id}}" ).autocomplete({
             source: availableTags
         });
+
 
 </script>
 <style type="text/css">
