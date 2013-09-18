@@ -1268,10 +1268,11 @@ class Nodetype(Node):
         return get_url_shortener()(self)
 
     def __unicode__(self):
-        objref=str(self.ref)
-        reftitle=self.ref.title
-        objref=objref.replace(reftitle,"")
-        objtype=objref.strip()
+        #objref=str(self.ref)
+        #reftitle=self.ref.title
+        #objref=objref.replace(reftitle,"")
+        #objtype=objref.strip()
+        objtype = str(self.ref).split()[0]
         return objtype + " " + self.title
     
 
