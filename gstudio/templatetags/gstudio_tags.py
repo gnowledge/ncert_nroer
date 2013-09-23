@@ -776,3 +776,8 @@ def get_pri_post_page():
         if not ('page box of' in each.title or 'message box of' in each.title):
             listobject.append(each.__str__())
     return str(listobject)
+
+@register.inclusion_tag('gstudio/publicprivate.html')
+def public_private(objectid,status):
+  template = 'gstudio/publicprivate.html'
+  return {'objectid':objectid,'status':status}

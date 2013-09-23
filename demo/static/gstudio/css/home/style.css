@@ -3375,9 +3375,74 @@ hr
 	display:none;
 	color:#fff;
 	}
+
+
+/* css for dashboard table */
+
+#dashboard table {
+	border-radius: 5px 5px 5px 5px;
+	border: 1px solid #BDBDBD;
+	border-collapse:separate;
+	width : 100%
+}
+
+#dashboard thead th {
+	background: -moz-linear-gradient(top, #eee, #e0e0e0);
+    background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#e0e0e0));
+    background: -o-linear-gradient(top, #eee, #e0e0e0);
+	border-bottom: 1px solid #D4D4D4;
+	color : black;
+	text-align: left;
+    font-weight: normal;
+    line-height: 12px;
+    padding: 5px 10px;
+    font-size: 13px;
+	border-left:1px solid #D4D4D4;
+}
+
+#dashboard tbody td {
+	border-bottom: 1px solid #D4D4D4;
+    font-weight: normal;
+    font-size: 11px;
+	border-left:1px solid #D4D4D4;
 }
 
 
+
+/*  TABLES
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+tr.alt th, tr.alt td {
+    background: #f4f4f4;
+}
+#row1 th, #row1 td {
+    background: #f4f4f4;
+}
+#row2 th, #row2 td {
+    background: #fff;
+}
+#selected th, #selected td {
+    background: #ffd;
+}
+
+/* status button css*/ 
+
+#objectStatus #publicObject  {
+	background:green;
+    border: 0 solid #FFFFFF;
+    border-radius: 7px 7px 7px 7px;
+    color: white;
+    padding: 3px 6px;
+}
+
+#objectStatus #privateObject  {
+	background:red;
+    border: 0 solid #FFFFFF;
+    border-radius: 7px 7px 7px 7px;
+    color: white;
+    padding: 3px 6px;
+
+}
 
 /* css for imagescroll used in fullscreen.html and imagecollection.html */
 /*

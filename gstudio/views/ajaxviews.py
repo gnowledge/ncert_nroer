@@ -1013,6 +1013,16 @@ def ajaxgetConceptPageGraphText(request):
     return render_to_response(template,variables)
                     
                 
+def ajaxpublicprivate(request):
+    if request.is_ajax() and request.method =="POST" and request.user.is_superuser == True :
+        objectid=request.POST['objectid']
+        tostatus=request.POST['tostatus']
+	gbobject = Gbobject.objects.get(id=objectid)
+	gbobject.status=tostatus
+	gbobject.save()
+        return HttpResponse("success")
+    else :
+        return HttpResponse("failed")
                 
 
             

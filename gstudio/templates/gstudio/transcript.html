@@ -122,6 +122,7 @@ $('#pandoravideo').pandoravideo();
 <h2><font ><font id="fonttitleid" >{{video.title}}</font></font></h2>
 {% if user.is_authenticated %}
 {#{% edit_title video.id video.title %}#}
+{% public_private video.id video.status %}
 {% endif %}
 <br/>
 <div id="pandoravideo" data-pandora-id={{video.slug}} data-pandora-layers="transcripts, descriptions, keywords, places">

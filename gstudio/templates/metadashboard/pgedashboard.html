@@ -168,7 +168,7 @@ $.ajax({
 	  }       
 	 	 });
 	 });
-			      
+
 	</script>
 <style>
 <link href="{% admin_media_prefix %}css/base.css" rel="stylesheet" type="text/css" />
@@ -178,11 +178,18 @@ $.ajax({
 <script src="/static/gstudio/js/tabcontent.js" type="text/javascript"></script>
     <link href="/static/gstudio/css/tabcontent.css" rel="stylesheet" type="text/css" />
  <h2>  <font id="fonttitleid" >{{ page_ob.title }} </font>
+
 {% for author in page_ob.authors.all %}
 	{% ifequal author.username user.username %}
             {% edit_title page_ob.id page_ob.title %} 
 {% endifequal %}
 {% endfor %}
+
+
+{% if request.user.is_superuser %}
+{% public_private page_ob.id page_ob.status %}
+{% endif %}
+
 </h2>
  {% with page_ob.html_content|safe as page_ob_content %}
          <div><i>{{ page_ob_content|striptags|truncatewords:"100" }}

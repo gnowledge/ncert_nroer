@@ -61,6 +61,10 @@ jQuery(document).ready(function($) {
 <br/>
 
 <h2><font id="fonttitleid" size="5" >{{doc.title}}</b></font></h2>
+{% if request.user.is_superuser %}
+{% edit_title doc.id doc.title %}
+{% public_private doc.id doc.status %}
+{% endif %}
 
 <div class="blank2"></div>
 {% get_related_docus doc.id as related_docs %}
@@ -77,10 +81,6 @@ jQuery(document).ready(function($) {
 {% endif %}
 </div>
 
-<!--<div id="final_content">!-->
-{% if user.is_authenticated %}
-{% edit_title doc.id doc.title %}
-{% endif %}
 <br/>
 {% if "html" in doc.objecttypes.all|slugify %}
 <div id="htmlcontent">
