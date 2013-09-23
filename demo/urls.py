@@ -64,6 +64,7 @@ urlpatterns = patterns(
     url(r'^ContactUs/', direct_to_template, {'template': 'gstudio/contactUs.html'}),
     url(r'^Contribute/', direct_to_template, {'template': 'gstudio/contribute.html'}),
     url(r'^contribute/resources', direct_to_template, {'template': 'gstudio/contrib_resource.html'}),
+    url(r'^dashboard/','gstudio.views.dashboard.dashboard'),
     #URL for XMLRPC
     #url(r'^xmlrpc/$','django_xmlrpc.views.handle_xmlrpc'),
     #url(r'^i18n/', include('django.conf.urls.i18n')),

@@ -47,5 +47,6 @@ urlpatterns = patterns('gstudio.views.ajaxviews',
                        url(r'^deletedoccolln/$','Deldoccolln',name='ajax_deldoccolln'),
                        url(r'^deleteimgcolln/$','Delimgcolln',name='ajax_delimgcolln'),
                        url(r'^notifyuser/$','notifyuser',name='ajax_wikieditnotify'),
+                       url(r'^publicprivate/$','ajaxpublicprivate',name='ajax_publicprivate'),
                        
                        )

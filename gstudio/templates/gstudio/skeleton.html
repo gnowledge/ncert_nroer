@@ -653,7 +653,7 @@ $(fgraph());
 <!--New Addition-->
 <div class="top_nav">
 <div id="content_bottom_nav">
-<div class="left"><a href="/AboutUs/">About Us</a><span class="white_clr">l</span><a href="/TermsOfUse/">Terms of Use</a><span class="white_clr">l</span><a href="/ContactUs/">Contact Us</a><span class="white_clr">l</span>{% if not user.is_authenticated %}<a href="/accounts/login/?next={{request.path}}">Login</a>{% else %}<a href="/accounts/logout/">Logout</a>{% endif %}</div>
+<div class="left"><a href="/AboutUs/">About Us</a><span class="white_clr">l</span><a href="/TermsOfUse/">Terms of Use</a><span class="white_clr">l</span><a href="/ContactUs/">Contact Us</a><span class="white_clr">l</span>{% if not user.is_authenticated %}<a href="/accounts/login/?next={{request.path}}">Login</a>{% else %}<a href="/accounts/logout/">Logout</a>{% endif %}{% if user.is_superuser %}<span class="white_clr">l</span><a href="/dashboard">Dashboard</a>{% endif %}</div>
 <div class="right">Powered by: <a href="https://github.com/gnowledge/ncert_nroer" target="_blank">Gnowsys-Studio</a>, <a target="_blank" href="http://www.hbcse.tifr.res.in">Homi Bhabha Centre for Science Education</a>, <a target="_blank" href="http://www.tifr.res.in">TIFR</a></div>
 </div>
 </div> 

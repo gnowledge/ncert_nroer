@@ -1,0 +1,67 @@
+       <script type="text/javascript" >
+
+			
+	 function statusButton(num){
+	 if(num==2){
+		$.ajax({
+       			      url: '/gstudio/ajax/publicprivate/',
+			      type: 'POST',
+       			      data:{'objectid':{{objectid}},'tostatus':2,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                              beforeSend: function() {
+                              $("#ajax_load_image1").show();
+                            
+			      $("#content").css({"opacity":"0.1",})
+	   
+                              },
+       			      
+       			      success: function(data) {
+	          		document.getElementsByClassName("statusButton").publicObject.setAttribute('onclick', "statusButton(1);");
+				document.getElementsByClassName("statusButton").publicObject.innerHTML = "Make Hidden";
+				document.getElementsByClassName("statusButton").publicObject.id = "privateObject";
+
+       			    },
+                             complete: function(){
+                             $("#ajax_load_image1").hide();
+			      $("#content").css({"opacity":"",})},
+			});
+			      
+	 }
+	 if(num==1){
+			$.ajax({
+       			      url: '/gstudio/ajax/publicprivate/',
+			      type: 'POST',
+       			      data:{'objectid':{{objectid}},'tostatus':1,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                              beforeSend: function() {
+                              $("#ajax_load_image1").show();
+                            
+			      $("#content").css({"opacity":"0.1",})
+	   
+                              },
+       			      
+       			      success: function(data) {
+				document.getElementsByClassName("statusButton").privateObject.setAttribute('onclick',"statusButton(2);");
+				document.getElementsByClassName("statusButton").privateObject.innerHTML = "Make Public";
+				document.getElementsByClassName("statusButton").privateObject.id = "publicObject";
+
+
+       			    },
+                             complete: function(){
+                             $("#ajax_load_image1").hide();
+			      $("#content").css({"opacity":"",})},
+			});
+		
+
+	 }	 
+			      
+	  }       
+
+	</script>
+
+<div id="objectStatus">
+{% ifequal status 1 %}
+<button type="button" class="statusButton" id="publicObject" onclick="statusButton(2)"> Make Public </button>
+{% else %}
+<button type="button" class="statusButton" id="privateObject" onclick="statusButton(1)"> Make Hidden </button>
+{% endifequal %}
+<img id="ajax_load_image1" width="30" style="display: none;" src="/static/grappelli/img/ajax-loader1.gif">
+</div>

@@ -1,0 +1,46 @@
+{% extends "gstudio/base.html" %}
+{% load i18n %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+{% if request.user.is_superuser %}
+<div id="dashboard" style="margin-top:20px">
+<table cellspacing=0>
+   <colgroup>
+       <col span="1" style="width: 40%;">
+       <col span="1" style="width: 10%">
+       <col span="1" style="width: 15%">
+       <col span="1" style="width: 25%">
+       <col span="1">
+       <col span="1">
+
+    </colgroup>
+
+
+ <caption>Hidden Objects</caption>
+ <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Type</th>
+      <th>Creation date</th>
+      <th>View</th>
+     <!-- <th>Make Public</th>-->
+    </tr>
+</thead>
+
+<tbody>
+{% for each in allObject %}
+{% if forloop.counter0|divisibleby:2 %}   
+<tr id=row1><td>{{each.title}}</td> <td>{{each.authors}}</td><td>{{each.type}}</td><td>{{each.date}}</td><td><a href="{{each.view}}">view</a></td></tr>
+{% else %}
+<tr id=row2><td>{{each.title}}</td> <td>{{each.authors}}</td><td>{{each.type}}</td><td>{{each.date}}</td><td><a href="{{each.view}}">view</a></td></tr>
+{% endif %}
+{% endfor %}
+</tbody>
+
+</table>
+<div>
+{% else %}
+No content
+{% endif %}
+{% endblock %}
