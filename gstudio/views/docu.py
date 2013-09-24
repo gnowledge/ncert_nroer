@@ -33,6 +33,7 @@ from django.shortcuts import get_object_or_404
 from itertools import chain
 from operator import attrgetter
 import subprocess
+from gstudio.views.ajaxviews import *
 report = "true"
 
 
@@ -265,6 +266,10 @@ def create_object(file,log,content,usr,title):
 	a.subject=p
 	a.svalue=md5_checksum  
 	a.save()
+        #code to notify admin about document upload
+        response_content="Uploaded Document :"+p.title
+        notifyUpdate(p.id,usr,response_content)
+        #end code
 
 def rate_it(topic_id,request,rating):
 	ob = Gbobject.objects.get(id=topic_id)
