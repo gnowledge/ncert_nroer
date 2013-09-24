@@ -33,6 +33,8 @@ import threading
 from tagging.models import Tag, TaggedItem
 from django.http import Http404
 import json
+from gstudio.views.ajaxviews import *
+
 report = "true"
 global md5_checksum
 md5_checksum = ""
