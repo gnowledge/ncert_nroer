@@ -34,7 +34,7 @@ from gstudio.methods import getimages,check_collection
 from django.http import Http404
 from gstudio.views.ajaxviews import notifyuserimg
 from django.shortcuts import render
-
+from gstudio.views.ajaxviews import *
 size = 128, 128
 report = "true"
 md5_checksum = ""
