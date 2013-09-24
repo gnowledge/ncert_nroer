@@ -57,39 +57,32 @@ def getconceptsubjects(request):
 
 
 def notifyuserimg(pageid,user):
-    sys=Gbobject.objects.get(id=pageid)
-    sysurl=str(sys.get_view_object_url)
-    page=sys.title
-    usr=user.id
-    authr=Author.objects.get(id=usr)
-    objurl=sys.get_view_object_url
-    activ="Edited image description"
-    site=Site.objects.get_current()
-    render = render_to_string("/gstudio/notification/label.html",{'sender':authr.username,'activity':activ,'conjunction':'-','object':page,'url':sysurl,'site':site,'oburl':objurl})
-    bx=Author.objects.get(username='ciet')
-    notification.create_notice_type(render, "Notifictn", "notification")
-    notification.send([bx], render, {"from_user": user})
-    return True
+        activ="Edited image description"
+        notifyUpdate(pageid,user,activ)
 
-def notifyuser(request):
-    pageid=request.GET["pageid"]
-    username=request.GET["username"]
-    response_content=request.GET["response_content"]
+def notifyUpdate(pageid,username,response_content):
     sys=System.objects.filter(id=pageid)
     if sys:
         sys=System.objects.get(id=pageid)
     else:
         sys=Gbobject.objects.get(id=pageid)
-    sysurl=str(sys.get_view_url)
+    #sysurl=str(sys.get_view_url)
     page=sys.title
     objurl=sys.get_view_object_url
     activ=response_content 
     #print response_content,pageid,userid,username,activ
     site=Site.objects.get_current()
-    render = render_to_string("/gstudio/notification/label.html",{'sender':username,'activity':activ,'conjunction':'-','object':page,'url':sysurl,'site':site,'oburl':objurl})
-    bx=Author.objects.get(username='ciet')
+    render = render_to_string("/gstudio/notification/label.html",{'sender':username,'activity':activ,'conjunction':'-','object':page,'site':site,'oburl':objurl})
+    bx=Author.objects.get(username='krishna')
     notification.create_notice_type(render, "Notifictn", "notification")
-    notification.send([bx], render, {"from_user": request.user})
+    notification.send([bx], render, {"from_user": username})
+
+
+def notifyuser(request):
+    pageid=request.GET["pageid"]
+    username=request.GET["username"]
+    response_content=request.GET["response_content"]
+    notifyuserUpdate(pageid,username,response_content)
     return HttpResponse("sucess")
 
 def Deldoccolln(request):
