@@ -33,6 +33,8 @@ import threading
 from tagging.models import Tag, TaggedItem
 from django.http import Http404
 import json
+from gstudio.views.ajaxviews import *
+
 report = "true"
 global md5_checksum
 md5_checksum = ""
@@ -634,6 +636,10 @@ def getVideo(request):
 				m.save()
 				m.sites.add(Site.objects.get_current())
 				m.objecttypes.add(objecttypeVideo)
+                                #code to notify admin about document upload      
+                                response_content="Uploaded Document :"+m.title
+                                notifyUpdate(m.id,request.user,response_content)
+                                #end code 
 	finally:
 		lock.release()
 	return HttpResponse("sucess")

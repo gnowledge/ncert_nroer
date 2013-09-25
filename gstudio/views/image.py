@@ -34,7 +34,7 @@ from gstudio.methods import getimages,check_collection
 from django.http import Http404
 from gstudio.views.ajaxviews import notifyuserimg
 from django.shortcuts import render
-
+from gstudio.views.ajaxviews import *
 size = 128, 128
 report = "true"
 md5_checksum = ""
@@ -408,7 +408,10 @@ def create_object(f,log,title,content,usr):
         a.subject=p
         a.svalue=md5_checksum
         a.save()
-
+        #code to notify admin about document upload                                                                                 
+        response_content="Uploaded Document :"+p.title
+        notifyUpdate(p.id,usr,response_content)
+        #end code 
 
 def rate_it(topic_id,request,rating):
 	ob = Gbobject.objects.get(id=topic_id)
