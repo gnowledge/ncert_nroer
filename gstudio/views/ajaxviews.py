@@ -73,7 +73,7 @@ def notifyUpdate(pageid,username,response_content):
     #print response_content,pageid,userid,username,activ
     site=Site.objects.get_current()
     render = render_to_string("/gstudio/notification/label.html",{'sender':username,'activity':activ,'conjunction':'-','object':page,'site':site,'oburl':objurl})
-    bx=Author.objects.get(username='krishna')
+    bx=Author.objects.get(username='ciet')
     notification.create_notice_type(render, "Notifictn", "notification")
     notification.send([bx], render, {"from_user": username})
 
@@ -83,7 +83,7 @@ def notifyuser(request):
     username=request.GET["username"]
     response_content=request.GET["response_content"]
     notifyuserUpdate(pageid,username,response_content)
-    return HttpResponse("sucess")
+    return HttpResponse("success")
 
 def Deldoccolln(request):
     try:

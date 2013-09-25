@@ -1,20 +1,61 @@
 
 {% extends "gstudio/base.html" %}
 {% load i18n %}
+{% load gstudio_tags %}
 {% block content %}
+
 <style type="text/css">
 #content{
 width: 1000px;
 }
 </style>
-{% for each in notices %}
-<ul>
-<li> 
 
-<font size="2">{{ each }} </font>
+<div id="notice" >
+<table class="notices" >
+   <colgroup>
+       <col span="1" style="width: 10%;">
+       <col span="1" style="width: 20%">
+       <col span="1" style="width: 60%">
+       <col span="1" style="width: 10%">
+      
+    </colgroup>
 
-</li>
-</ul>
-{% endfor %}
+
  
+ <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Title</th>
+      <th>Notice</th>
+      <th>View</th>
+     
+    </tr>
+</thead>
+
+<tbody>
+
+
+{% for each  in notices %}
+{% get_each_url each as eachurl %}
+{% get_each_title each as eachtitle %} 
+{% get_each_activity each as activity %}
+{{activity}}
+{% ifequal activity 'Edit' %}
+<tr id=row1><td><img src="/static/gstudio/img/editar.png" width="27pt" title="Edit"></td><td>{{eachtitle}}</td><td>{{each}}</td><td><a href="{{eachurl}}">view</a></td></tr>
+
+{% endifequal %}
+{% ifequal activity 'Upload' %}
+<tr id=row1><td><img src="/static/gstudio/img/upload.png" width="27pt" title="Upload"></td><td>{{eachtitle}}</td><td>{{each}}</td><td><a href="{{eachurl}}">view</a></td></tr>
+
+{% endifequal %}
+
+{% ifequal activity 'Add' %}
+<tr id=row1><td><img src="/static/gstudio/img/add-icon.png" width="27pt" title="Upload"></td><td>{{eachtitle}}</td><td>{{each}}</td><td><a href="{{eachurl}}">view</a></td></tr>
+
+{% endifequal %}
+
+{% endfor %}
+</tbody>
+</table>
+
 {% endblock %}
