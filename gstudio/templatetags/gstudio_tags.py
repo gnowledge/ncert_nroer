@@ -71,6 +71,18 @@ def cd_change(tmp_location):
         os.chdir(cd)
 
 @register.assignment_tag
+def get_each_title(each):
+    spl=each.split("-")
+    tit=spl[1].split("http")
+    return tit[0]
+
+@register.assignment_tag
+def get_each_url(each):
+    spl=each.split("http")
+    rets="http"+spl[1]
+    return rets
+
+@register.assignment_tag
 def get_slug_of_video(videoid):
     print "videoid",videoid
     slug=""

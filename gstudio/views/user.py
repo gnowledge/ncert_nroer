@@ -57,7 +57,7 @@ def addconcept(request):
                 cols=System.objects.get(title=subj)
                 gbob=Gbobject.objects.get(id=newob.id)
                 cols.gbobject_set.add(gbob)
-                return HttpResponse("sucess")
+                return HttpResponse("success")
         else:
                 variables = RequestContext(request,{"pageob":newob})
                 template = "gstudio/contri_concept.html"
