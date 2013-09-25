@@ -37,8 +37,34 @@ body {
 	height: 100%;
 	line-height:18px;
     color:#333;
+	font-family:arial;
+}
+.event_2
+{
+	background:url('http://nroer.gov.in/static/img/ciet.ncert/bg_2t.jpg')repeat-x 0px 30px;
 }
 
+.event_2 h1
+
+{
+
+    background:#481e20;
+    color:#fff;
+    border-bottom:3px solid #bfa35a;
+    margin-top:15px;
+}
+.top_gappings
+{
+	padding-top:15px;
+	margin-left:10px;
+}
+.events_text
+{
+	padding:15px;
+	padding-top:0px;
+	font-size:14px;
+	line-height:24px;
+}
 p
 
 {
@@ -3365,6 +3391,18 @@ hr
     font-size:11px;
 
 }
+ #box {
+    position: absolute;
+    margin-left: -250px;
+    left: 50%;
+    width: 300px;
+    height: 1.25em;
+    font-weight:bold;
+    top: 30px;
+    text-align: center;
+font-size:12px;
+}
+
 
 /* css for image preview */
 #preview{
@@ -3510,3 +3548,6 @@ float: none;
 clear: both;
 }
 */
+
+
+
