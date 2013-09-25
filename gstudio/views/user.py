@@ -22,7 +22,7 @@ from django.shortcuts import render_to_response
 from gstudio.methods import *
 from django.template.defaultfilters import slugify
 from django.contrib.sites.models import Site
-
+from gstudio.views.ajaxviews import notifyUpdate
 
 
 
@@ -57,6 +57,7 @@ def addconcept(request):
                 cols=System.objects.get(title=subj)
                 gbob=Gbobject.objects.get(id=newob.id)
                 cols.gbobject_set.add(gbob)
+                notifyUpdate(newob.id,auth.username,"Added Concept")
                 return HttpResponse("success")
         else:
                 variables = RequestContext(request,{"pageob":newob})

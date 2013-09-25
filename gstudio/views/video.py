@@ -637,7 +637,7 @@ def getVideo(request):
 				m.sites.add(Site.objects.get_current())
 				m.objecttypes.add(objecttypeVideo)
                                 #code to notify admin about document upload      
-                                response_content="Uploaded Document :"+m.title
+                                response_content="Uploaded Video :"+m.title
                                 notifyUpdate(m.id,request.user,response_content)
                                 #end code 
 	finally:
