@@ -471,6 +471,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
 	height: 100%;
+	font-family:arial;
 }
 
 /* Page style */

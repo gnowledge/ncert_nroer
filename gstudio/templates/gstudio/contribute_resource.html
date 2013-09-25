@@ -1,0 +1,51 @@
+{% extends "gstudio/base.html" %}
+{% load i18n mptt_tags %}
+
+{% block meta-description %}{% trans "Metatype list" %}{% endblock %}
+
+{% block title %}{% trans "Contribute Resources" %}{% endblock %}
+
+{% block content %}
+
+
+{% if not user.is_authenticated %}
+
+<script type="text/javascript">
+function message()
+{
+alert("Please login to continue");
+
+}
+</script>
+
+<div>
+
+<div align="center">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/new_poster_final_1_24_sep_2013.jpg" width="725px" height="1437px" border="0" usemap="#Map">
+<map name="Map" id="Map">
+	<area shape="rect" coords="125,732,625,773" alt="Enrich Timeline" onClick="message()"/>
+	<area shape="rect" coords="129,812,627,852" alt="Share Knowledge" onClick="message()"/>
+	<area shape="rect" coords="138,893,625,930" alt="Share Resources" onClick="message()"/>
+	<area shape="rect" coords="134,971,624,1008" alt="Comment on Resources" onClick="message()"/>
+</map>
+</div>
+</div>
+
+{% else %}
+<div>
+
+<div align="center">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/new_poster_final_1_24_sep_2013.jpg" width="735px" height="1437px" border="0" usemap="#Map">
+<map name="Map" id="Map">
+	<area shape="rect" coords="125,732,625,773" href="/EnrichTimeline" alt="Enrich Timeline"/>
+	<area shape="rect" coords="129,812,627,852" href="/ShareKnowledge" alt="Share Knowledge"/>
+	<area shape="rect" coords="138,893,625,930" href="/ShareResources" alt="Share Resources"/>
+	<area shape="rect" coords="134,971,624,1008" href="/CommentOnResources" alt="Comment on Resources"/>
+</map>
+</div>
+</div>
+
+{% endif %}
+
+
+{% endblock %}
