@@ -72,37 +72,46 @@ def cd_change(tmp_location):
 
 @register.assignment_tag
 def get_each_activity(each):
-    spl=each.split(",")
-    print spl
-    if spl[1]:
-        strn=spl[1].split("!")
-    else:
+    try:
+        spl=each.split(",")
+        print spl
+        if spl[1]:
+            strn=spl[1].split("!")
+        else:
+            return "empty"
+        print strn
+        strg=strn[0]
+        cnt=strg.find("Edit")
+        print strg,cnt
+        if cnt > -1:
+            return "Edit"
+        cnt=strg.find("Upload")
+        if cnt > -1:
+            return "Upload"
+        cnt=strg.find("Add")
+        if cnt > -1:
+            return "Add"
         return "empty"
-    print strn
-    strg=strn[0]
-    cnt=strg.find("Edit")
-    print strg,cnt
-    if cnt > -1:
-        return "Edit"
-    cnt=strg.find("Upload")
-    if cnt > -1:
-        return "Upload"
-    cnt=strg.find("Add")
-    if cnt > -1:
-        return "Add"
-    return "empty"
+    except:
+        return "empty"
 
 @register.assignment_tag
 def get_each_title(each):
-    spl=each.split("-")
-    tit=spl[1].split("http")
-    return tit[0]
+    try:
+        spl=each.split("-")
+        tit=spl[1].split("http")
+        return tit[0]
+    except:
+        return ""
 
 @register.assignment_tag
 def get_each_url(each):
-    spl=each.split("http")
-    rets="http"+spl[1]
-    return rets
+    try:
+        spl=each.split("http")
+        rets="http"+spl[1]
+        return rets
+    except:
+        return ""
 
 @register.assignment_tag
 def get_slug_of_video(videoid):
