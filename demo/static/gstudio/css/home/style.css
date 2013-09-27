@@ -65,6 +65,32 @@ body {
 	font-size:14px;
 	line-height:24px;
 }
+.image_top_side
+{
+	 position:relative;
+	 top:-155px;
+}
+
+ #box {
+    position: absolute;
+    margin-left: 160px;
+    left: 50%;
+    width: 300px;
+    height: 1.25em;
+    font-weight:bold;
+    top: 900px;
+font-size:12px;
+}
+.event_btn
+{
+	padding:10px;
+	color:#fff;
+	background:#481e20;
+	font-weight:bold;
+	border-radius:5px;
+	margin-bottom:15px;
+}
+
 p
 
 {
@@ -76,8 +102,6 @@ p
     margin-bottom:0px;
 
 }
-
-
 
 a
 
@@ -3390,17 +3414,6 @@ hr
 
     font-size:11px;
 
-}
- #box {
-    position: absolute;
-    margin-left: -250px;
-    left: 50%;
-    width: 300px;
-    height: 1.25em;
-    font-weight:bold;
-    top: 30px;
-    text-align: center;
-font-size:12px;
 }
 
 
