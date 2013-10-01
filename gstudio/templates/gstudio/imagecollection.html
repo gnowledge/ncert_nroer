@@ -7,7 +7,7 @@
 <script type="text/javascript" language="javascript" src="/static/gstudio/js/jquery.carouFredSel-6.2.1-packed.js"></script>
 <script type="text/javascript" src="/static/gstudio/js/jquery-ui.js" ></script>
 
-<!--
+
 <style type="text/css">
 .fullimage {
     background-color: #EFEFEF;
@@ -50,10 +50,14 @@ cursor: default;
 }
 
 a.prev span, a.next span {
-display: none;
+display: block;
 }
 .pagination {
 text-align: center;
+}
+.pagination a span
+{
+display:none
 }
 .pagination a {
 background: url(/static/gstudio/img/miscellaneous_sprite.png) 0 -300px no-repeat transparent;
@@ -66,9 +70,7 @@ display: inline-block;
 background-position: -25px -300px;
 cursor: default;
 }
-.pagination a span {
-display: none;
-}
+
 .clearfix {
 float: none;
 clear: both;
@@ -76,7 +78,7 @@ clear: both;
 
 
 </style>
--->
+
 <h2><font id="fonttitleid" >{{image.title}}</font></h2>
 
 <font color = 'black'>Posted By : </font>
@@ -119,7 +121,7 @@ clear: both;
 
 </div>   <!--closing div fullimage!-->
 
-<div class="image_scroll">
+<div class="image_carousel">
 
     <div id="imagescroll">
 
@@ -130,9 +132,9 @@ clear: both;
 
       </div>
     <div class="clearfix"></div>
-    <a class="prev" id="imagescroll_prev" href="#"><span>prev</span></a>
-    <a class="next" id="imagescroll_next" href="#"><span>next</span></a>
-    <div class="pagination" id="imagescroll_pag"></div>
+    <a class="prev" id="foo2_prev" href="#"></a>
+    <a class="next" id="foo2_next" href="#"></a>
+    <div class="pagination" id="foo2_pag"></div>
 </div>
 
 
@@ -140,19 +142,26 @@ clear: both;
 
 <!--script for scrollable image collection!-->
 <script type="text/javascript">
+$(window).load(function(){
+document.getElementById('foo2_prev').style.display = "block";
+document.getElementById('foo2_next').style.display = "block";
+document.getElementById('foo2_pag').style.display = "block";
+
+})
+
 $("#imagescroll").carouFredSel({
 circular: false,
 infinite: false,
 auto : false,
 prev: {
-button: "#imagescroll_prev",
+button: "#foo2_prev",
 key: "left"
 },
 next: {
-button: "#imagescroll_next",
+button: "#foo2_next",
 key: "right"
 },
-pagination: "#imagescroll_pag"
+pagination: "#foo2_pag"
 });
 
 $(".inactive").click(function()
