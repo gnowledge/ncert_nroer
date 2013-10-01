@@ -5,752 +5,337 @@
 
 
 {% block content %}
-<link rel="stylesheet" href="/static/gstudio/css/home/basic.css" type="text/css" />              
- <link rel="stylesheet" href="/static/gstudio/css/home/galleriffic-2.css" type="text/css" />
- <script type="text/javascript" src="/static/gstudio/js/home/jquery-1.3.2.js"></script>
- <script type="text/javascript" src="/static/gstudio/js/home/jquery.galleriffic.js"></script>
- <script type="text/javascript" src="/static/gstudio/js/home/jquery.opacityrollover.js"></script> 
+<script src="http://code.jquery.com/jquery-latest.js"></script>	
+    <script src="/static/gstudio/js/tabcontent.js" type="text/javascript"></script>		
+    <link href="/static/gstudio/css/tabcontent.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/static/gstudio/js/home/stepcarousel.js">
+
+
+</script>
+
+<style type="text/css">
+
+.stepcarousel
+position: relative; /*leave this value alone*/
+border: 10px solid black;
+overflow: scroll; /*leave this value alone*/
+width: 480px; /*Width of Carousel Viewer itself*/
+height: 400px; /*Height should enough to fit largest content's height*/
+z-index:10;
+}
+
+.stepcarousel .belt{
+position: absolute; /*leave this value alone*/
+left: 0;
+top: 0;
+}
+
+.stepcarousel .panel{
+float: left; /*leave this value alone*/
+overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
+margin: 10px; /*margin around each panel*/
+width: 460px; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
+}
+
+</style>
 
 <div class="event_2">
 
 <h1><div class="top_gappings">Share Knowledge</div></h1>
 <div class="events_text">
 <p>
-The images given below depicts the moments from Mahatma Gandhi’s life. Share and discuss these images in your classroom and design activities using these images and share with us, you can also use the timeline for this. Share your knowledge by adding/ sharing any related or specific information on any of the image/ images you can also send this information in the format attached below. Your suggestions are always welcomed at <a href="mailto:nroer.ciet@gmail.com"><u>nroer.ciet@gmail.com</u></a> 
+Here are some of the activities designed for students. Teachers are supposed to do engage students in these activities.Besides enriching their lesson plans teachers can also design activities other than these. Teachers can also share these activities with us by sending an email to us on <a href="mailto:nroer.ciet@gmail.com"><u>nroer.ciet@gmail.com</u> </a>  in the format attached below.
 </p>
+<p><b>Or you can post us at :--</b><br/>
+
+To<br/>
+
+The Joint Director CIET<br/>
+
+Central Institute of Educational Technology (CIET)<br/>
+
+National Council of Educational Research and Training<br/>
+
+Sri Aurbindo Marg,<br/>
+
+New Delhi, 110016.<br/><br/>
+
+Please superscribe on the top of the envelop <b>“A Tribute to Mahatma”</b>.</p><br/>
 
 
+ <div style="margin: 0 auto; padding: 0px 0 0px; font: 1.0em arial;z-index:100;">
+        <ul class="tabs" persist="true">
+            <li><a href="#" rel="view2">Activity 1</a></li>
+            <li><a href="#" rel="view1">Activity 2</a></li>
+            <li><a href="#" rel="view3">Activity 3</a></li>
+               </ul>
+        <div class="tabcontents">
+            <div id="view1" class="tabcontent">
+<script type="text/javascript">
 
+stepcarousel.setup({
+	galleryid: 'mygallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: [], rightnav: []},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
 
+</script>
 
-
-<div id="page">
-			<div id="container">
-
-				<!-- Start Advanced Gallery Html Containers -->
-				<div id="gallery" class="content">
-					<div id="controls" class="controls"></div>
-					<div class="slideshow-container">
-						<div id="loading" class="loader"></div>
-						<div id="slideshow" class="slideshow"></div>
-					</div>
-					<div id="caption" class="caption-container"></div>
-				</div>
-				<div id="thumbs" class="navigation">
-					<ul class="thumbs noscript">
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/1.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/1-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/2.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/2-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/3.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/3-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/4.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/4-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/5.JPG" ><img src="http://nroer.gov.in/static/img/ciet.ncert/5-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/6.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/6-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/7.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/7-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/8.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/8-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/9.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/9-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/10.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/10-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/11.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/11-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/13.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/13-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/14.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/14-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/15.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/15-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/16.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/16-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/17.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/17-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/18.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/18-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/19.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/19-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/20.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/20-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/21.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/21-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/22.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/22-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/23.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/23-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/24.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/24-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-						<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/25.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/25-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/26.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/26-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/27.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/27-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/28.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/28-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/29.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/29-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/30.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/30-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/31.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/31-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/32.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/32-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/33.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/33-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/34.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/34-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/35.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/35-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/36.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/36-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/37.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/37-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/38.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/38-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/39.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/39-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/40.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/40-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/41.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/41-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/42.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/42-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/43.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/43-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/44.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/44-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/45.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/45-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/46.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/46-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/47.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/47-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/48.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/48-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/49.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/49-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/50.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/50-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/51.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/51-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/52.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/52-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/53.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/53-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/54.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/54-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/55.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/55-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/56.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/56-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/57.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/57-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/58.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/58-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/59.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/59-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/60.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/60-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/61.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/61-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/62.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/62-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/63.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/63-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/64.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/64-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/65.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/65-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/66.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/66-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/67.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/67-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/68.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/68-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/69.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/69-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/70.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/70-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/71.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/71-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/72.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/72-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/73.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/73-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/74.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/74-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/75.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/75-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/76.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/76-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/77.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/77-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/78.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/78-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/79.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/79-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/80.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/80-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/81.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/81-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/82.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/82-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/83.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/83-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/84.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/84-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/85.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/85-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/86.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/86-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/87.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/87-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/88.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/88-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/89.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/89-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/90.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/90-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/91.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/91-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/92.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/92-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-<li>
-							<a class="thumb" name="leaf" href="http://nroer.gov.in/static/img/ciet.ncert/93.jpg" ><img src="http://nroer.gov.in/static/img/ciet.ncert/93-thumbnail"/></a>
-							<div class="caption">
-								<div class="image-title">Title #20</div>
-								<div class="image-desc">Description</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div style="clear: both;"></div>
-			</div>
-		</div>
+<div class="right nav_arrow" style="margin-right:30px;">
+<a href="javascript:stepcarousel.stepBy('mygallery', -1)"><img src="http://nroer.gov.in/static/img/ciet.ncert/brown_left.jpg" width="12px" height="16px"></a> <a href="javascript:stepcarousel.stepBy('mygallery', 1)"><img src="http://nroer.gov.in/static/img/ciet.ncert/brown_right.jpg"  width="12px" height="16px"></a> 
+</div>
+<div class="clear"></div>
 		
-		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				// We only want these styles applied when javascript is enabled
-				$('div.navigation').css({'width' : '325px', 'float' : 'left'});
-				$('div.content').css('display', 'block');
+<div id="mygallery" class="stepcarousel">
+<div class="belt">
 
-				// Initially set opacity on thumbs and add
-				// additional styling for hover effect on thumbs
-				var onMouseOutOpacity = 0.67;
-				$('#thumbs ul.thumbs li').opacityrollover({
-					mouseOutOpacity:   onMouseOutOpacity,
-					mouseOverOpacity:  1.0,
-					fadeSpeed:         'fast',
-					exemptionSelector: '.selected'
-				});
-				
-				// Initialize Advanced Galleriffic Gallery
-				var gallery = $('#thumbs').galleriffic({
-					delay:                     2500,
-					numThumbs:                 15,
-					preloadAhead:              10,
-					enableTopPager:            true,
-					enableBottomPager:         true,
-					maxPagesToShow:            7,
-					imageContainerSel:         '#slideshow',
-					controlsContainerSel:      '#controls',
-					captionContainerSel:       '#caption',
-					loadingContainerSel:       '#loading',
-					renderSSControls:          true,
-					renderNavControls:         true,
-					playLinkText:              'Play Slideshow',
-					pauseLinkText:             'Pause Slideshow',
-					prevLinkText:              '&lsaquo; Previous Photo',
-					nextLinkText:              'Next Photo &rsaquo;',
-					nextPageLinkText:          'Next &rsaquo;',
-					prevPageLinkText:          '&lsaquo; Prev',
-					enableHistory:             false,
-					autoStart:                 false,
-					syncTransitions:           true,
-					defaultTransitionDuration: 900,
-					onSlideChange:             function(prevIndex, nextIndex) {
-						// 'this' refers to the gallery, which is an extension of $('#thumbs')
-						this.find('ul.thumbs').children()
-							.eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
-							.eq(nextIndex).fadeTo('fast', 1.0);
-					},
-					onPageTransitionOut:       function(callback) {
-						this.fadeTo('fast', 0.0, callback);
-					},
-					onPageTransitionIn:        function() {
-						this.fadeTo('fast', 1.0);
-					}
-				});
-			});
-		</script>
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/4.jpg"/>
+<div><b>Description:</b> The Dandi March.<br/>During the Salt march Mahatma Gandhi was accompanied by 78 volunteers. On the way they were joined by thousands.<br/>
+<b>People:</b> Mahatma Gandhi and other Volunteers.<br/>
+<b>Date:</b> 11 March – 6 April 1930.<br/>
+<b>Source:</b> NCERT  Textbook India and Contemporary  world-II p 64.</div>
+</div>
 
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/3.jpg"/>
+<div><b>Description:</b> Meeting of Congress leaders at Allahabad, 1931.<br/>
+<b>People:</b> Mahatma Gandhi, Sardar vallabh bhai patel (Extreme left), Jawaharlal Nehru (extreme right) and subhash Chandra bose (fifth from right).<br/>
+<b>Source:</b> NCERT  Textbook India and Contemporary  world-II p 62.</div>
+</div>
 
-<div class="image_top_side">
-<div><img src="http://nroer.gov.in/static/img/ciet.ncert/share_knoledge_2_Final.jpg" width="325px" height="435px"><p  align="left"><a href="http://nroer.gov.in/gstudio/resources/images/#imagecollections" class="event_btn">Download images</a><br/><br/><a href="http://nroer.gov.in/static/img/ciet.ncert/share_knowledge_1_FINAL.jpg" class="event_btn">Download form to Share Knowledge</a></div>
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/1.jpg"/>
+<div><b>Description:</b> Karachi Session of Congress 1931, in which Mahatma Gandhi was authorized to represent the Congress in the Round Table Conference.<br/>
+<b>People:</b> Mahatma Gandhi<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/30.jpg"/>
+<div><b>Description:</b> Mahatma Gandhi in conversation with other leaders during Indian national movement.<br/>
+<b>People:</b> Mahatma Gandhi, Maulana Abul Kalam and Sardar Patel.<br/>
+<b>Source:</b> Gandhi Smriti and Darshan Samiti.</div>
+</div>
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/36.jpg"/>
+<div><b>Description:</b> Mahatma Gandhi in conversation with Jawaharlal Nehru during Indian national movement<br/>
+<b>Source:</b> Gandhi Smriti and Darshan Samiti.</div>
 </div>
 
 
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/2..jpg"/>
+<div><b>Description:</b> In Dum Dum Jail, near Calcutta, after an interview with political prisoners, 1946.<br/>
+<b>People:</b> Mahatma Gandhi<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+
+<div class="panel">
+<b>Mahatma Gandhi and the Indian National Movement</b><br/><br/>
+<div align="center"><b>Activity 2 for students</b></div>
+<ol>
+	<li>Engage the students in the given pictures and ask them to critically express their views on each slide.</li>
+	<li>Ask students to visit website nroer.gov.in and to make a presentation on gandhi’s role in the Indian national movement.</li>
+	<li>Discuss the Gandhian principles of truth, non-violence and satyagraha and ask students to write an essay on the relevance of these principles in present society.</li>
+</ol>
+</div>
+
+</div>
+</div>
+
+
+
+
+
+            </div>
+            <div id="view2" class="tabcontent">
+
+
+<div class="right nav_arrow" style="margin-right:30px;">
+<a href="javascript:stepcarousel.stepBy('mygallery2', -1)"><img src="http://nroer.gov.in/static/img/ciet.ncert/brown_left.jpg" width="12px" height="16px"></a> <a href="javascript:stepcarousel.stepBy('mygallery2', 1)"><img src="http://nroer.gov.in/static/img/ciet.ncert/brown_right.jpg"  width="12px" height="16px"></a> 
+</div>
+<div class="clear"></div>
+
+	 
+
+
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'mygallery2', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: [], rightnav: []},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>		
+<div id="mygallery2" class="stepcarousel">
+<div class="belt">
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/IMAGE_1.jpg"/>
+<div><b>Description:</b> Pietermaritzburg Railway Station: the seeds of Satyagraha were sown here.<br/>
+<b>Place:</b> Pietermaritzberg<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/2.jpg"/>
+<div><b>Description: </b>With the Indian Ambulances Corps during the Boer War, 1899.<br/>
+<b>People:</b> Mahatma Gandhi and Indian Ambulances Corps<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/55.jpg"/>
+<div><b>Description:</b> Boer War Medal awarded to Mahatma Gandhi.<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/67.jpg" height="400px"/>
+<div><b>Description:</b> Mahatma Gandhi  (on chair) with his office colleagues in Johannesberg.<br/>
+<b>Place:</b> Johannesberg<br/>
+<b>People:</b> Mahatma Gandhi<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/56.jpg"/>
+<div><b>Description:</b> Map of South Africa in the year 1900 C.<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/54.jpg"/>
+<div><b>Description:</b> Mahatma Gandhi and Kasturba with fellow settlers at the Phoenix Settlement, Natal in 1906.<br/>
+<b>Place:</b> Natal, South Africa<br/>
+<b>People:</b> Mahatma Gandhi and Kasturba Gandhi.<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027</div>
+</div>
+
+<div class="panel">
+<b>Mahatma Gandhi’s life in South Africa</b><br/><br/>
+<div align="center"><b>Activity 1 for students</b></div>
+<ol>
+	<li>Engage the students in the given pictures, and:</li>
+	<ul>
+		<li>Ask them to write at least five points on each picture.</li>
+		<li>Ask them to critically express their views on each slide.</li>
+	</ul>
+	<li>Explore Gandhi’s life with the help of given timeline and ask students to prepare a report on “What led       the turning point in gandhi’s life” ?</li>
+	<li>Discuss the given map of South Africa (1900 C.) and compare it with that of now.</li>
+</ol>
+</div>
+
+</div>
+</div>
+
+
+
+
+	    </div>	
+            <div id="view3" class="tabcontent">
+  
+
+<div class="right nav_arrow" style="margin-right:30px;">
+<a href="javascript:stepcarousel.stepBy('mygallery3', -1)"><img src="http://nroer.gov.in/static/img/ciet.ncert/brown_left.jpg" width="12px" height="16px"></a> <a href="javascript:stepcarousel.stepBy('mygallery3', 1)"><img src="http://nroer.gov.in/static/img/ciet.ncert/brown_right.jpg"  width="12px" height="16px"></a> 
+</div>
+<div class="clear"></div>
+
+
+          
+
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'mygallery3', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: [], rightnav: []},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>		
+<div id="mygallery3" class="stepcarousel">
+<div class="belt">
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/43.jpg"/>
+<div><b>Description:</b>Mahatma Gandhi at work<br/>
+<b>People:</b> Mahatma Gandhi.<br/>
+<b>Source:</b> Gandhi Smriti and Darshan Samiti.</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/42.jpg"/>
+<div><b>Description:</b> Mahatma Gandhi and his publications.<br/>
+<b>People:</b> Mahatma Gandhi.<br/>
+<b>Source:</b> Gandhi Smriti and Darshan Samiti.</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/mahatma_social_welfare3.jpg"/>
+<div><b>Description:</b> Mahatma Gandhi planting a tree.<br/>
+<b>People:</b> Mahatma Gandhi.<br/>
+<b>Source:</b> Gandhi Smriti and Darshan Samiti.</div>
+</div>
+
+<div class="panel">
+<img src="http://nroer.gov.in/static/img/ciet.ncert/mahatma_social_welfare4.jpg"/>
+<div><b>Description:</b> Mahatma Gandhi and Kasturba with social workers in Gujarat, 1916.<br/>
+<b>Place:</b> Gujarat.<br/>
+<b>People:</b> Mahatma Gandhi and Kasturba.<br/>
+<b>Source:</b> Gandhi Smarak Sangrahalaya, Gandhi Ashram, Ahmedabad 380027.</div>
+</div>
+
+<div class="panel">
+<b>Mahatma Gandhi and the social welfare activities</b><br/><br/>
+<div align="center"><b>Activity 3 for students</b></div>
+<ol>
+	<li>Engage the students in the given pictures and ask them to critically express their views on each slide.</li>
+	
+	<li>Discuss the scenario of the society during 19th centaury in india with students and ask them :</li>
+	<ul>
+		<li>To examine what led Gandhiji to run social welfare activities parallel to Indian national movement.</li>
+		<li>To prepare a report on the role of women in Indian national movement.</li>
+		<li>To prepare a report on Gandhi’s  untouchability removal campaign.</li>
+	</ul>
+</ol>
+</div>
+
+
+</div>
+</div>
+
+
+
+            </div>
+            
+	</div>    
+</div>
+
+<div class="image_top_side right">
+<div><img src="http://nroer.gov.in/static/img/ciet.ncert/share_knoledge_2_Final.jpg" width="150px" height="207px"><p  align="left"><a href="http://nroer.gov.in/gstudio/resources/images/#imagecollections" class="event_btn">Download images</a><br/><br/><a href="http://nroer.gov.in/static/img/ciet.ncert/share_knowledge_1_FINAL.jpg" class="event_btn">Download form</a></div>
+</div>
+<div class="clear"></div>
 {% endblock %}
