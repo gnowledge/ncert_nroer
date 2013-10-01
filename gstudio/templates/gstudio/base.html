@@ -32,8 +32,8 @@ window.onload = function() {
     var box = document.getElementById('box'),
         scroll = getScrollTop();
     
-    if (scroll <= 28) {
-      box.style.top = "30px";
+    if (scroll <= 898) {
+      box.style.top = "900px";
     }
     else {
       box.style.top = (scroll + 2) + "px";
@@ -42,6 +42,7 @@ window.onload = function() {
   
 };
 </script>
+
 <script>
 
 /* Text and/or Image Crawler Script v1.53 (c)2009-2012 John Davenport Scheuer
@@ -414,6 +415,8 @@ function marqueeInit(config){
 
 })();
 </script>
+
+
 
     <!-- {% get_archives_gbobjects "objectapp/tags/archives_gbobjects_link.html" %} -->
 {% endblock %}

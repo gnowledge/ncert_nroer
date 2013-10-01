@@ -53,6 +53,63 @@ body {
     border-bottom:3px solid #bfa35a;
     margin-top:15px;
 }
+.event_2 ul.tabs li a
+{
+	
+    color: #fff;
+    background: #481e20;
+    font-family:arial;
+}
+.event_2 ul.tabs li a:visited
+{
+    color: #fff;
+}   
+.event_2 ul.tabs li a:hover
+{
+    color:#000;
+} 
+.event_2 ul.tabs li.selected a
+{
+    /*selected tab style */
+       color:#000;
+	font-weight:normal;
+}
+.event_2 .tabcontents
+{
+   
+    background:#fff;
+	width:510px;
+display:inline;
+float:left;
+border:none;
+margin-left:1px;
+padding:10px;
+padding-top:10px;
+
+}
+.event_2 .stepcarousel{
+
+width: 480px;
+height:600px;
+background:none;
+font-size:14px;
+line-height:24px;
+z-index:10;
+}
+.event_2 .stepcarousel .belt .panel ol li{
+
+margin-bottom:10px;
+}
+.event_2 .stepcarousel .belt .panel img{
+
+width: 480px;
+height:339px;
+}
+.event_2 .stepcarousel .belt .panel img{
+
+width: 480px;
+height:339px;
+}
 .top_gappings
 {
 	padding-top:15px;
@@ -68,7 +125,6 @@ body {
 .image_top_side
 {
 	 position:relative;
-	 top:-155px;
 }
 
  #box {
@@ -3297,6 +3353,7 @@ hr
     width:100%;
 
     border-top:1px solid #888;
+    z-index:1000;
 
 }
 
