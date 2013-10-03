@@ -3,6 +3,40 @@
 {% block title %}Enrich Timeline{% endblock %}
 
 {% block content %}
+
+<script>
+window.onload = function() {
+  
+  function getScrollTop() {
+    if (typeof window.pageYOffset !== 'undefined' ) {
+      return window.pageYOffset;
+    }
+
+    var d = document.documentElement;
+    if (d.clientHeight) {
+      return d.scrollTop;
+    }
+    return document.body.scrollTop;
+  }
+
+  window.onscroll = function() {
+    var box = document.getElementById('box'),
+        scroll = getScrollTop();
+    
+    if (scroll <= 898) {
+      box.style.top = "900px";
+    }
+    else {
+      box.style.top = (scroll + 2) + "px";
+    }
+  };
+  
+};
+</script>
+
+
+
+
 <div class="event_2">
 
 <h1><div class="top_gappings">Enrich Timeline</div></h1>
