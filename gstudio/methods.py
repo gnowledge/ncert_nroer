@@ -1091,3 +1091,21 @@ def sendMail_NonMember(senderuser,receiveremail,activity,conjuction,nid,url=None
     render = render_to_string("/gstudio/notification/emailBody.html",{'sender':senderuser,'activity':activity,'conjunction':conjuction,'object':sys.title,'url':url,'site':site.domain}) 
     send_mail("Invitation", render, senderuser.email, [receiveremail,])
     return 
+
+
+def sendNotify(pageid,senderUsername,recieverUsername,response_content):
+    sys=System.objects.filter(id=pageid)
+    if sys:
+        sys=System.objects.get(id=pageid)
+    else:
+        sys=Gbobject.objects.get(id=pageid)
+    #sysurl=str(sys.get_view_url)
+    page=sys.title
+    objurl=sys.get_view_object_url
+    activ=response_content
+    #print response_content,pageid,userid,username,activ  
+    site=Site.objects.get_current()
+    render = render_to_string("/gstudio/notification/label.html",{'sender':username,'activity':activ,'conjunction':'-','object':page,'site':site,'oburl':objurl})
+    bx=Author.objects.get(username=recieverUsername)
+    notification.create_notice_type(render, "Notification", "notification")
+    notification.send([bx], render, {"from_user": username})
