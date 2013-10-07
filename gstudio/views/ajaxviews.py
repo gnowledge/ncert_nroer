@@ -34,7 +34,7 @@ rlist={}
 import os
 from settings import PYSCRIPT_URL_GSTUDIO
 from demo.settings import FILE_URL,PYSCRIPT_URL_GSTUDIO,HTML_FILE_URL
-from gstudio.methods import sendMail_RegisterUser,sendMail_NonMember
+from gstudio.methods import sendMail_RegisterUser,sendMail_NonMember,sendNotify
 import unicodedata
 from unidecode import unidecode
 from notification import models as notification
@@ -1013,6 +1013,15 @@ def ajaxpublicprivate(request):
 	gbobject = Gbobject.objects.get(id=objectid)
 	gbobject.status=tostatus
 	gbobject.save()
+        #code to notify user about status his upload object
+        senderUsername = "ciet"
+        recieverUsername = gbobject.authors.all()[0].username
+        if tostatus == 2:
+            response_content= "Made Published "+ gbobject.title
+            sendNotify(gbobject.id,senderUsername,recieverUsername,response_content)
+        else : 
+            response_content= "Made Hidden "+ gbobject.title
+            sendNotify(gbobject.id,senderUsername,recieverUsername,response_content)
         return HttpResponse("success")
     else :
         return HttpResponse("failed")
