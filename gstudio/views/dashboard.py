@@ -34,8 +34,7 @@ from gstudio.methods import getimages,check_collection
 from django.http import Http404
 from gstudio.views.ajaxviews import notifyuserimg
 from django.shortcuts import render
-
-
+from operator import itemgetter
 def dashboard(request):
     allObject = []
     if request.user.is_superuser:
@@ -116,7 +115,8 @@ def dashboard(request):
                 author = each.authors.all()[0].username
             allObject.append({'title':each.title,'id':each.id,'authors':author,"type":"Html",'date':each.creation_date,'view':"/gstudio/resources/documents/show/"+str(each.id)})
 
-        
+        allObject.sort(key=itemgetter('date'))
+        allObject.reverse() 
     vars=RequestContext(request,{'allObject':allObject})
     template="gstudio/dashboard.html"
     return render_to_response(template, vars)
