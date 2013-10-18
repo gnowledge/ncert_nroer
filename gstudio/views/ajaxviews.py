@@ -82,7 +82,7 @@ def notifyuser(request):
     pageid=request.GET["pageid"]
     username=request.GET["username"]
     response_content=request.GET["response_content"]
-    notifyuserUpdate(pageid,username,response_content)
+    notifyUpdate(pageid,username,response_content)
     return HttpResponse("success")
 
 def Deldoccolln(request):
