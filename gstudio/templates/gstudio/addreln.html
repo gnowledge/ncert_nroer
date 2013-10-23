@@ -161,6 +161,29 @@ llbars');
            }
 
 function relationfunction(id,reltitle){
+{% if user.is_superuser %}
+        var ajurl ="/gstudio/resources/addreln/deleteRelation/"+{{meetingob.id}};
+        var relation_id = "";
+	relation_id = id;
+	$.ajax({
+              url: ajurl,
+	      data: {relation_ajax_id:relation_id},
+              beforeSend: function() {
+                              $("#ajax_load_image").show();                    
+			      $("#content").css({"opacity":"0.1",})
+                              },
+	       success: function(data){	
+	       		     $('#relndiv').html(data);
+                             $("#chart").text("");
+			     fgraph();
+			     },
+	       complete: function(){
+                             $("#ajax_load_image").hide();
+			     $("#content").css({"opacity":"",})
+			     },
+   		});
+         
+{% else %} 
 r = confirm("Do you to send Delet Request");
 username="{{user.username}}";
 var response_content = "Request for Delete tag name="+reltitle;
@@ -169,19 +192,13 @@ if (r==true)
 	var relation_id = "";
 	relation_id = id;
         pageid="{{meetingob.id}}";
-	//var ajurl ="/gstudio/resources/addreln/deleteRelation/"+{{meetingob.id}}
-         
 	$.ajax({
-       	//	url: ajurl,
-	  //     data: {relation_ajax_id:relation_id},
-        url: '/gstudio/ajax/notifyuser/',
-        type: 'GET',
-        data: {response_content:response_content,pageid:pageid,username:username},
+               url: '/gstudio/ajax/notifyuser/',
+               type: 'GET',
+               data: {response_content:response_content,pageid:pageid,username:username},
 	       beforeSend: function() {
                               $("#ajax_load_image").show();
-                            
-			      $("#content").css({"opacity":"0.1",})
-	   
+             		      $("#content").css({"opacity":"0.1",})
                               },
 	       success: function(data){	
 	       	//	     $('#relndiv').html(data);
@@ -202,7 +219,7 @@ else
   
   }
 
-
+{% endif %}
 
 }
 </script>
