@@ -48,39 +48,54 @@ var id1 = {{objectid}},
     id2 = this.id;
     tagname=$(this).attr('value');
    username="{{user.username}}";
-var response_content = "Request for Delete page, name:"+tagname+" on page";   
-r = confirm("Do you want to send Delete Request ")
-if (r==true)
-  {
-tagname = arr;
-$.ajax({
-	//url: '/gstudio/ajax/deletepriorpage/',
-	//type: 'POST',
-	//data: {objectid1:id1,objectid2:id2,csrfmiddlewaretoken: '{{ csrf_token }}' },
-url: '/gstudio/ajax/notifyuser/',
-type: 'GET',
-data: {response_content:response_content,pageid:id1,username:username},
-beforeSend: function() {
+{% if user.is_superuser %}
+ alert("superuser:"+username);
+  $.ajax({
+	url: '/gstudio/ajax/deletepriorpage/',
+	type: 'POST',
+	data: {objectid1:id1,objectid2:id2,csrfmiddlewaretoken: '{{ csrf_token }}' },
+        beforeSend: function() {
               $("#ajax_load_image").show();
               $("#content").css({"opacity":"0.1",})
                               },
-success: function(data){
+       success: function(data){
+		$('#priorpostpages').html(data);
+		$("#chart").text("");
+		fgraph();
+		},
+       complete: function(){
+               $("#ajax_load_image").hide();
+		$("#content").css({"opacity":"",})
+		  }
+});  
+{% else %}
+  var response_content = "Request for Delete page, name:"+tagname+" on page";   
+  r = confirm("Do you want to send Delete Request ")
+  if (r==true)
+  {
+  $.ajax({
+       url: '/gstudio/ajax/notifyuser/',
+       type: 'GET',
+       data: {response_content:response_content,pageid:id1,username:username},      
+       beforeSend: function() {
+              $("#ajax_load_image").show();
+              $("#content").css({"opacity":"0.1",})
+                              },
+       success: function(data){
 		//$('#priorpostpages').html(data);
                 alert("Request sent to Admin");
 		$("#chart").text("");
 		fgraph();
 		},
-complete: function(){
+       complete: function(){
                $("#ajax_load_image").hide();
 		$("#content").css({"opacity":"",})
 		  }
 });  
        			      
   }
-else
-  {
-  
-  }
+else { }
+{% endif %}
 });
 
 });

@@ -45,20 +45,46 @@ $.ajax({
 $("#tags{{objectid}}").val("");
 });
 
-/*$(".deletetags").click(function(){
-tagname = $(this).attr('value');
-
-$.ajax({
-url: '/gstudio/resources/images/deletetag/',
-//type: 'POST',
-data: {objectid:{{objectid}},data:tagname},
-success: function(data){
-$('.tags{{objectid}}').html(data);
-}
-});  
-
-});*/
+  <!-- for this code a super user can delete tag and normal user send email to admin to delete tag-->
+    $(".deletetags").click(function(){ 
+          tagname = $(this).attr('value');
+          id={{objectid}};
+    {% if user.is_superuser %}
+     $.ajax({
+          url: '/gstudio/resources/images/deletetag/',
+          //type: 'POST',
+          data: {objectid:{{objectid}},data:tagname},
+          success: function(data){
+         $('.tags{{objectid}}').html(data);
+         }
+      });  
+    {% else %}
+    r = confirm("Do you to send Delet Request");
+    if (r==true)
+      {
+         var response_content = "Request for Delete tag name="+tagname;
+         username="{{user.username}}";
+        $.ajax({
+                url: '/gstudio/ajax/notifyuser/',
+                type: 'GET',
+                data: {response_content:response_content,pageid:id,username:username},
+                beforeSend: function() {
+                     $("#ajax_load_image").show();
+                     $("#content").css({"opacity":"0.1",})},
+	        success: function(data){
+                     alert("Request sent to Admin ");},
+                complete: function(){
+                     $("#ajax_load_image").hide();
+		     $("#content").css({"opacity":"",})}
+         });  
+       			      
+         }
+    else{}
+    {% endif %}
+        <!-- end code-->
 });
+});
+/*
 function tagfunction(arr,id){
 r = confirm("Do you to send Delet Request");
 if (r==true)
@@ -92,7 +118,7 @@ else
   {
   
   }
-}
+}*/
 </script>	
 
 <div class="tags{{objectid}}">
@@ -105,7 +131,7 @@ else
 
 	   {% if user.is_authenticated %}
 
-	   <a class="deletetags" value="{{tag}}" title="delete {{tag}}" onclick='tagfunction("{{tag}}","{{objectid}}");' ><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/></a>
+	   <a class="deletetags" value="{{tag}}" title="delete {{tag}}" ><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/></a>
 	   {% endif %}
 
    	   {% if not forloop.last %},{% endif %}
