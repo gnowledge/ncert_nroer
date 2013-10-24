@@ -19,10 +19,14 @@ if (loc >= 0)
   $("#tags{{objectid}}").focus();
 }
 });
+
 $(".tag{{objectid}}").click(function(){
 data = $("#tags{{objectid}}").val();//attr('value');
 var sdata=data.toString();
 data=sdata.toLowerCase();
+var response_content="Added Tag, Name="+data;
+username="{{user.username}}";
+var pageid={{objectid}};
 $.ajax({
 	url: '/gstudio/resources/images/addtag/',
 	//type: 'POST',
@@ -30,11 +34,10 @@ $.ajax({
         beforeSend: function() {
               $("#ajax_load_image").show();
               $("#content").css({"opacity":"0.1",})
-                
                               },
 	success: function(data){
-           alert("Request sent to Admin ");
-	
+           //alert("Request sent to Admin ");
+                $('.tags{{objectid}}').html(data);
 			     },
         complete: function(){
                 $("#ajax_load_image").hide();
@@ -42,6 +45,7 @@ $.ajax({
 		  }
 
 });  
+notifyuser(response_content,pageid,username);
 $("#tags{{objectid}}").val("");
 });
 
@@ -64,7 +68,16 @@ $("#tags{{objectid}}").val("");
       {
          var response_content = "Request for Delete tag name="+tagname;
          username="{{user.username}}";
-        $.ajax({
+         notifyuser(response_content,id,username);		      
+         }
+    else{}
+    {% endif %}
+        <!-- end code-->
+});
+});
+function notifyuser(response_content,id,username)
+{
+	$.ajax({
                 url: '/gstudio/ajax/notifyuser/',
                 type: 'GET',
                 data: {response_content:response_content,pageid:id,username:username},
@@ -72,18 +85,12 @@ $("#tags{{objectid}}").val("");
                      $("#ajax_load_image").show();
                      $("#content").css({"opacity":"0.1",})},
 	        success: function(data){
-                     alert("Request sent to Admin ");},
+                     alert("notification sent to Admin ");},
                 complete: function(){
                      $("#ajax_load_image").hide();
 		     $("#content").css({"opacity":"",})}
          });  
-       			      
-         }
-    else{}
-    {% endif %}
-        <!-- end code-->
-});
-});
+ }      	
 /*
 function tagfunction(arr,id){
 r = confirm("Do you to send Delet Request");

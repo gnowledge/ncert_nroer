@@ -3,6 +3,8 @@
 var availableobjs=[];
 var keyrt;
 var keyot;
+var lefrel;
+var rightrel;
 var dict_rt={}
 var dict_ot={}
 var availablerts=[]
@@ -98,6 +100,7 @@ $(document).ready(function(){
             source: availablerts,
             select: function(event, ui) {
                     keyrt=dict_rt[ui.item.value]
+                    leftrel=ui.item.value;
                     reopt(keyrt);
                    
          }
@@ -106,6 +109,8 @@ $(document).ready(function(){
             source: availableobjs,
             select: function(event, ui) {
                     keyot=dict_ot[ui.item.value]
+                    rightrel=ui.item.value;
+                    
                   
                     
                     
@@ -115,11 +120,14 @@ $(document).ready(function(){
         });
 $("#addreln").click(function(){
 reopt();
+username="{{user.username}}";
+pageid="{{meetingob.id}}";
 var ajurl ="/gstudio/resources/addreln/thread/"+{{meetingob.id}}
-var res_reln = keyrt
-
-var res_obj= keyot
-
+var res_reln = keyrt;
+var res_obj= keyot;
+var reltitle1=leftrel.split("-")[0]+"-"+rightrel.split("-")[0];
+alert(reltitle1);
+var response_content="Added Relation:"+reltitle1;
 if (res_reln == "" || res_obj == "" )
 {  alert("Please select relation and right object");
 }
@@ -147,6 +155,7 @@ $.ajax({
 			   }
 });
 }
+notifyuser(response_content,pageid,username);
 });
 });
 
@@ -192,7 +201,17 @@ if (r==true)
 	var relation_id = "";
 	relation_id = id;
         pageid="{{meetingob.id}}";
-	$.ajax({
+        notifyuser(response_content,pageid,username);		      
+  }
+else
+  {}
+
+{% endif %}
+
+}
+function notifyuser(response_content,pageid,username)
+          {
+               $.ajax({
                url: '/gstudio/ajax/notifyuser/',
                type: 'GET',
                data: {response_content:response_content,pageid:pageid,username:username},
@@ -201,27 +220,14 @@ if (r==true)
              		      $("#content").css({"opacity":"0.1",})
                               },
 	       success: function(data){	
-	       	//	     $('#relndiv').html(data);
                              alert(" Request sent to Admin ");
-                             $("#chart").text("");
-			     fgraph();
 			     },
 	       complete: function(){
                              $("#ajax_load_image").hide();
 			     $("#content").css({"opacity":"",})
 			     },
    		});
-                             
-       			      
-  }
-else
-  {
-  
-  }
-
-{% endif %}
-
-}
+         }  
 </script>
 <div id="relndiv">
 <br/>
@@ -240,6 +246,7 @@ else
 
 {% if user.is_authenticated %}
            <a class="deleterelation" value="{{rel.id}}" id = "{{rel.id}}" title="delete {{rel.title}}" onclick='relationfunction("{{rel.id}}","{{rel.title}}");' > <img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width = 8px; style="vertical-align: super;"/></a>
+<input type="hidden" value="{{rel.title}}" id="reltitle">
 {% endif %}
 
 

@@ -73,7 +73,7 @@ def notifyUpdate(pageid,username,response_content):
     #print response_content,pageid,userid,username,activ
     site=Site.objects.get_current()
     render = render_to_string("/gstudio/notification/label.html",{'sender':username,'activity':activ,'conjunction':'-','object':page,'site':site,'oburl':objurl})
-    bx=Author.objects.get(username='ciet')
+    bx=Author.objects.get(username='krishna')
     notification.create_notice_type(render, "Notifictn", "notification")
     notification.send([bx], render, {"from_user": username})
 

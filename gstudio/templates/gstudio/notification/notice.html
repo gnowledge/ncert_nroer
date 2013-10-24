@@ -50,7 +50,12 @@ width: 1000px;
 {% endifequal %}
 
 {% ifequal activity 'Add' %}
-<tr id=row1><td><img src="/static/gstudio/img/add-icon.png" width="27pt" title="Upload"></td><td>{{eachtitle}}</td><td>{{each}}</td><td><a href="{{eachurl}}">view</a></td></tr>
+<tr id=row1><td><img src="/static/gstudio/img/add-icon.png" width="27pt" title="Add"></td><td>{{eachtitle}}</td><td>{{each}}</td><td><a href="{{eachurl}}">view</a></td></tr>
+
+{% endifequal %}
+
+{% ifequal activity 'Delete' %}
+<tr id=row1><td><img src="/static/gstudio/js/orgitdown/orgitdown/sets/org/images/close.jpeg" width="27pt" title="Delete"></td><td>{{eachtitle}}</td><td>{{each}}</td><td><a href="{{eachurl}}">view</a></td></tr>
 
 {% endifequal %}
 
