@@ -91,6 +91,9 @@ def get_each_activity(each):
         cnt=strg.find("Add")
         if cnt > -1:
             return "Add"
+        cnt=strg.find("Delete")
+        if cnt > -1:
+            return "Delete"
         return "empty"
     except:
         return "empty"

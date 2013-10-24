@@ -8,8 +8,10 @@ $.merge(availableObjects, {% get_pri_post_page %})
 jQuery(document).ready(function($) { 
 $("#addpriorpost").click(function(){
      
-var data 
 data = $("#priorpage").val();//attr('value');
+var username="{{user.username}}";
+var response_content="Added Priopage:"+data;
+var pageid={{objectid}};
 $.ajax({
 	url: '/gstudio/resources/images/addpriorpost/',
 	//type:"POST",
@@ -29,6 +31,7 @@ $.ajax({
 		  }
 });  
 $("#priorpage").val("");
+notifyuser(response_content,pageid,username);
 });
 });
 
@@ -73,7 +76,17 @@ var id1 = {{objectid}},
   r = confirm("Do you want to send Delete Request ")
   if (r==true)
   {
-  $.ajax({
+   notifyuser(response_content,id1,username);      			      
+  }
+else { }
+{% endif %}
+});
+
+});
+
+function notifyuser(response_content,pageid,username)
+            {
+       $.ajax({
        url: '/gstudio/ajax/notifyuser/',
        type: 'GET',
        data: {response_content:response_content,pageid:id1,username:username},      
@@ -92,13 +105,8 @@ var id1 = {{objectid}},
 		$("#content").css({"opacity":"",})
 		  }
 });  
-       			      
-  }
-else { }
-{% endif %}
-});
 
-});
+            }
 </script>
 
 <br/>
