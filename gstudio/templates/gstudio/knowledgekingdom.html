@@ -1,0 +1,56 @@
+{% extends "gstudio/base.html" %}
+{% load i18n mptt_tags %}
+
+{% block meta-description %}{% trans "Metatype list" %}{% endblock %}
+
+{% block title %}{% trans "Contribute Resources" %}{% endblock %}
+
+{% block content %}
+
+
+{% if not user.is_authenticated %}
+
+<script type="text/javascript">
+function message()
+{
+alert("Please login to continue");
+
+}
+</script>
+<div>
+<div align="center">
+<img src="/static/gstudio/img/14Poster.jpg" width="725" height="1035" border="0" usemap="#Map" />
+<map name="Map" id="Map">
+<area shape="rect" coords="233,559,493,590" alt="Rejuvenating History"  onClick="message()"/>
+<area shape="rect" coords="230,597,480,627" alt="Capture nature" onClick="message()"/>
+<area shape="rect" coords="243,634,477,662" alt="Science in my hands" onClick="message()"/>
+<area shape="rect" coords="244,670,476,697" alt="Sharing novel ideas"  onClick="message()"/>
+<area shape="rect" coords="244,709,477,733" alt="Voice to masses"  onClick="message()"/>
+<area shape="rect" coords="113,751,310,764" href="/accounts/register/" />
+<area shape="rect" coords="620,751,656,764" href="/accounts/login/" /></map>
+</div>
+
+</div>
+
+
+{% else %}
+<div>
+
+<div align="center">
+<img src="/static/gstudio/img/14Poster.jpg" width="725" height="1035" border="0" usemap="#Map" />
+<map name="Map" id="Map">
+<area shape="rect" coords="233,559,493,590" href="/RejuvenatingHistory" alt="Rejuvenating History" />
+<area shape="rect" coords="230,597,480,627" href="/CaptureNature" alt="Capture nature" />
+<area shape="rect" coords="243,634,477,662" href="/ScienceinHands" alt="Science in my hands" />
+<area shape="rect" coords="244,670,476,697" href="/SharingIdeas" alt="Sharing novel ideas" />
+<area shape="rect" coords="244,709,477,733" href="/VoicetoMasses" alt="Voice to masses" />
+</div>
+
+
+</div>
+
+{% endif %}
+
+
+
+{% endblock %}

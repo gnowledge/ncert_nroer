@@ -39,9 +39,91 @@ body {
     color:#333;
 	font-family:arial;
 }
+.event_blue
+{
+	background: -webkit-gradient(linear, left top, right top, from(#99CC99), to(#019297)); /* Safari 5.1, Chrome 10+ */ 
+	background: -webkit-linear-gradient(left, #019297, #99CC99); /* Firefox 3.6+ */ 
+	background: -moz-linear-gradient(left, #019297, #99CC99); /* IE 10 */ 
+	background: -ms-linear-gradient(left, #019297, #99CC99); /* Opera 11.10+ */ 
+	background: -o-linear-gradient(left, #019297, #99CC99);
+	color:#fff;
+	padding:20px;
+	position:relative;
+	border-bottom:10px solid #F1D700;
+}
+.event_3_heading
+{
+	font-size:70px;
+	font-weight:bold;
+	font-family:Georgia,Times New Roman;
+	line-height:75px;
+	text-shadow: 1px 4px 3px rgba(0,0,0,0.2),
+		         0px -2px 17px rgba(255,255,255,0.3);
+}
+.event3_quote
+{
+	margin-top:50px;
+	font-size:16px;
+	font-style:italic;
+	line-height:28px;
+}
+.event3_name
+{
+	margin-left:400px;
+	font-weight:bold;
+}
+.event3_textsize
+{
+	font-size:16px;
+	line-height:30px;
+	text-align:justify;
+	padding:20px;
+	padding-top:30px;
+}
+.event_border
+{
+	border:10px solid #00777b;
+	height:680px;
+	position:relative;
+	top:20px;
+}
+.polaroid
+{
+	background: white;
+	float: right;
+	padding: 10px 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	-webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 4px 6px rgba(0,0,0,.3);
+	box-shadow: 0 4px 6px rgba(0,0,0,.3);
+	-webkit-transition: all .15s linear;
+	-moz-transition: all .15s linear;
+	transition: all .15s linear;
+	-webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+	z-index:0;
+        position:absolute;
+	right:0px;
+	top:15px;
+	right:15px;
+	width:150px;
+	height:130px;
+	
+}
 .event_2
 {
 	background:url('http://nroer.gov.in/static/img/ciet.ncert/bg_2t.jpg')repeat-x 0px 30px;
+}
+.event_3_bg
+{
+	background:url(/static/gstudio/img/14nolayoutbg.jpg)repeat-x 0px  bottom;
+	height:720px;
+}
+.event_4_bg
+{
+	background:url(/static/gstudio/img/14nolayoutbg.jpg)repeat-x 0px  bottom;
+	height:720px;
 }
 
 .event_2 h1
