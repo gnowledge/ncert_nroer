@@ -7,16 +7,8 @@
 
 {% block content %}
 
+<!--
 
-{% if not user.is_authenticated %}
-
-<script type="text/javascript">
-function message()
-{
-alert("Please login to continue");
-
-}
-</script>
 <div>
 <div align="center">
 <img src="/static/gstudio/img/14Poster.jpg" width="725" height="1035" border="0" usemap="#Map" />
@@ -32,24 +24,23 @@ alert("Please login to continue");
 
 </div>
 
+-->
 
-{% else %}
 <div>
 
 <div align="center">
 <img src="/static/gstudio/img/14Poster.jpg" width="725" height="1035" border="0" usemap="#Map" />
 <map name="Map" id="Map">
-<area shape="rect" coords="233,559,493,590" href="/RejuvenatingHistory" alt="Rejuvenating History" />
-<area shape="rect" coords="230,597,480,627" href="/CaptureNature" alt="Capture nature" />
-<area shape="rect" coords="243,634,477,662" href="/ScienceinHands" alt="Science in my hands" />
-<area shape="rect" coords="244,670,476,697" href="/SharingIdeas" alt="Sharing novel ideas" />
-<area shape="rect" coords="244,709,477,733" href="/VoicetoMasses" alt="Voice to masses" />
+<area shape="rect" coords="247,581,477,606" href="/RejuvenatingHistory" alt="Rejuvenating History" />
+<area shape="rect" coords="247,618,477,645" href="/CaptureNature" alt="Capture nature" />
+<area shape="rect" coords="247,655,477,680" href="/ScienceinHands" alt="Science in my hands" />
+<area shape="rect" coords="247,691,477,718" href="/SharingIdeas" alt="Sharing novel ideas" />
+<area shape="rect" coords="249,727,475,753" href="/VoicetoMasses" alt="Voice to masses" />
+</div>
+
 </div>
 
 
-</div>
-
-{% endif %}
 
 
 
