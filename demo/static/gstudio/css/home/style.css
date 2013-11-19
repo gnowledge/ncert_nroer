@@ -124,7 +124,11 @@ body {
 	
 	height:1220px;
 }
-
+.knowledge_map map area
+{
+	border:1px solid red;
+	display:block;
+}
 .event_2 h1
 
 {
