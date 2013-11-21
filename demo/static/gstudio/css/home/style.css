@@ -480,11 +480,15 @@ fieldset { border: 1px solid #cccccc; width:230px; padding: 1.4em; margin: 0 0 1
 {
 
     width:990px;
-
+	font-size:11px;
     margin:auto;
+    padding-top:5px;
 
 }
-
+.browser_desc
+{
+	text-align:center;border-top:1px solid #777;
+}
 #content_body
 
 {

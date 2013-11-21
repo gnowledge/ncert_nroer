@@ -657,6 +657,8 @@ $(fgraph());
 <div id="content_bottom_nav">
 <div class="left"><a href="/AboutUs/">About Us</a><span class="white_clr">l</span><a href="/TermsOfUse/">Terms of Use</a><span class="white_clr">l</span><a href="/ContactUs/">Contact Us</a><span class="white_clr">l</span>{% if not user.is_authenticated %}<a href="/accounts/login/?next={{request.path}}">Login</a>{% else %}<a href="/accounts/logout/">Logout</a>{% endif %}{% if user.is_superuser %}<span class="white_clr">l</span><a href="/dashboard">Dashboard</a>{% endif %}</div>
 <div class="right">Powered by: <a href="https://github.com/gnowledge/ncert_nroer" target="_blank">Gnowsys-Studio</a>, <a target="_blank" href="http://www.hbcse.tifr.res.in">Homi Bhabha Centre for Science Education</a>, <a target="_blank" href="http://www.tifr.res.in">TIFR</a></div>
+<div class="clear"></div>
+<div class="browser_desc">This site is best viewed using current versions of Firefox, Chrome, Safari or Microsoft Internet Explorer (9 or higher) at a screen resolution of 1024 x 768 or higher.</div>
 </div>
 </div> 
 <!--New Addition-->
