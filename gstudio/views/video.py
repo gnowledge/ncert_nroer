@@ -136,6 +136,7 @@ def video(request):
 
 		if clip != "":
 			api.signup({'username':user,'password':password,'email':useremail})
+			api.signin({'username':user,'password':password})
 			report,imageeachid = save_file(clip,user)
 			if report == "false":
 				reportid = imageeachid
@@ -154,10 +155,40 @@ def video(request):
 				x=str(clipname[0]).upper()
 				CreateConfig(user,password)
 				# os.system("pandora_client config")
+				# code to upload video to video server using pandora_client
 				os.system("pandora_client add_volume "+ user+" "+MEDIA_ROOTNEW+"/"+user )
 				os.system("pandora_client scan")
 				os.system("pandora_client sync")
 				os.system("pandora_client upload") 
+				# end code
+                                oshash = ox.oshash(MEDIA_ROOTNEW+"/"+user+"/"+x+"/"+y+"/"+clipname) # get oshash of video 
+                                outputId = api.find({"query":{"conditions":[{"key":"oshash","value":oshash}]},"keys":["id"]})# fetch video id 
+                                if outputId['data']['items'] :
+                                        videoId = outputId['data']['items'][0]['id']
+                                        Video = api.get({'id':videoId,"keys":["id","title",'user']})
+					api.edit({'id':videoId,'project':'NROER','rightslevel':'0'})
+                                        VideosData=Video['data']
+                                        objecttypeVideo=Objecttype.objects.get(title="Video")
+                                        if not Gbobject.objects.filter(slug=videoId):
+                                                videoObject=Gbobject() # create video object
+                                                videoObject.title = VideosData['title']
+                                                videoObject.altnames=VideosData['title']
+                                                videoObject.rurl="http://wetube.gnowledge.org/"+VideosData['id']+'/480p.webm'
+                                                videoObject.slug=VideosData['id']
+                                                videoObject.save()
+                                                videoObject.sites.add(Site.objects.get_current())
+                                                videoObject.objecttypes.add(objecttypeVideo)
+						objectAuthor=Author.objects.get(username=user)
+						if objectAuthor.is_superuser == True:
+							videoObject.status=2
+						else:
+							#code to notify admin about video upload      
+							response_content="Uploaded Video :"+videoObject.title
+							notifyUpdate(videoObject.id,request.user,response_content)
+                                                        #end code 
+							videoObject.status=1
+						videoObject.authors.add(objectAuthor)
+						videoObject.save()
 			# wclip= api.find({'sort': [{'key': 'title','operator': '+'}],'query': {'conditions': [{'key': 'title','value': y,'operator': '='}],'operator': '&'},'keys': ['id', 'title','user','duration','sourcedescription','created'],'range': [0,100]})
 			# for each in wclip['data']['items']:
 			# 	flag=0
@@ -392,7 +423,7 @@ def video(request):
 		
 	svid=""
 	videolist=p.get_nbh['contains_members']# omiting first 80 videos for temporary Aug 12
-	q=p.get_nbh['contains_members'][80:len(videolist)-1]
+	q=p.get_nbh['contains_members']
 	variables = RequestContext(request,{'vids':q,'val':svid})
 	template = "gstudio/video.html"
 	return render_to_response(template, variables)	
@@ -636,7 +667,7 @@ def getVideo(request):
 				m.save()
 				m.sites.add(Site.objects.get_current())
 				m.objecttypes.add(objecttypeVideo)
-                                #code to notify admin about document upload      
+                                #code to notify admin about video upload      
                                 response_content="Uploaded Video :"+m.title
                                 notifyUpdate(m.id,request.user,response_content)
                                 #end code 

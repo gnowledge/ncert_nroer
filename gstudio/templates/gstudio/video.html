@@ -228,13 +228,13 @@ background: green;
 <form enctype="multipart/form-data" method="post" action="">
 {% csrf_token %}
 <h4 style="color: black;">Submit Videos:</h4>
-Title:&nbsp; <input type="text" name="title1">
-Video:&nbsp;<input type="file" name="clip" multiple="multiple" /></p>
+<!--Title:&nbsp; <input type="text" name="title1">-->
+Select Video:&nbsp;<input type="file" name="clip" multiple="multiple" /></p>
 <!-- Description:&nbsp;&nbsp;<b></b> -->
 <!-- <input type="button"  id="editcommenteditor"  value="edit" style="display:none" > -->
 <!-- <input type="button"  id="commenteditor"  value="Add Content" > -->
-<input type="button" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" />
-<input type=text name="contenttext" id="commenttext" style="visibility:hidden" />
+<!-- <input type="button" class="commentsavecontent" id="save" value="Save" style="visibility:hidden" /> -->
+<!-- <input type=text name="contenttext" id="commenttext" style="visibility:hidden" /> -->
 <input type="hidden" name="user" value={{user.username}}>
 <input type="hidden" name="userpassword" value={{user.password}}>
 <input type="hidden" name="useremail" value={{user.email}}>
@@ -245,29 +245,18 @@ Video:&nbsp;<input type="file" name="clip" multiple="multiple" /></p>
 <script type="text/javascript">
 function myupload()
 {
-document.getElementById('showingprocess').style.visibility="visible";
+document.getElementById('ajax_load_image_video').style.visibility="visible";
 document.getElementById('headvideo').style.visibility="visible";
-
-	setInterval( function() {
-	if( i < 340 )
-	{
-	
-	i = i + 20;
-	$("#inner").css({ "-moz-box-sizing":"border-box", "margin-left":i });
-	}
-	else 
-		{
-		i = 0;
-		}
-	},1000);
-
-	
-
 }
 </script>
 </form>
 </div>
 {% endif %}
+{% if reportid %}
+<h2><font color="red">this video is already uploaded on this site</font></h2>
+<a href="/gstudio/resources/videos/show/{{ reportid }}/"> <font size="4">to see this video click here</font></a><br/><br/><br/>
+{% endif %}
+<img width="50" src="/static/grappelli/img/ajax-loader1.gif" style="z-index: 1000;visibility:hidden;" id="ajax_load_image_video"><font size="5px" color="#1F768F" style="visibility:hidden;" id="headvideo">Processing And Uploading Video</font>
 <br><br>
 <div id="videocollections" style="font-size:1.5em;float:left">
 	<h2 style="">Video Collection  </h2><br>
@@ -279,15 +268,6 @@ document.getElementById('headvideo').style.visibility="visible";
 </div>
 </div>
 <br>
-{% if reportid %}
-<h2><font color="red">this image is already uploaded on this site</font></h2>
-<a href="/gstudio/resources/images/show/{{ reportid }}/"> <font size="4">to see this image click here</font></a><br/><br/><br/>
-{% endif %}
-<h2 id="headvideo" style="visibility:hidden;">Processing And Uploading Video</h2>
-<div id="showingprocess" style="visibility:hidden;">
-<div id="inner">
-</div>
-</div>
 
 
 {% if fav %}
