@@ -1,0 +1,230 @@
+{% extends "gstudio/base.html" %}
+{% load i18n mptt_tags %}
+
+{% block meta-description %}{% trans "Metatype list" %}{% endblock %}
+
+{% block title %}{% trans "Contribute Resources" %}{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/gstudio/css/home/style.css">
+
+<style type="text/css">
+.hidden { display: none; }
+.unhidden { display: block; }
+</style>
+<script type="text/javascript">
+function unhide(divID) {
+    var item = document.getElementById(divID);
+    if (item) {
+        item.className=(item.className=='hidden')?'unhidden':'hidden';
+    }
+}
+</script>
+<script type="text/javascript"> 
+ 
+function FormSubmit()
+{
+if (document.fEnquiry.Declaration_1.checked == false) 
+{
+
+  alert("Please choose the Declaration 1");
+
+ document.fEnquiry.Declaration_1.focus();
+  return (false);
+}
+if (document.fEnquiry.Declaration_2.checked == false) 
+{
+
+  alert("Please choose the Declaration 2");
+
+ document.fEnquiry.Declaration_2.focus();
+  return (false);
+}
+if (document.fEnquiry.Declaration_3.checked == false) 
+{
+
+  alert("Please choose the Declaration 3");
+
+ document.fEnquiry.Declaration_3.focus();
+  return (false);
+}
+
+	if ( (document.fEnquiry.License_Type[0].checked == false ) && ( document.fEnquiry.License_Type[1].checked == false ) && ( document.fEnquiry.License_Type[2].checked == false ) && ( document.fEnquiry.License_Type[3].checked == false ))
+	{
+	alert ( "Please choose the License Type" );
+	document.fEnquiry.License_Type[0].focus();
+	return false;
+	}
+	if ( (document.fEnquiry.Resource_Type[0].checked == false ) && ( document.fEnquiry.Resource_Type[1].checked == false ) && ( document.fEnquiry.Resource_Type[2].checked == false ) && ( document.fEnquiry.Resource_Type[3].checked == false ) && ( document.fEnquiry.Resource_Type[4].checked == false ))
+	{
+	alert ( "Please choose the Resource Type" );
+	document.fEnquiry.Resource_Type[0].focus();
+	return false;
+	}
+	if(document.fEnquiry.Resource_Title.value=="")
+		{
+			alert("Please Enter Title...!!");
+			document.fEnquiry.Resource_Title.focus();
+			return false;
+		}
+				
+ 	if(document.fEnquiry.Resource_Description.value=="")
+		{
+			alert("Please Enter Description...!!");
+			document.fEnquiry.Resource_Description.focus();
+			return false;
+		}
+				
+	if(document.fEnquiry.Resource_Tags.value=="")
+		{
+			alert("Please Enter Tags...!!");
+			document.fEnquiry.Resource_Tags.focus();
+			return false;
+		}
+		if(document.fEnquiry.Language.value=="" || document.fEnquiry.Language.value=="Please Select")
+		{
+
+			alert("Please select language...!!");
+			document.fEnquiry.Language.focus();
+			return false;
+		}
+		if(document.fEnquiry.Source.value=="")
+		{
+			alert("Please Enter Source...!!");
+			document.fEnquiry.Source.focus();
+			return false;
+		}
+		if(document.fEnquiry.Author.value=="")
+		{
+			alert("Please Enter Author Name...!!");
+			document.fEnquiry.Author.focus();
+			return false;
+		}
+		
+		
+	document.fEnquiry.submit();
+}
+ 
+</script> 
+
+<div>
+<form class="Image_form_style" METHOD="post" ACTION="mailto:nroer.ciet@gmail.com" ENCTYPE="text/plain" onsubmit="return FormSubmit()"  name="fEnquiry" style="margin-top:20px;" >
+<fieldset style="width:660px;">
+<legend>Submit Resource:</legend>
+<table style="font-size:12px;" cellspacing="7px">
+	<tr>
+		<td valign="top"><label>Declaration</label></td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<input type="checkbox" name="Declaration 1" id="Declaration_1" value="I hereby declare that the resource belongs to me" style="margin-top:0px;" onclick="javascript:unhide('learnHTML');"/> I hereby declare that the resource belongs to me<br/>
+			<div id="learnHTML" class="hidden">
+			<input type="checkbox" name="Declaration 2" id="Declaration_2" value="I have the right to contribute it to NROER"/> I have the right to contribute it to NROER<br/>
+			<input type="checkbox" name="Declaration 3" id="Declaration_3" value="I agree to publish the image under the following License" onclick="javascript:unhide('learnCSS');"/> I agree to publish the image under the following License
+			 <div id="learnCSS" class="hidden" style="margin-top:10px;">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="License Type"  id="License_Type" value="CC BY" title="Attribution CC BY: All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first."/>
+				<span title="Attribution CC BY: All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first."  class="text_underline">CC BY</span>
+
+				&nbsp;&nbsp;&nbsp;<input type="radio" name="License Type"  id="License_Type" value="CC BY-SA" title=" Attribution-ShareAlike CC BY-SA: All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first.
+
+You let others copy, distribute, display, perform, and modify your work, as long as they distribute any modified work on the same terms. If they want to distribute modified works under other terms, they must get your permission first.  "/>
+				<span  title=" Attribution-ShareAlike CC BY-SA: All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first.
+
+You let others copy, distribute, display, perform, and modify your work, as long as they distribute any modified work on the same terms. If they want to distribute modified works under other terms, they must get your permission first. "  class="text_underline"> CC BY-SA </span>
+
+				&nbsp;&nbsp;&nbsp;<input type="radio" name="License Type"  id="License_Type" value="CC BY-NC" title=" Attribution-NonCommercial CC BY-NC : All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first.
+
+You let others copy, distribute, display, perform, and (unless you have chosen NoDerivs) modify and use your work for any purpose other than commercially unless they get your permission first."/>
+				<span  title=" Attribution-NonCommercial CC BY-NC : All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first.
+
+You let others copy, distribute, display, perform, and (unless you have chosen NoDerivs) modify and use your work for any purpose other than commercially unless they get your permission first."  class="text_underline"> CC BY-NC  </span><br/>
+
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  id="License_Type" name="License Type" value="CC BY-NC-SA" title=" Attribution-NonCommercial-ShareAlike CC BY-NC-SA: All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first.	
+
+You let others copy, distribute, display, perform, and (unless you have chosen NoDerivs) modify and use your work for any purpose other than commercially unless they get your permission first.
+
+You let others copy, distribute, display, perform, and modify your work, as long as they distribute any modified work on the same terms. If they want to distribute modified works under other terms, they must get your permission first."/> 
+				<span  title=" Attribution-NonCommercial-ShareAlike CC BY-NC-SA: All CC licenses require that others who use your work in any way must give you credit the way you request, but not in a way that suggests you endorse them or their use. If they want to use your work without giving you credit or for endorsement purposes, they must get your permission first.	
+
+You let others copy, distribute, display, perform, and (unless you have chosen NoDerivs) modify and use your work for any purpose other than commercially unless they get your permission first.
+
+You let others copy, distribute, display, perform, and modify your work, as long as they distribute any modified work on the same terms. If they want to distribute modified works under other terms, they must get your permission first."  class="text_underline">CC BY-NC-SA </span>
+			</div>
+</div>
+		</td>
+	</tr>
+
+	<tr>
+		<td>If you are not the author, inform us of the source, for example send us the URL at <a href="mailto:nroer.ciet@gmail.com"><u>nroer.ciet@gmail.com</u></a></td>
+	</tr>
+	<tr>
+		<td valign="top"><label>Select type of resource</label></td>
+	</tr>
+	<tr>
+		<td>
+			<input type="radio" name="Resource Type" id="Resource_Type" value="Video" title="Should be in .mp4, must be of good picture and voice quality, duly supported by acknowledging source."><span title="Should be in .mp4, must be of good picture and voice quality, duly supported by acknowledging source."  class="text_underline">Video</span>&nbsp;&nbsp;
+			<input type="radio" name="Resource Type" id="Resource_Type" value="Audio" title="Should be in .mp3, must be of good quality, duly supported by acknowledging source."><span title="Should be in .mp3, must be of good quality, duly supported by acknowledging source." class="text_underline">Audio</span>&nbsp;&nbsp;
+			<input type="radio" name="Resource Type" id="Resource_Type" value="Interactive Objects" title="ggb files for geogebra applets and swf for flash files, duly supported by acknowledging source."><span title="ggb files for geogebra applets and swf for flash files, duly supported by acknowledging source."><span title="ggb files for geogebra applets and swf for flash files, duly supported by acknowledging source."  class="text_underline">Interactive Objects</span><br/>
+			<input type="radio" name="Resource Type" id="Resource_Type" value="Image" title="Must be in .jpg format, 300 dpi, 7” width and of good picture quality, duly supported by acknowledging source."><span title="Must be in .jpg format, 300 dpi, 7” width and of good picture quality, duly supported by acknowledging source."  class="text_underline;">Image</span> <span style="font-size:11px;color:#666;"> (Photograph, drawing etc.)</span><br/>
+			<input type="radio" name="Resource Type" id="Resource_Type" value="Document" title="Should be the html text and in pdf format, duly supported by acknowledging source."><span title="Should be the html text and in pdf format, duly supported by acknowledging source."  class="text_underline">Document</span><span style="font-size:11px;color:#666;"> (Text, worksheets, problem sets, lesson ideas, activities etc.)</span></td>
+	</tr>
+	<tr>
+		<td><hr></td>
+	</tr>
+	<tr>
+		<td><label>Title</label></td>
+	</tr>
+	<tr>
+		<td><input type="text" name="Resource Title"  id ="Resource_Title"></td>
+	</tr>	
+	<tr>
+		<td valign="top"><label><span title="Description of the particular resource in approximately 50-80 words must be given"  class="text_underline">Description</span></label></td>
+	</tr>
+	<tr>
+		<td><textarea name="Resource Description" value="Description" id ="Resource_Description"></textarea></td>
+	</tr>	
+	<tr>
+		<td><label><span title="Tags are key words very much related to the concepts, some times can be a concept/sub-concept."  class="text_underline">Tags</span></label></td>
+	</tr>
+	<tr>
+		<td><input type="text" name="Resource Tags" id ="Resource_Tags" title="Tags are key words very much related to the concepts, some times can be a concept/sub-concept."></td>
+	</tr>	
+	<tr>
+		<td><label>Language</label></td>
+	</tr>
+	<tr>
+		<td>
+			<select name="Language" id="Language">
+				<option value ="Please Select">Please Select</option>
+				<option value="English">English</option>
+				<option value="Hindi">Hindi</option>
+			</select>
+		</td>
+	</tr>	
+	<tr>
+		<td><hr></td>
+	</tr>
+	<tr>
+		<td><label>Source</label></td>
+	</tr>
+	<tr>
+		<td><input type="text" name="Source" id="Source" ></td>
+	</tr>
+	<tr>
+		<td><label>Author</label></td>
+	</tr>
+	<tr>
+		<td><input type="text" name="Author" id="Author"></td>
+	</tr>
+	<tr>
+		<td align="left"><input type="submit" value="Submit" ></td>
+	</tr>
+</table>
+</fieldset>
+</form>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</div>
+{% endblock %}

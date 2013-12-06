@@ -75,6 +75,8 @@ urlpatterns = patterns(
     url(r'^Contribute/', direct_to_template, {'template': 'gstudio/contribute.html'}),
     url(r'^contribute/resources', direct_to_template, {'template': 'gstudio/contrib_resource.html'}),
     url(r'^ShareResources/', direct_to_template, {'template': 'gstudio/shareresources.html'}),
+    url(r'^ContributeResourceForm/', direct_to_template, {'template': 'gstudio/contributeresform.html'}),
+    url(r'^ContributeForm2/', direct_to_template, {'template': 'gstudio/contributeresform2.html'}),
     url(r'^dashboard/','gstudio.views.dashboard.dashboard'),
     url(r'^contribute/theresources', direct_to_template, {'template': 'gstudio/contribute_resource.html'}),
     #URL for XMLRPC
