@@ -586,7 +586,19 @@ fieldset { border: 1px solid #cccccc; width:230px; padding: 1.4em; margin: 0 0 1
     padding-bottom:30px;
 
 }
-
+#math_event a
+	{	
+position:absolute;z-index:1000;width:225px;display:block;-webkit-transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-o-transition: all 0.1s ease-in-out;
+transition: all 0.1s ease-in-out;
+	}
+	#math_event a:hover
+	{	
+border:3px solid #005B9A;-moz-box-shadow:3px 3px 5px 6px #777;
+-webkit-box-shadow: 3px 3px 5px 6px #777;
+box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
+	}
 #content_body2
 
 {
