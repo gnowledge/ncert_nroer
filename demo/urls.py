@@ -73,6 +73,7 @@ urlpatterns = patterns(
     url(r'^CommentOnResources/', direct_to_template, {'template': 'gstudio/commentonresources.html'}),
     url(r'^ContactUs/', direct_to_template, {'template': 'gstudio/contactUs.html'}),
     url(r'^Contribute/', direct_to_template, {'template': 'gstudio/contribute.html'}),
+     url(r'^SrinivasaRamanujan/', direct_to_template, {'template': 'gstudio/ramanujan.html'}),
     url(r'^contribute/resources', direct_to_template, {'template': 'gstudio/contrib_resource.html'}),
     url(r'^ShareResources/', direct_to_template, {'template': 'gstudio/shareresources.html'}),
     url(r'^ContributeResourceForm/', direct_to_template, {'template': 'gstudio/contributeresform.html'}),
