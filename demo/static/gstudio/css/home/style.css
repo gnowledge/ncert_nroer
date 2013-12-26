@@ -127,6 +127,36 @@ transition: all 0.1s ease-in-out;
 {
 	background:url('http://nroer.gov.in/static/img/ciet.ncert/bg_2t.jpg')repeat-x 0px 30px;
 }
+.event_maths
+{
+	background:#C5EFFD;
+	margin-top:20px;
+	-moz-box-shadow:    3px 3px 5px 6px #999;
+  -webkit-box-shadow: 3px 3px 5px 6px #999;
+  box-shadow:         3px 3px 5px 6px #999;
+}
+.event_maths h1
+
+{
+
+    background:#22678b;
+    color:#fff;
+    border-bottom:3px solid #2F8CAB;
+text-shadow: 1px 4px 3px rgba(0,0,0,0.2),
+		         0px -2px 17px rgba(255,255,255,0.3);
+}
+
+.event_btn2
+{
+	padding:10px;
+	color:#fff;
+	background:#22688a;
+	font-weight:bold;
+	border-radius:5px;
+	margin-bottom:15px;
+}
+
+
 .event_3_bg
 {
 	height:720px;
