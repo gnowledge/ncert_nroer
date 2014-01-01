@@ -73,7 +73,7 @@ urlpatterns = patterns(
     url(r'^CommentOnResources/', direct_to_template, {'template': 'gstudio/commentonresources.html'}),
     url(r'^ContactUs/', direct_to_template, {'template': 'gstudio/contactUs.html'}),
     url(r'^Contribute/', direct_to_template, {'template': 'gstudio/contribute.html'}),
-     url(r'^SrinivasaRamanujan/', direct_to_template, {'template': 'gstudio/ramanujan.html'}),
+    url(r'^SrinivasaRamanujan/', direct_to_template, {'template': 'gstudio/ramanujan.html'}),
     url(r'^EnrichTheTimeline/', direct_to_template, {'template': 'gstudio/enrichthetimeline.html'}),
     url(r'^MagicSquare/', direct_to_template, {'template': 'gstudio/magicsquare.html'}),
     url(r'^MathsTricks/', direct_to_template, {'template': 'gstudio/mathstricks.html'}),
@@ -83,6 +83,7 @@ urlpatterns = patterns(
     url(r'^ContributeResourceForm/', direct_to_template, {'template': 'gstudio/contributeresform.html'}),
     url(r'^ContributeForm2/', direct_to_template, {'template': 'gstudio/contributeresform2.html'}),
     url(r'^dashboard/','gstudio.views.dashboard.dashboard'),
+    url(r'^translate/',include('gstudio.urls.translate')),
     url(r'^contribute/theresources', direct_to_template, {'template': 'gstudio/contribute_resource.html'}),
     #URL for XMLRPC
     #url(r'^xmlrpc/$','django_xmlrpc.views.handle_xmlrpc'),

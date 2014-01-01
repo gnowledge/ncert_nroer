@@ -20,6 +20,7 @@ from django.core.mail import send_mail
 from django.contrib.sessions.models import Session
 from djangoratings.models import *
 import unicodedata
+from unidecode import unidecode
 
 lst1=[]
 count=0
@@ -757,7 +758,8 @@ def create_wikipage(title,idusr,content_org,usr,collection,list1):
  for line in data3:
         newdata += line.lstrip()
  sys.content = newdata
- sys.slug = slugify(title)
+
+ sys.slug = slugify(unidecode(title))
  sys.save()
  i=0
  if boolean:
