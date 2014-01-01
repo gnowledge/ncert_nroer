@@ -50,8 +50,8 @@ def concept_request(request):
 			conceptObjectTitle = each.get_relations()["hindipage"][0].right_subject.title
 			conceptObjectId = each.get_relations()["hindipage"][0].right_subject.id
 			relation = "yes"
-		if not "englishpage" in rt:
-		        data.append({"id":each.id, "title":each.title, "relation":relation, "conceptObjectTitle":conceptObjectTitle, "conceptObjectId":conceptObjectId})
+	if not "englishpage" in rt:
+	        data.append({"id":each.id, "title":each.title, "relation":relation, "conceptObjectTitle":conceptObjectTitle, "conceptObjectId":conceptObjectId})
     return HttpResponse(json.dumps(data))
 
 def concept_search(request):
