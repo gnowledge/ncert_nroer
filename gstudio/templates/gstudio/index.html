@@ -843,13 +843,15 @@ function marqueeInit(config){
 				<div id="content" class="astx-col-duo" style="left: 70%;width: 70%;" role="main">
 					<article class="front-page page-content">
 						<header class="entry-header">
-							<h2 class="entry-title">
-								A Digital Repository for Open Educational Resources
+							<h2 class="entry-title" style="font-family: Georgia,Times New Roman;font-size: 24px;
+    font-weight: bold;color:#80D4DF;">
+								National Repository of Open Educational Resources 
 							</h2>
+<p align="right" style="color:#93BBC3;font-style:italic;">Connecting Knowledge Connecting People</p>
 						</header>
 						<div class="entry-content">
 							<p>
-National Repository of Open Educational Resources offers resources for all school subjects and grades in multiple languages. The resources are available in the form of concept maps, videos, audio clips, talking books, multimedia, learning objects, photographs, diagrams, charts, articles, wikipages and textbooks.
+<!--National Repository of Open Educational Resources offers resources for all school subjects and grades in multiple languages. The resources are available in the form of concept maps, videos, audio clips, talking books, multimedia, learning objects, photographs, diagrams, charts, articles, wikipages and textbooks.-->
 							</p>
 
 
@@ -860,6 +862,11 @@ National Repository of Open Educational Resources offers resources for all schoo
 						</div>
 					</article>
 					<hr class="content-divider">
+						<header class="entry-header" style="padding-left:20px;color:#fff;">
+							<h2 class="entry-title">
+								Concept Library
+							</h2>
+						</header>
 					<div class="searchform" role="search">
 						<form id="searchform" action="{% url gstudio_nodetype_search %}" method="get">
 							<div class="formfields">
@@ -867,21 +874,40 @@ National Repository of Open Educational Resources offers resources for all schoo
 								<input class="searchbutton" id = "searchid" type="submit" value="" title="Search" alt="Search">
 								<div class="searchinput">
 									<img class="searchlens" alt="Search" src="/static/gstudio/img/home/home_img/searchlens.jpg">
-									<input type="text" class="field" name="pattern" id="search" placeholder="Search by concept">
+									<input type="text" class="field" name="pattern" id="search" placeholder="Search concepts">
 								</div>
+
+<hr class="content-divider" style="margin:20px 0px 0px 0px;">
+<label for="search" class="search-title">Browse repository</label>
+								<div class="searchinput">
+									
+<div class="left" >
+<img class="searchlens" alt="Search" src="/static/gstudio/img/home/home_img/browselens_2.png" height="29px"></div>
+									<div class="left" style="margin-left:30px;"><div class="repository-browser-link">
+						<a rel="contents" href="/browsecollection/">Browse concepts</a>
+					</div></div>
+<div class="clear"></div>
+								</div>
+
 							</div>
 						</form>
 
 					</div><!-- .searchform -->
+
+
+
+
+
+
 					<div class="astx-clear-spacer"></div>
-					<div class="repository-browser-link">
-						<a rel="contents" href="/browsecollection/"><img alt="Browse repository by collection" src="/static/gstudio/img/home/home_img/browselens.png">Browse repository by collection</a>
-					</div>
+					<!--<div class="repository-browser-link">
+						<a rel="contents" href="/browsecollection/"><img alt="Browse repository by collection" src="/static/gstudio/img/home/home_img/browselens.png">Browse concepts</a>
+					</div>-->
 					<hr class="content-divider">
 					<aside class="front-page content-links">
 						<header class="entry-header">
 							<h2 class="entry-title">
-								Featured Resources
+								Resource Library
 							</h2>
 						</header>
 						<div class="astx-wrp-pen astx-wrp-outer astx-featured-content">
@@ -909,7 +935,7 @@ National Repository of Open Educational Resources offers resources for all schoo
 												<div class="entry-content">
 													<a rel="contents" href="/collection/Interactive/">
 														<img alt="Interactive" src="/static/gstudio/img/home/home_img/interactive.png">
-														<h3>Interactive Objects</h3>
+														<h3>Interactives</h3>
 													</a>
 												</div>
 											</div><!-- .astx-col-tri -->
