@@ -7,7 +7,7 @@
 	{% endif %}
 
 	{% if key == 'has_audio' %}
-	<p><img src="{{STATIC_URL}}gstudio/img/audio_icon.png" alt="Audios" title="Audios"/></p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Videos" src="/static/gstudio/img/home/home_img/audio.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Audios</p>
 	{% endif %}
 	
 	{% if key == 'has_pdf' %}
@@ -16,11 +16,15 @@
 	{% endif %}
 
         {% if key == 'has_image' %}
-	<p><img src="{{STATIC_URL}}gstudio/img/img.png" alt="Images" title="Images"/></p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);-moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;"><img alt="Videos" src="/static/gstudio/img/home/home_img/images.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Images</p>
 	{% endif %}
 
 	{% if key == 'has_video' %}
-	<p><img src="{{STATIC_URL}}gstudio/img/video.png" alt="Videos" title="Videos" /></p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);-moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;"><img alt="Videos" src="/static/gstudio/img/home/home_img/video.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Videos</p>
 	{% endif %}
 
 	{% if  key == 'has_document'  %}
@@ -37,13 +41,12 @@
 	{% endif %}
 
 	{% if  key == 'has_multimedia'  %}
-	<p><img src="{{STATIC_URL}}gstudio/img/multimedia.png" alt="Multimedia" title="Multimedia"/></p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Videos" src="/static/gstudio/img/home/home_img/interactive.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Interactives</p>
 
 	{% endif %}
 
 	{% if  key == 'has_html'  %}
-	<p><img src="{{STATIC_URL}}gstudio/img/page_html.jpg" alt="HTML" title="HTML"/></p>
-
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Videos" src="/static/gstudio/img/home/home_img/documents.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Documents</p>	
 	{% endif %}
 
 	{% for k  in value %}
