@@ -471,7 +471,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
 	height: 100%;
-	font-family:arial;
+	font-family:Arial, "Helvetica Neue", Helvetica, "Nimbus Sans L", "URW Chancery L", sans-serif;
 }
 
 /* Page style */
@@ -817,7 +817,9 @@ input[type=text]:focus {
 	display: block;
 	margin: 0em auto -1.25em auto;
 	height: 3.6125em;
-	width: 565px;
+line-height: 3.6125em;
+	width: 570px;
+margin-left:5px;
 }
 
 .repository-browser-link a {
