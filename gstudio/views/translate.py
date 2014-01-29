@@ -115,7 +115,25 @@ def translate_to_hindi(request):
 	        	newrelation.left_subject = System.objects.get(id=conceptid)
 	                newrelation.relationtype = rt
 		        newrelation.right_subject=System.objects.get(id=newconceptid)
-	        	newrelation.save()
+                       	newrelation.save()
+
+			parentid=System.objects.get(id=conceptid)
+                        relset=parentid.get_relations_for_view()
+                        rdict={}
+                        for key,value in relset.items():
+                            for each in value:
+                                rdict[each['id']]=key
+                        for key,value in rdict.items():
+                            
+                            r=Relation.objects.get(id=key)
+                            rt=Relationtype.objects.get(title=value)
+                            rid=r.right_subject_id
+                            newrel=Relation()
+                            newrel.left_subject = System.objects.get(id=newconceptid)
+                            newrel.relationtype = rt
+                            newrel.right_subject= NID.objects.get(id=rid)
+                            newrel.save()
+
 		data = {"id":newconceptid,"title":System.objects.get(id=newconceptid).title,"status":"ok"}
 	except:
 		data = {"status":"failed"}
