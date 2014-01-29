@@ -2,7 +2,7 @@
 {% load gstudio_tags %}
 {% block nodetype-comments %}
 <div id="comments" class="">
-  <h2>{% trans "Comments" %}</h2>
+  <h5>{% trans "Comments" %}</h5>
   {% with page_ob.comments as comment_list %}
   {% if comment_list.count %}
   <ol id="comment-list" class="span-15 last">

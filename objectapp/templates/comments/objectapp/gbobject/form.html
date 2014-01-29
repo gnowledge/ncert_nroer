@@ -1,6 +1,11 @@
 {% load comments i18n %}
-
-<form action="{% comment_form_target %}" method="post">
+<style>
+.cmnt fieldset label 
+{
+	top: 15px;
+}
+</style>
+<form action="{% comment_form_target %}" method="post" class="cmnt">
   {% csrf_token %}
   <fieldset>
     <input type="hidden" name="next" value="{% url objectapp_discussion_success %}"/>
