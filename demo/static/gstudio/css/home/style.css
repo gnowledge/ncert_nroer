@@ -274,6 +274,58 @@ font-size:12px;
 	border-radius:5px;
 	margin-bottom:15px;
 }
+
+
+/*Constitution Calling Event Style*/
+
+
+.janevents_text
+{
+	padding:15px;
+	padding-top:0px;
+	font-size:14px;
+	line-height:24px;
+}
+.janevents_text img
+{
+	margin-top:20px;
+}
+
+ #download_box {
+    position: absolute;
+    margin-left: 320px;
+    left: 50%;
+    width: 300px;
+    height: 1.25em;
+    font-weight:bold;
+    top: 50px;
+font-size:12px;
+}
+.janevent_btn2
+{
+	padding:10px;
+	color:#fff;
+	background:#481e20;
+	font-weight:bold;
+	border-radius:5px;
+	margin-bottom:15px;
+}
+#constitution_event a
+	{	
+position:absolute;z-index:1000;display:block;-webkit-transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-o-transition: all 0.1s ease-in-out;
+transition: all 0.1s ease-in-out;
+	}
+	#constitution_event a:hover
+	{	
+border:3px solid #af6e06;-moz-box-shadow:3px 3px 5px 6px #777;
+-webkit-box-shadow: 3px 3px 5px 6px #777;
+box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
+	}
+/*Constitution Calling Event Style*/
+
+
 .Image_form_style legend, .Image_form_style2 legend
 {
 	font-size:14px;
@@ -470,6 +522,22 @@ h4
     padding-bottom:10px;
 
 }
+h5
+
+{
+
+    color:#1f768f;
+
+    margin-bottom:0px;
+
+    padding-bottom:10px;
+
+    font-size:14px;
+
+    margin-top:5px;
+
+}
+
 
 #content_body2 #box2 h2
 
@@ -682,6 +750,51 @@ box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
     background:none;
 
 }
+/* --------- COLLAPSIBLE PANELS ----------*/
+ 
+.expandable-panel {
+    width:100%;
+    position:relative;
+    overflow:auto;
+}  
+.expandable-panel-heading {
+    width:100%;
+    cursor:pointer;
+    clear:both;
+    background-color:#eaeaea;
+    position:relative;
+}
+.expandable-panel-heading:hover {
+    color:#666;
+}
+
+.expandable-panel-content {
+    padding:0 15px 0 0px;
+    margin-top:-999px;
+}
+.expandable-panel-content p {
+    padding:4px 0 6px 0;
+}
+.expandable-panel-content p:first-child  {
+    padding-top:10px;
+}
+.expandable-panel-content p:last-child {
+    padding-bottom:15px;   
+}
+.icon-close-open {
+    width:20px;
+    height:20px;
+    position:absolute;
+    background-image:url(/static/gstudio/img/icon-close-open.png);
+    right:15px;
+}
+.expandable-panel-content img {
+    float:right;
+    padding-left:12px;
+}
+
+
+/* Collapsible Panel CSS ends here*/
 
 .logo_container
 
@@ -3698,6 +3811,11 @@ hr
 
 }
 
+.showVideos a img
+{
+	margin-right:10px;
+	
+}
 
 
 /* css for tagcloud---------------------------------*/

@@ -204,7 +204,7 @@ $.ajax({
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
 	        {% if user.is_authenticated %}
-	       <!-- <li><a href="#" rel="view5">Edit</a></li>-->
+	       <li><a href="#" rel="view5">Edit</a></li>
 		    {% endif%}
         </ul>
         <div class="tabcontents" style="padding:20px;">
@@ -222,9 +222,9 @@ $.ajax({
              {% include "metadashboard/wikicomment.html"%}
 	         </div>
 	        {% if user.is_authenticated %}
-	        <!--<div id="view5" class="tabcontent">
-		  {% include "metadashboard/test_2.html"%}
-	         </div>-->
+	        <div id="view5" class="tabcontent">
+		  {% include "metadashboard/test2.html"%}
+	         </div>
 		    {% endif %}
 
 </div>
