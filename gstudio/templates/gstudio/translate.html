@@ -95,6 +95,8 @@ jQuery(document).ready(function($){
 		type: 'POST',
 		data: {conceptid:conceptid,concept_to_hindi:concept_to_hindi,csrfmiddlewaretoken: '{{ csrf_token }}'},		
 		beforeSend: function() {
+		   $("#ajax_load_image").show();
+                            
 		              },
 		success: function(result){
 			var request_result = JSON.parse(result);
@@ -106,6 +108,9 @@ jQuery(document).ready(function($){
 			$("#"+this.id).hide();
 			}
 			},
+		 complete: function(){
+                             $("#ajax_load_image").hide();
+			   } 
 		});
 	}
 	});
