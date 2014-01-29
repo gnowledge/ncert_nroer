@@ -3005,7 +3005,7 @@ button.ui-datepicker-close {
 
      background-image: linear-gradient(0deg,rgb(200,200,200),rgb(255,255,255));
 
-     margin-top:6px;
+     margin-bottom:6px;
 
 }
 
@@ -3481,18 +3481,12 @@ select
     margin-right:7px;
 
 }
-
-
-
 label {
 
     display: block;
-
-    position:relative;
+ position:relative;
 
     top:3px;
-
-
 
 }
 
@@ -3506,7 +3500,7 @@ fieldset_contribute
 
 }
 
-legend
+/*legend
 
 {
 
@@ -3517,7 +3511,18 @@ legend
     color:#1f768f;
 
 }
+*/
+legend
 
+{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#555;
+
+}
 .label_gap
 
 {

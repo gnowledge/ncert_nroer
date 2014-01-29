@@ -177,6 +177,7 @@ $.ajax({
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/static/gstudio/js/tabcontent.js" type="text/javascript"></script>
     <link href="/static/gstudio/css/tabcontent.css" rel="stylesheet" type="text/css" />
+<div style="background:#eaeaea;padding:10px;margin-top:25px;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);">
  <h2>  <font id="fonttitleid" >{{ page_ob.title }} </font>
 
 {% for author in page_ob.authors.all %}
@@ -192,29 +193,29 @@ $.ajax({
 
 </h2>
  {% with page_ob.html_content|safe as page_ob_content %}
-         <div><i>{{ page_ob_content|striptags|truncatewords:"100" }}
+         <div style="padding-top:5px;"><i>{{ page_ob_content|striptags|truncatewords:"100" }}
 </i></div>
-         {% endwith %}
+ </div>        {% endwith %}
 
-    <div style="width: 100%; margin: 0 auto; padding: 0px 0 0px; font: 1.0em arial;">
+    <div style="width: 100%; margin: 0 auto; padding: 0px 0 0px; font: 1.0em arial;margin-top:20px;">
         <ul class="tabs" persist="true">
-            <li onclick="getGraph();"><a href="#" rel="view1">Concept View</a></li>
-             <li><a href="#" rel="view2">Related Topics</a></li>
+            <li onclick="getGraph();"><a href="#" rel="view1">Concepts</a></li>
+             <li><a href="#" rel="view2">Related Concepts</a></li>
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
 	        {% if user.is_authenticated %}
 	        <li><a href="#" rel="view5">Edit</a></li>
 		    {% endif%}
         </ul>
-        <div class="tabcontents">
+        <div class="tabcontents" style="padding:20px;">
             <div id="view1" class="tabcontent">
+<p style="color:#666;font-size:11px;"><i>Control+Click on any related concept (any concept that is not highlighted by a blue ellipse) to expand the concept map.</i></p>
 	      <div id="chart"></div>
-              
             </div>
             <div id="view2" class="tabcontent">
 	      
 	    </div>
-            <div id="view3" class="tabcontent">
+            <div id="view3" class="tabcontent" style="font-family:arial;">
               
             </div>
             <div id="view4" class="tabcontent">
