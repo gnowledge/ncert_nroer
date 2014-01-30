@@ -110,13 +110,7 @@ def translate_to_hindi(request):
 			        newrt.right_applicable_nodetypes = unicode('ST')
 			        newrt.save()
 				newrt.authors.add(Author.objects.get(id=request.user.id))
-			rt=Relationtype.objects.get(title="hindipage")
-			newrelation=Relation()
-	        	newrelation.left_subject = System.objects.get(id=conceptid)
-	                newrelation.relationtype = rt
-		        newrelation.right_subject=System.objects.get(id=newconceptid)
-                       	newrelation.save()
-
+			
 			parentid=System.objects.get(id=conceptid)
                         relset=parentid.get_relations_for_view()
                         rdict={}
@@ -133,6 +127,12 @@ def translate_to_hindi(request):
                             newrel.relationtype = rt
                             newrel.right_subject= NID.objects.get(id=rid)
                             newrel.save()
+                        rt=Relationtype.objects.get(title="hindipage")
+			newrelation=Relation()
+	        	newrelation.left_subject = System.objects.get(id=conceptid)
+	                newrelation.relationtype = rt
+		        newrelation.right_subject=System.objects.get(id=newconceptid)
+                       	newrelation.save()
 
 		data = {"id":newconceptid,"title":System.objects.get(id=newconceptid).title,"status":"ok"}
 	except:
