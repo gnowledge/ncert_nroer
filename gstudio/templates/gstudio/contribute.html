@@ -1,12 +1,22 @@
 {% extends "gstudio/base.html" %}
 
 {% block title %}Contribute{% endblock %}
-
 {% block content %}
+{% if not user.is_authenticated %}
+<script type="text/javascript">
+function message()
+{
+alert("New user: Please Register...!! Existing user: Please Login...!!");
+
+}
+</script>
+
 <h1>Contribute Resource</h1>
 
+<p><a onClick="message()" style="cursor:pointer;"><b>Contribution form for resource uploading</b></a> &nbsp;<img src="http://www.ncert.nic.in/images/new_in.gif"></p>
+{%else%}
 <p><a href="/ContributeResourceForm"><b>Contribution form for resource uploading</b></a> &nbsp;<img src="http://www.ncert.nic.in/images/new_in.gif"></p>
-
+{% endif %}
 <p>Any of the educational resources under the following categories that supplements or enriches the school curriculum. The idea is to provide scope for value addition to various subjects offered at the school level.
 <ul>
 <li>Images/Graphics</li>

@@ -293,8 +293,8 @@ function hideCollection(){
 	
 
 </script>
-<font size="4"><a href="#" class="show_collection" onclick="showCollection()" style="display:none">Show Collections</a></font>
-<font size="4"><a href="#" class="hide_collection" onclick="hideCollection()" style="display:none">Hide Collections</a></font>
+<div><a href="#" class="show_collection" onclick="showCollection()" style="display:none">&#60;&#60; Show Collections</a></div>
+<div><a href="#" class="hide_collection" onclick="hideCollection()" style="display:none">&#60;&#60; Hide Collections</a></div>
 <!--<div class="collectionTable" style="border: 1px solid;display:table">-->
 <table class="collectionTable" style="border: 1px solid;display:table">
 <tr>
@@ -352,12 +352,14 @@ function hideCollection(){
 </tr>
 </table>
 <!--</div >-->
-<h1 id="titleOfPage" style="display:none"> </h1>
+<div style="background:#eaeaea;padding:10px;margin-top:25px;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);" style="display:none">
+ <h2 id="titleOfPage">
+</h2> </div>
 <div class="conceptpage" style="display:none">
     <div style="width: 100%; margin: 0 auto; padding: 0px 0 0px; font: 1.0em arial;">
             <ul class="tabs" persist="true">
-            <li onclick="getGraph();"><a href="#" rel="view1">Concept View</a></li>
-             <li><a href="#" rel="view2">Related Topics</a></li>
+            <li onclick="getGraph();"><a href="#" rel="view1">Concepts</a></li>
+             <li><a href="#" rel="view2">Related Concepts</a></li>
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
 	        {% if user.is_authenticated %}
@@ -366,6 +368,7 @@ function hideCollection(){
         </ul>
        <div class="tabcontents">
             <div id="view1" class="tabcontent">
+<p style="color:#666;font-size:11px;"><i>Control+Click on any related concept (any concept that is not highlighted by a blue ellipse) to expand the concept map.</i></p>
 		<div id="chart"></div>
               
             </div>

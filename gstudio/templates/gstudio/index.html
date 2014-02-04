@@ -875,7 +875,7 @@ function marqueeInit(config){
 								<input class="searchbutton" id = "searchid" type="submit" value="" title="Search" alt="Search">
 								<div class="searchinput">
 									<img class="searchlens" alt="Search" src="/static/gstudio/img/home/home_img/searchlens.jpg">
-									<input type="text" class="field" name="pattern" id="search" placeholder="Search concepts">
+									<input type="text" class="field" name="pattern" id="search" value="Search concepts" onblur="if(this.value == null || this.value == ''){this.value='Search concepts'}" onfocus="if(this.value == 'Search concepts'){this.value=''}">
 								</div>
 
 <hr class="content-divider" style="margin:20px 0px 0px 0px;">
@@ -927,7 +927,7 @@ function marqueeInit(config){
 											<div class="astx-col-duo" style="left: 83%; width: 18%;">
 												<div class="entry-content">
 													<a rel="contents" href="/collection/Audio/">
-														<img alt="Audio" src="/static/gstudio/img/home/home_img/audio.png">
+														<img alt="Audios" src="/static/gstudio/img/home/home_img/audio.png">
 														<h3>Audios</h3>
 													</a>
 												</div>
@@ -935,7 +935,7 @@ function marqueeInit(config){
 											<div class="astx-col-tri" style="left: 85%; width: 18%;">
 												<div class="entry-content">
 													<a rel="contents" href="/collection/Interactive/">
-														<img alt="Interactive" src="/static/gstudio/img/home/home_img/interactive.png">
+														<img alt="Interactives" src="/static/gstudio/img/home/home_img/interactive.png">
 														<h3>Interactives</h3>
 													</a>
 												</div>

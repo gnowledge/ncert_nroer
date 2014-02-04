@@ -35,10 +35,26 @@ window.onload = function() {
 </script>
 
 
-
-
-
 <div class="janevents_text" style="line-height:18px;">
+{% if not user.is_authenticated %}
+
+<script type="text/javascript">
+function message()
+{
+alert("New user: Please Register...!! Existing user: Please Login...!!");
+
+}
+</script>
+
+<div class="left">
+<div id="constitution_event" style="position:relative;top:12px;">
+<img src="/static/gstudio/img/enrichtimelineevent.jpg" width="530px" height="11000" style="border:1px solid #aeaeae;-moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;">
+<a style="position:absolute;top:10843px;left:153px;height:35px;width:235PX;display:block;" alt="Contribute" title="Contribute" onClick="message()"></a>
+</div>
+</div>
+{%else%}
 <div class="left">
 <div id="constitution_event" style="position:relative;top:12px;">
 <img src="/static/gstudio/img/enrichtimelineevent.jpg" width="530px" height="11000" style="border:1px solid #aeaeae;-moz-box-shadow:    3px 3px 5px 6px #ccc;
@@ -47,7 +63,8 @@ window.onload = function() {
 <a style="position:absolute;top:10843px;left:153px;height:35px;width:235PX;display:block;" alt="Contribute" title="Contribute" href="http://nroer.gov.in/ContributeResourceForm/"></a>
 </div>
 </div>
-<div class="right"><p id="download_box" align="left"><a href="/static/gstudio/img/Timeline.pdf" class="event_btn">Download Timeline</a></div>
+{% endif %}
+
 <!--
 <b>Contribute:</b><br/>
 <a href="http://nroer.gov.in/gstudio/resources/images/#divpost" style="font-weight:normal;">Images</a><br/>
@@ -57,9 +74,9 @@ window.onload = function() {
 <p>&nbsp;</p>
 -->
 
+
+<div class="right"><p id="download_box" align="left"><a href="/static/gstudio/img/Timeline.pdf" class="event_btn">Download Timeline</a></div>
 <div class="clear"></div>
-
 </div>
-
 
 {% endblock %}
