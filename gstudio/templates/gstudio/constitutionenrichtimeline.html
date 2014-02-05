@@ -1,0 +1,65 @@
+{% extends "gstudio/base.html" %}
+
+{% block title %}Enrich Timeline{% endblock %}
+
+{% block content %}
+
+<script>
+window.onload = function() {
+  
+  function getScrollTop() {
+    if (typeof window.pageYOffset !== 'undefined' ) {
+      return window.pageYOffset;
+    }
+
+    var d = document.documentElement;
+    if (d.clientHeight) {
+      return d.scrollTop;
+    }
+    return document.body.scrollTop;
+  }
+
+  window.onscroll = function() {
+    var box = document.getElementById('download_box'),
+        scroll = getScrollTop();
+    
+    if (scroll <= 48) {
+      box.style.top = "50px";
+    }
+    else {
+      box.style.top = (scroll + 2) + "px";
+    }
+  };
+  
+};
+</script>
+
+
+
+
+
+<div class="janevents_text" style="line-height:18px;">
+<div class="left">
+<div id="constitution_event" style="position:relative;top:12px;">
+<img src="/static/gstudio/img/enrichtimelineevent.jpg" width="530px" height="11000" style="border:1px solid #aeaeae;-moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;">
+<a style="position:absolute;top:10843px;left:153px;height:35px;width:235PX;display:block;" alt="Contribute" title="Contribute" href="http://nroer.gov.in/ContributeResourceForm/"></a>
+</div>
+</div>
+<div class="right"><p id="download_box" align="left"><a href="/static/gstudio/img/Timeline.pdf" class="event_btn">Download Timeline</a></div>
+<!--
+<b>Contribute:</b><br/>
+<a href="http://nroer.gov.in/gstudio/resources/images/#divpost" style="font-weight:normal;">Images</a><br/>
+<a href="http://nroer.gov.in/gstudio/resources/videos/#divpost" style="font-weight:normal;">Videos</a><br/>
+<a href="http://nroer.gov.in/gstudio/resources/documents/#divpost" style="font-weight:normal;">Text</a><br/><br/>
+<a href="http://nroer.gov.in/gstudio/page/gnowsys-page/43388/" style="font-size:14px;color:#111;"><b>Resources (Srinivasa Ramanujan)</b></a>
+<p>&nbsp;</p>
+-->
+
+<div class="clear"></div>
+
+</div>
+
+
+{% endblock %}

@@ -10,6 +10,9 @@
 {% block link %}
   {{ block.super }}
   <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of search result of" %} '{{ pattern }}'" href="{% url gstudio_nodetype_search_feed %}?pattern={{ pattern }}" />
+
+<script src="/static/gstudio/js/home/collapsible_panel.js" type="text/javascript"></script>		
+
 {% endblock %}
 
 {% block content %}
@@ -23,16 +26,49 @@ $("#graphcss").hide();
 </script>
 <h1>{% trans "Search results  for" %} {% if pattern %}'{{ pattern }}'{% endif %}</h1>
 <div class="search">
-  <form method="get" id="main_searchform" action="{% url gstudio_nodetype_search %}">
+  <form method="get" id="main_searchform" action="{% url gstudio_nodetype_search %}" style="background:#eaeaea;padding-left:10px;padding-top:1px;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);">
     <p>
+<div>
       <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" />
       <input type="submit" id="button" value="OK" />
-      <a title="{% trans 'You can use - to exclude words or phrases, &quot;double quotes&quot; for exact phrases and the AND/OR boolean operators combined with parenthesis for complex searchs.' %}">
+</div>
+
+<!--Collapsible panel starts here-->
+
+<div id="container">
+    <div class="expandable-panel" id="cp-1">
+        <div class="expandable-panel-heading">
+            <div><u>Advanced Search<span class="icon-close-open"></span></u></div>
+         </div>
+        <div class="expandable-panel-content">
+            <div style="color:#666;font-size:11px;line-height:14px;margin-top:0px;">
+<p>To refine your search, use these symbols:</p>
+
+<p><b>-</b> to exclude a word or phrase; <i>example: desert - india will show all results for desert which do not include india</i></p>
+
+<p><b>and</b> to include both words; <i>example: india and mountains will show all results which include both india and mountains</i></p>
+
+<p><b>or</b> to include both words; example: india or rivers will show all results which include either india or rivers or both</i></p>
+
+<p><b>"xxx"</b>, where xxx is the search word enclosed in double quotes, to get an exact match; example: "plains" will show results which contain only plains, will not show gangetic plains</i></p>
+
+<p>You can also combine these to further refine your search; <i>example: "constitution" and republic - india, will show all results which have an exact match for constitution, contains republic, but does not contain india</i></p>
+</div>
+        </div>
+    </div>
+</div>
+
+
+<!--Collapsible panel ends here-->
+      <!--<a title="{% trans '' %}">
         <img src="{{ STATIC_URL }}gstudio/img/help.png" alt="?" width="14" height="14" />
-      </a>
+      </a>-->
+
     </p>
   </form>
+
 </div>
+<p>&nbsp;</p>
 {% if error %}
 <p class="error">{{ error }}</p>
 {% endif %}
@@ -42,9 +78,13 @@ $("#graphcss").hide();
 	{% if key == 'Page' %}
                {% if value %}
                <h2><b>Pages</b></h2>
+
 	        {% include "gstudio/searchDetail.html" %}
-	       {% endif %}     
+{% else %}   <p>We don't seem to have mapped this concept yet or the mapping is under development. Please use <a href="http://nroer.gov.in/browsecollection/"><u>Browse Concepts</u></a> to see the concepts already mapped</p>
+	       {% endif %}  
+	
 	{% endif %}
+
 {% empty %}
 <p class="notice">{% trans "Nothing found." %}</p>
 {% endfor %}

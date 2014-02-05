@@ -650,7 +650,7 @@ def getVideo(request):
 		api=ox.api.API("http://wetube.gnowledge.org/api")
 		countVideo = api.find({"query":{"operator":"&","conditions":[{"operator":"==","key":"project","value":"NROER"}]}})
 		totalVideoNo=countVideo['data']['items']
-		allVideo = api.find({"keys":["id","title","director","id","posterRatio","year"],"query":{"conditions":[{"operator":"==","key":"project","value":"NROER"}],"operator":"&"},"range":[0,totalVideoNo],"sort":[{"operator":"+","key":"title"}]})
+		allVideo = api.find({"keys":["id","title","director","id","posterRatio","year","user"],"query":{"conditions":[{"operator":"==","key":"project","value":"NROER"}],"operator":"&"},"range":[0,totalVideoNo],"sort":[{"operator":"+","key":"title"}]})
 
 		allVideosData=allVideo['data']['items']
 		objecttypeVideo=Objecttype.objects.get(title="Video")
@@ -669,7 +669,7 @@ def getVideo(request):
 				m.objecttypes.add(objecttypeVideo)
                                 #code to notify admin about video upload      
                                 response_content="Uploaded Video :"+m.title
-                                notifyUpdate(m.id,request.user,response_content)
+                                notifyUpdate(m.id,each['user'],response_content)
                                 #end code 
 	finally:
 		lock.release()
