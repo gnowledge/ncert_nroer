@@ -363,7 +363,7 @@ function hideCollection(){
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
 	        {% if user.is_authenticated %}
-	        <li><a href="#" rel="view5">Edit</a></li>
+	       <!-- <li><a href="#" rel="view5">Edit</a></li>-->
 		    {% endif%}
         </ul>
        <div class="tabcontents">
@@ -382,9 +382,9 @@ function hideCollection(){
 	
 	    </div>
        {% if user.is_authenticated %}
-           <div id="view5" class="tabcontent">
+          <!-- <div id="view5" class="tabcontent">
          
-           </div>
+           </div>-->
        {% endif %}
 	</div>
     </div>

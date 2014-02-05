@@ -199,7 +199,7 @@ margin-left:52%;
 </style> 
 
 {% autopaginate documents 8 %}
-<h2 style="">Document/Audio/Interactive object  Library</h2>
+<h1 style="">Documents/Audios/Interactive objects  Library</h1>
 <br>
 <div id="upperdiv">
 
@@ -349,15 +349,15 @@ Description:&nbsp;&nbsp;<b></b>
      <!-- {{ object_content }}-->
     </div>
 <form method="post" action="">{% csrf_token %}
-<h2><a href="/gstudio/resources/documents/show/{{document.id}}" title="{{document.title}}">{{document.title}}</a>
-</h2>
-<font color = 'black'>Posted By : </font>
+<h1><a href="/gstudio/resources/documents/show/{{document.id}}" title="{{document.title}}">{{document.title}}</a>
+</h1>
+<!--<font color = 'black'>Posted By : </font>
 {% for author in document.authors.all %}
-  <font >{{author}}</font>
+  <font >{{author}}</font>-->
 {% endfor %}
 <br>
-<font color = 'black'>Posted At : </font><font >{{document.creation_date}}</font>
-<br>
+<!--<font color = 'black'>Posted At : </font><font >{{document.creation_date}}</font>
+<br>-->
 <font color = 'black'>Description:</font><font >
 {%autoescape on%}
 {% with document.html_content|safe as document_content %}

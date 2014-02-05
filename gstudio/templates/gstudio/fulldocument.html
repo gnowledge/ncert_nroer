@@ -60,7 +60,7 @@ jQuery(document).ready(function($) {
 <link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
 <br/>
 
-<h2><font id="fonttitleid" size="5" >{{doc.title}}</b></font></h2>
+<h1><font id="fonttitleid" size="5" >{{doc.title}}</b></font></h1>
 {% if request.user.is_superuser %}
 {% edit_title doc.id doc.title %}
 {% public_private doc.id doc.status %}
@@ -89,7 +89,7 @@ jQuery(document).ready(function($) {
 </div>
 {% endif %} 
 {% if doc.authors.all %}
-<font color = 'black'>Posted By : </font>
+<!--<font color = 'black'>Posted By : </font>
 {% endif %}
 {% for author in doc.authors.all %}
   <font >{{author}}</font>
@@ -98,7 +98,7 @@ jQuery(document).ready(function($) {
 
 
 
-<font color = 'black'>Posted At : </font><font >{{doc.creation_date}}</font>
+<font color = 'black'>Posted At : </font><font >{{doc.creation_date}}</font>-->
 <br/>
 {% ifequal doc.ref.get_nbh.member_of|slugify  'nodetype-ot-audio'  %}
 <font color = 'black'>Play: </font>

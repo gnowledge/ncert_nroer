@@ -46,7 +46,7 @@
 			var isEditdoc = false;
 $(document).ready(function(){
 var sendData = JSON.stringify({'id': "{{video.slug}}", 'keys': []});
-var jsonDetails = {'Posted By':"user","Posted At":"created","Location":"location","Source":"source","Summary":"summary","Description":"notes","Language":"language","Topic":"topic"}
+var jsonDetails = {"Source":"source","Summary":"summary","Description":"notes","Language":"language","Topic":"topic"}
 /* ajax call for fetching video's data from wetube.gnowledge.org api */
 $.ajax({
 	url: 'http://wetube.gnowledge.org/api',
@@ -119,7 +119,7 @@ $('#pandoravideo').pandoravideo();
 <body>
 {% block content %}
 <br/>
-<h2><font ><font id="fonttitleid" >{{video.title}}</font></font></h2>
+<h1><font ><font id="fonttitleid" >{{video.title}}</font></font></h1>
 {% if user.is_authenticated %}
 {#{% edit_title video.id video.title %}#}
 {% public_private video.id video.status %}
@@ -192,7 +192,7 @@ $('#pandoravideo').pandoravideo();
 <!--ADDING AND DISPLAY TAG-->
 	{% addtag video video.id user %}
 </div>
-<div class="relatedVideo" style="float:right">
+<!--<div class="relatedVideo" style="float:right">
 {% if otherRelatedVideo %}
 
 <h3>Related Videos</h3>
@@ -210,6 +210,7 @@ $('#pandoravideo').pandoravideo();
 </div>
 {% endif %}
 </div>
+-->
 </div>
 
 {% block nodetype-comments %}
