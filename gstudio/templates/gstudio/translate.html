@@ -1,0 +1,192 @@
+{% extends "gstudio/base.html" %}
+{% load i18n %}
+{% block title %}Translate{% endblock %}
+{% block content %}
+{% if request.user.is_superuser %}
+<style type="text/css">
+table td {
+width :300px;
+}
+.concept_pagination{
+font-size: 30px;
+}
+</style>
+<script type="text/javascript">
+var totalNoOfConcept = parseInt("{{no_of_concept}}")
+var noOfpage = totalNoOfConcept/100;
+//var jsonOfpage = {""}
+function createrow(json_concept){
+var table = $("<table>"+"</table>")
+		    .attr("id","conceptTable")
+		    .appendTo($("#translate"));
+	for(var each in json_concept){ 
+	var tr = $("<tr>"+"</tr>")
+		.appendTo($("#conceptTable"));
+	var td1 = $("<td>"+"</td>")
+		.appendTo(tr);
+	var atagtitle = $("<a>"+json_concept[each]['title']+"</a>")
+			.attr("href","/gstudio/page/gnowsys-page/"+json_concept[each]['id'])
+			.attr("title","ctrl + click")
+			.appendTo(td1);
+	var td2 = $("<td> eng-to-hi </td>")
+		.appendTo(tr);
+	var td3 = $("<td>"+"</td>")
+		.appendTo(tr);
+	if(json_concept[each]['relation'] == "yes"){
+	var atag = $("<a> "+json_concept[each]['conceptObjectTitle'] + "</a>")
+		   .attr("href","/gstudio/page/gnowsys-page/"+json_concept[each]['conceptObjectId'])
+		   .attr("title","ctrl + click")
+		   .appendTo(td3);
+	}
+	else{
+	var textbox = $("<input>"+"</input>")
+		      .attr("type","text")
+		      .attr("id","text_"+json_concept[each]['id'])
+		      .appendTo(td3);
+	var button = $("<input>"+"</input>")
+		      .attr("type","button")
+		      .attr("id",json_concept[each]['id'])
+		      .attr("value","ok")
+		      .attr("class","translate_to_hi")
+		      .appendTo(td3);
+	}	
+	}
+
+}
+function getConcept(){
+$.ajax({
+	url:'/translate/concept/',
+	data: {start:0,end:100},
+	success: function(result){
+	$("#translate").html("");
+	var json_concept = JSON.parse(result);
+	createrow(json_concept);
+	createpagenate();
+	$("#1").hide();
+	}
+})
+}
+function createpagenate(){
+for(var i=1; i<=noOfpage+1;i++){
+
+var atag1 = $("<a>  "+i+"  </a>")
+	    .attr("id",i)
+	    .attr("class","pagenate")
+	    .attr("href","#")
+	    .appendTo($(".concept_pagination"));
+}
+}
+$(window).load(function() { 
+getConcept();
+});
+jQuery(document).ready(function($){
+	$(document).on('click',".translate_to_hi",function(){
+	var conceptid = this.id;
+	var concept_to_hindi = $('#text_'+conceptid).val();
+	if (concept_to_hindi == "")
+	{
+	alert("enter the translated text")	
+	$('#text'+conceptid).focus();
+	}
+	else
+	{	$("#"+this.id).hide()
+		$.ajax({
+		url: '/translate/translate_to_hindi/',
+		type: 'POST',
+		data: {conceptid:conceptid,concept_to_hindi:concept_to_hindi,csrfmiddlewaretoken: '{{ csrf_token }}'},		
+		beforeSend: function() {
+		   $("#ajax_load_image").show();
+                            
+		              },
+		success: function(result){
+			var request_result = JSON.parse(result);
+			if(request_result['status'] == "ok"){
+				$('#text_'+conceptid).replaceWith('<a href="/gstudio/page/gnowsys-page/'+request_result['id']+'/">'+request_result['title']+'</a>');
+			}
+			else{
+			alert(request_result['status']);
+			$("#"+this.id).hide();
+			}
+			},
+		 complete: function(){
+                             $("#ajax_load_image").hide();
+			   } 
+		});
+	}
+	});
+
+	
+});
+
+jQuery(document).ready(function($){
+	$(document).on('click',".pagenate",function(){
+	var pageid = this.id;
+	if(pageid <= noOfpage){
+	var start = pageid*100 - 100;
+	var end = pageid*100;
+	}
+	else{
+	var start = pageid*100 - 100;
+	var end = totalNoOfConcept-1;
+	}
+	$.ajax({
+	url:'/translate/concept/',
+	data: {start:start,end:end},
+	beforeSend: function() {
+        $("#translate").html('<img id="ajax_image_custom" width="50" style="padding-left:275px" src="/static/grappelli/img/ajax-loader1.gif">');
+        },
+	success: function(result){
+	$("#translate").html("");
+	var json_concept = JSON.parse(result);
+	createrow(json_concept);
+	$(".pagenate").show();
+	$("#"+pageid).hide();
+	}
+})
+	});
+});
+
+jQuery(document).ready(function($){
+	$(document).on('click',"#button_concept_concept",function(){
+		var text_search = $("#text_concept_search").val();
+		if(text_search == ""){
+		 alert("enter a valid input");
+		 $("#text_concept_search").focus();
+		}
+		else{
+		$.ajax({
+		url:'/translate/concept_search/',
+		data: {text_concept:text_search},
+		beforeSend: function() {
+        	$("#ajax_search").show();
+        	},
+		success: function(result){
+		$("#ajax_search").hide();
+		$("#translate").html("");
+		var json_concept = JSON.parse(result);
+		createrow(json_concept);
+		$(".pagenate").show();
+		}
+		});
+		}
+	
+	});
+});
+
+</script>	
+<h2>Translate to Hindi</h2>
+<div id="searchconcept">
+<input type="text" id="text_concept_search">
+<input type="button" value="  search   " id="button_concept_concept">
+<img id="ajax_search" width="50" style="padding-left:275px;display:none" src="/static/grappelli/img/ajax-loader1.gif">
+</div>	
+<div id="translate" style="margin-top:20px">
+<img id="ajax_image_custom" width="50" style="padding-left:275px" src="/static/grappelli/img/ajax-loader1.gif">
+</div>
+<div class="concept_pagination">
+
+</div>
+{% else %}
+No content
+{% endif %}
+{% endblock %}

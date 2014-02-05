@@ -68,10 +68,18 @@ $(document).on('click',"#lstvalue",function(){
                              $.ajax({
                               url: '/gstudio/resources/images/createcolln/',
                               data:{'listofcollns':abc,'coltitle':coltitle,'editcoln':0,'colid':colid},
-                              success: function(data) {
-                              $("#imagecollections").html(data);
+			      beforeSend: function() {
+				       $("#ajax_load_image").show();
+				       },
+
+			      success: function(data) {
+				       $("#imagecollections").html(data);
 
                               },
+                             complete: function(){
+                             $("#ajax_load_image").hide();
+			      
+	             }
 
        });}
 
