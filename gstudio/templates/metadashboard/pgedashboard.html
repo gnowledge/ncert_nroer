@@ -12,7 +12,7 @@
 function getGraph()
 	{
 
-		$("#view1").html("<div id='chart'></div>");
+		$("#view1").html("<div id='chart' style='color:#666;font-size:11px;'><i>Control+Click on any related concept (any concept that is not highlighted by a blue ellipse) to expand the concept map.</i></div>");
                  load({{object.id}}); 
 		$("li").prop("onclick", null);
 	}
@@ -203,14 +203,16 @@ $.ajax({
              <li><a href="#" rel="view2">Related Concepts</a></li>
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
-	        {% if user.is_authenticated %}
-	        <!--<li><a href="#" rel="view5">Edit</a></li>-->
+	       {% if user.is_authenticated %}
+	       <!-- <li><a href="#" rel="view5">Edit</a></li>-->
 		    {% endif%}
         </ul>
         <div class="tabcontents" style="padding:20px;">
             <div id="view1" class="tabcontent">
+
+	      <div id="chart">
 <p style="color:#666;font-size:11px;"><i>Control+Click on any related concept (any concept that is not highlighted by a blue ellipse) to expand the concept map.</i></p>
-	      <div id="chart"></div>
+	      </div>
             </div>
             <div id="view2" class="tabcontent">
 	      
@@ -221,10 +223,10 @@ $.ajax({
             <div id="view4" class="tabcontent">
              {% include "metadashboard/wikicomment.html"%}
 	         </div>
-	        {% if user.is_authenticated %}
-	       <!-- <div id="view5" class="tabcontent">
-		  {% include "metadashboard/test__2.html"%}
-	         </div>-->
+	       {% if user.is_authenticated %}
+	      <div id="view5" class="tabcontent">
+		  <!--{% include "metadashboard/test_2.html"%}-->
+	         </div>
 		    {% endif %}
 
 </div>
