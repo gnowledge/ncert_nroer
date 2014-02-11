@@ -1,3 +1,4 @@
+
 # Copyright (c) 2011,  2012 Free Software Foundation
 
 #     This program is free software: you can redistribute it and/or modify
@@ -88,6 +89,7 @@ def translate_to_hindi(request):
     	conceptid = request.POST['conceptid']
 	concept_to_hindi = request.POST['concept_to_hindi']
 	content_org = ""
+        relation_list=[]
 	collection = ""
 	list1 = ""
 	newconceptid = ""
@@ -110,23 +112,28 @@ def translate_to_hindi(request):
 			        newrt.right_applicable_nodetypes = unicode('ST')
 			        newrt.save()
 				newrt.authors.add(Author.objects.get(id=request.user.id))
-			
-			parentid=System.objects.get(id=conceptid)
-                        relset=parentid.get_relations_for_view()
-                        rdict={}
-                        for key,value in relset.items():
-                            for each in value:
-                                rdict[each['id']]=key
-                        for key,value in rdict.items():
-                            
-                            r=Relation.objects.get(id=key)
-                            rt=Relationtype.objects.get(title=value)
-                            rid=r.right_subject_id
-                            newrel=Relation()
-                            newrel.left_subject = System.objects.get(id=newconceptid)
-                            newrel.relationtype = rt
-                            newrel.right_subject= NID.objects.get(id=rid)
-                            newrel.save()
+                        parent_id=System.objects.get(id=conceptid)
+                        for k,v in parent_id.get_relations().items():
+                            for each in v :
+                                dict = {}
+                                if parent_id.id == each.right_subject_id:
+                                    dict['right'] = newconceptid
+                                else :
+                                    dict['right'] = each.right_subject_id
+                                if parent_id.id == each.left_subject_id:
+                                    dict['left'] = newconceptid
+                                else :
+                                    dict['left'] = each.left_subject_id
+                                dict['rt'] = each.relationtype.id
+                                relation_list.append(dict) 
+                        print relation_list
+                        for each in relation_list:
+                            rt=Relation()
+                            rt.right_subject_id=each['right']
+                            rt.left_subject_id=each['left']
+                            rt.relationtype_id=each['rt']
+                            rt.save()
+
                         rt=Relationtype.objects.get(title="hindipage")
 			newrelation=Relation()
 	        	newrelation.left_subject = System.objects.get(id=conceptid)
@@ -135,8 +142,10 @@ def translate_to_hindi(request):
                        	newrelation.save()
 
 		data = {"id":newconceptid,"title":System.objects.get(id=newconceptid).title,"status":"ok"}
-	except:
-		data = {"status":"failed"}
+	except Exception as e:
+                delnew=System.objects.get(id=newconceptid)
+                delnew.delete()
+		data = {"status":"failed","error":str(e)}
     		return HttpResponse(json.dumps(data))	
 
 	
