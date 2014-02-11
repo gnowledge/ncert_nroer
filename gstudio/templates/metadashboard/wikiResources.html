@@ -47,15 +47,19 @@
 	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Documents" src="/static/gstudio/img/home/home_img/documents.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;margin-bottom:10px;">Documents</p>	
 	{% endif %}
 
+<table width="100%">
+    <tr>
 	{% for k  in value %}
 		{% if  key == 'has_image'  %}
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
+<td align="center">
 <a href="{{k.url}}"><img src="{% admin_media_prefix %}img/{{k.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail" alt="{{k.title}}" ><br/>{{k.title}}</a>
-</div> 
-
+<td>
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
 	
-
-		{% endif %}
+</tr>
+  {% endif %}
+{% endif %}
 
 		{% if  key == 'has_audio'  %}
 			<div style="font-size:13px;font-weight:bold;"><a href="{{k.url}}">{{k.title}}</a>,&nbsp;</div>
@@ -63,11 +67,15 @@
 		
 		{% if  key == 'has_video'  %}
 
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
+<td align="center">
  <a href="{{k.url}}">
         <img src="http://wetube.gnowledge.org/{{k.slug}}/icon128.jpg" alt="{{ k.title }}" style="border-radius: 10px 10px 10px 10px;" title="{{ k.title }}"><br/>{{k.title}}</a>
-</div>
-
+<td>
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
+	
+</tr>
+  {% endif %}
 
 		{% endif %}
 		
@@ -100,5 +108,24 @@
 		{% endif %}
 	
 	{% endfor %}
+</tr>
+</table>
+<!--
+<table width="100%">
+    <tr>
+{% for k  in value %}
+{% if  key == 'has_image'  %}
+        <td class="gbobject-image1" id = "{{image1.id}}"><a href="{{k.url}}"><img src="{% admin_media_prefix %}img/{{k.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail" alt="{{k.title}}"><br/>{{k.title}}</a>
+
+<td>
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
+    </tr>
+  {% endif %}
+{% endif %}
+   {% endfor  %} 
+ 		</tr>
+</table>
+-->
 <div class="clear"></div>
 {% endfor %}
