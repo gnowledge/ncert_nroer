@@ -100,22 +100,23 @@ function collectionClick(tag){
                               },
 	success: function(result)
 	{
+			var counter=0;
 			var jSon = JSON.parse(result);
 			$(".showVideos").html("");
+				var table=$("<table></table>")
+					.appendTo($(".showVideos"));
+				var tr=$("<tr></tr>")
+					.appendTo(table)
 			for (var each in jSon)
 			{
 				
-				var div=$("<div>"+jSon[each]['title']+"</div>")
-					.css("display","inline")
-					.css("float","left")
-					.css("text-align","center")
-					.css("width","128px")
-					.css("margin-right","10px")
-					.css("margin-bottom","10px")
-					.appendTo($(".showVideos"));					
+				
+				var td=$("<td></td>")
+					.attr("align","center")
+					.appendTo(tr)
 				var a = $("<a></a>")
 					.attr("href","/gstudio/resources/videos/show/"+jSon[each]['id'])
-					.appendTo(div)
+					.appendTo(td)
 				
 				var img = $("<img>")
 					 .attr("title",jSon[each]['title'])
@@ -124,6 +125,17 @@ function collectionClick(tag){
 					 .css("border-radius","10px 10px 10px 10px")
 					 .css("border-bottom","solid 5px")
 					 .appendTo(a)
+				var div = $("<div>"+jSon[each]['title']+"</div>")
+					 .appendTo(td)
+
+				counter++;
+				if((counter%6)==0)
+				{
+				tr=$("<tr></tr>")
+					.appendTo(table)
+				}
+				else{}
+
 
 				
 			}
@@ -335,37 +347,6 @@ document.getElementById('headvideo').style.visibility="visible";
 <div style="padding-top:10px;"><h3>Search Results:</h3>
 <div class="showVideos" style="max-height:300px;min-height:625px;width:705px;overflow-y:auto;padding-left:20px;padding-top:10px;background: #eaeaea;border-radius:10px;">
 
-<!--
-{% for each in jSon %}
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1650"><img title="d c motor - english - 28mb" alt="d c motor - english - 28mb" src="http://wetube.gnowledge.org/CXD/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>{{each.title}}</a>
-</div>
-{% endfor %}
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1764"><img title="dance of nine cubes - hindi - 10mb" alt="dance of nine cubes - hindi - 10mb" src="http://wetube.gnowledge.org/DXV/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dance of nine cubes - hindi - 10mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1765"><img title="dancing dragonfly - hindi - 15mb" alt="dancing dragonfly - hindi - 15mb" src="http://wetube.gnowledge.org/DXW/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dancing dragonfly - hindi - 15mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1652"><img title="dancing eyes - english - 9mb" alt="dancing eyes - english - 9mb" src="http://wetube.gnowledge.org/CXE/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dancing eyes - english - 9mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1653"><img title="dancing eyes - marathi - 9mb" alt="dancing eyes - marathi - 9mb" src="http://wetube.gnowledge.org/DFJ/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dancing eyes - marathi - 9mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1654"><img title="dancing washers - english - 17mb" alt="dancing washers - english - 17mb" src="http://wetube.gnowledge.org/CXF/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dancing washers - english - 17mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1655"><img title="dancing washers - marathi - 16mb" alt="dancing washers - marathi - 16mb" src="http://wetube.gnowledge.org/DFK/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dancing washers - marathi - 16mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1659"><img title="d.c. motor - marathi - 29mb" alt="d.c. motor - marathi - 29mb" src="http://wetube.gnowledge.org/DFI/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>d.c. motor - marathi - 29mb</a>
-</div>
-<div style="display:inline;float:left;text-align:center;width:128px;margin-right:10px;margin-bottom:10px;">
-<a href="/gstudio/resources/videos/show/1766"><img title="dear deer - hindi - 14mb" alt="dear deer - hindi - 14mb" src="http://wetube.gnowledge.org/DXX/icon128.jpg" style="border-radius: 10px; border-bottom: 5px solid;"></br>dear deer - hindi - 14mb</a>
-</div>
--->
 </div>
 </div>
 <br>
