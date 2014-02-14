@@ -14,7 +14,7 @@ def con_script():
         line="\n"+eachwiki.id.__str__()+","+eachwiki.title.encode('utf8')+","                                                            
         relns=eachwiki.get_relations_for_view()
         for key,value in relns.items():
-            if not (key=="has_video" or key =="has_image"):
+            if not (key=="has_video" or key =="has_image" or key == "has_html" or key == "has_multimedia" or key == "has_audio"):
                 for eachval in value:   
                     oburl=str(eachval['url']).split("/")
                     objid=oburl[len(oburl)-1]
