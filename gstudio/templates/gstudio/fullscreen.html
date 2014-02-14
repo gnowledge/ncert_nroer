@@ -212,7 +212,7 @@ $(document).ready(function(){
 
 <form method="POST" action="">
 {% csrf_token %}
-{% if user.is_authenticated %}
+{% if user.is_superuser %}
 <input type="hidden" name="imgid" value={{image.id}}>
 <input type="button" id="editcontent" value="Edit"/>
 
