@@ -203,12 +203,12 @@ $.ajax({
              <li><a href="#" rel="view2">Related Concepts</a></li>
             <li><a href="#" rel="view3">Resources</a></li>
             <li><a href="#" rel="view4">Comments</a></li>
-	       {% if user.is_authenticated %}
+	      
 	           {% if user.is_superuser %}
 	    
 	       <li><a href="#" rel="view5">Edit</a></li>
 		    {% endif%}
-	       {% endif%}
+	       
         </ul>
         <div class="tabcontents" style="padding:20px;">
 
