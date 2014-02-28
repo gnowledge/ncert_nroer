@@ -325,7 +325,23 @@ box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
 	}
 /*Constitution Calling Event Style*/
 
+/*Join the Dots Event Style*/
 
+#joindots_event a
+	{	
+position:absolute;z-index:1000;display:block;-webkit-transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-o-transition: all 0.1s ease-in-out;
+transition: all 0.1s ease-in-out;
+	}
+	#joindots_event a:hover
+	{	
+border:3px solid #DCDCDC;-moz-box-shadow:3px 3px 5px 6px #777;
+-webkit-box-shadow: 3px 3px 5px 6px #777;
+box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
+	}
+
+/*Join the Dots Event Style*/
 .Image_form_style legend, .Image_form_style2 legend
 {
 	font-size:14px;
