@@ -28,18 +28,26 @@ from gstudio.methods import *
 @user_passes_test(lambda u: u.is_superuser)
 def translate(request):
     wikipage = Systemtype.objects.get(title="Wikipage")
-    wikipage_member = wikipage.member_systems.all()
-    vars=RequestContext(request,{'no_of_concept':len(wikipage_member)})
+    rt=Relationtype.objects.get(title="hindipage")
+    wikipage_member = set(wikipage.member_systems.all())
+    relation_set=set([each.right_subject.ref for each in rt.relation_set.all()])
+    new_relation_set=list(wikipage_member-relation_set)
+    vars=RequestContext(request,{'no_of_concept':len(new_relation_set)})
     template="gstudio/translate.html"
     return render_to_response(template, vars)
+
 
 def concept_request(request):
     data = []
     start = request.GET['start']
     end = request.GET['end']
     wikipage = Systemtype.objects.get(title="Wikipage")
-    wikipage_member = wikipage.member_systems.all()[start:end]
-    for each in wikipage_member:
+    rt=Relationtype.objects.get(title="hindipage")
+    wikipage_member = set(wikipage.member_systems.all())
+    relation_set=set([each.right_subject.ref for each in rt.relation_set.all()])
+    new_relation_set=list(wikipage_member-relation_set)[int(start):int(end)]
+
+    for each in new_relation_set:
 	rt = []
     	relation = ""
    	conceptObjectTitle = ""
