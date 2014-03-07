@@ -153,9 +153,6 @@ $(document).ready(function(){
 
 <link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
 <h1><font id="fonttitleid" ><b>{{image.title}}</b></font></h1>
-
-
-
 {% if request.user.is_superuser %}
 {% edit_title image.id image.title %}
 {% public_private image.id image.status %}
