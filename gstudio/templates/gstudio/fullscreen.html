@@ -152,10 +152,7 @@ $(document).ready(function(){
 </script>
 
 <link rel="shortcut icon" href="{{ STATIC_URL }}gstudio/img/favicon.ico" />
-<h2><font id="fonttitleid" ><b>{{image.title}}</b></font></h2>
-
-
-
+<h1><font id="fonttitleid" ><b>{{image.title}}</b></font></h1>
 {% if request.user.is_superuser %}
 {% edit_title image.id image.title %}
 {% public_private image.id image.status %}
@@ -194,14 +191,14 @@ $(document).ready(function(){
 
 <br/>
 
-<font color = 'black'>Posted By : </font>
+<!--<font color = 'black'>Posted By : </font>
 {% for author in image.authors.all %}
   <font >{{author}}</font>
 {% endfor %}
 <br>
 
 <font color = 'black'>Posted At : </font><font >{{image.creation_date}}</font>
-<br/>
+<br/>-->
 <font color = 'black'>Description:</font>
 {% autoescape on %}
 {% with image.html_content|safe as image_content %}
@@ -212,7 +209,7 @@ $(document).ready(function(){
 
 <form method="POST" action="">
 {% csrf_token %}
-{% if user.is_authenticated %}
+{% if user.is_superuser %}
 <input type="hidden" name="imgid" value={{image.id}}>
 <input type="button" id="editcontent" value="Edit"/>
 

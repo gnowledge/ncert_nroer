@@ -1,13 +1,16 @@
+
 {% extends "gstudio/base.html" %}
-{% load pagination_tags %}
+<!--{% load pagination_tags %}-->
 {% load i18n %}
 {% load adminmedia grp_tags %}
 {% load i18n comments gstudio_tags %}
  {% block title %}Videos{% endblock %}
 {% block content %}
+
 <script src="{% admin_media_prefix %}jquery/jquery-1.6.2.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
+<script src="/static/gstudio/js/home/collapsible_panel.js" type="text/javascript"></script>		
     <script type="text/javascript" >
 function getVideo(){
 $.ajax({
@@ -45,8 +48,14 @@ $.ajax({
 				.appendTo($("#videocollections"));
 			var br = $("<br>")
 				.appendTo($("#videocollections"));*/
-			for (var each in resultkeywords.data.items) {
-			 if (resultkeywords.data.items[each].name != ""){	
+			
+/*Default Display of Video Collection*/
+			collectionClick(resultkeywords.data.items[0].name);
+/*Default Display of Video Collection*/
+			for (var each in resultkeywords.data.items)
+			{
+			 if (resultkeywords.data.items[each].name != "")
+			  {	
 			 var aTag=$("<option>"+resultkeywords.data.items[each].name+"</option>")
 				.attr("title","resultkeywords.data.items[each].name")
 				.attr("id",resultkeywords.data.items[each].name)
@@ -62,7 +71,11 @@ $.ajax({
 			.appendTo($("#videocollections"));
 			var font2 = $("<font>"+", &nbsp;"+"</font>")
 				.appendTo($("#videocollections"));*/
-			} }
+			}
+			else{	
+			 
+			}
+	            }
 			
 		},
 	        complete: function(){
@@ -83,15 +96,28 @@ function collectionClick(tag){
 	type: 'POST',
 	data: {tagName:tagName,csrfmiddlewaretoken: '{{ csrf_token }}'},
         beforeSend: function() {
-				$(".showVideos").html('<img width="50" id="ajax_load_image" style="display: block; margin-top: 20%; margin-left: 50%;" src="/static/grappelli/img/ajax-loader1.gif">')
+				$(".showVideos").html('<img width="50" id="ajax_load_image" style="margin-top: 20%; margin-left: 50%;" src="/static/grappelli/img/ajax-loader1.gif">')
                               },
-	success: function(result){
+	success: function(result)
+	{
+			var counter=0;
 			var jSon = JSON.parse(result);
 			$(".showVideos").html("");
-			for (var each in jSon){
+				var table=$("<table></table>")
+					.appendTo($(".showVideos"));
+				var tr=$("<tr></tr>")
+					.appendTo(table)
+			for (var each in jSon)
+			{
+				
+				
+				var td=$("<td></td>")
+					.attr("align","center")
+					.appendTo(tr)
 				var a = $("<a></a>")
 					.attr("href","/gstudio/resources/videos/show/"+jSon[each]['id'])
-					.appendTo($(".showVideos"));
+					.appendTo(td)
+				
 				var img = $("<img>")
 					 .attr("title",jSon[each]['title'])
 					 .attr("alt",jSon[each]['title'])
@@ -99,7 +125,21 @@ function collectionClick(tag){
 					 .css("border-radius","10px 10px 10px 10px")
 					 .css("border-bottom","solid 5px")
 					 .appendTo(a)
-				}	},
+				var div = $("<div>"+jSon[each]['title']+"</div>")
+					 .appendTo(td)
+
+				counter++;
+				if((counter%6)==0)
+				{
+				tr=$("<tr></tr>")
+					.appendTo(table)
+				}
+				else{}
+
+
+				
+			}
+	},
         complete: function(){
 
 		  }
@@ -198,9 +238,10 @@ background: green;
 
 {% autopaginate vids 40 %}
 
-<h2 style="">Video Library</h2>
+<h1 style="">Video Library</h1>
 <div id="upperdiv">
 <div id="divsearch">
+<!--
 <form method="post" action="">
 {% csrf_token %}
 <h4 style="color: black;">Search Videos:
@@ -211,9 +252,45 @@ background: green;
 </select>
 <input type="submit" name="norm" value="Search">
 <!--<input type="submit" name="spe" value="Search by User">-->
+<!--
 </h4>
 </form>
-<br>
+-->
+<form style="background:#eaeaea;padding-left:10px;padding-top:1px;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);">
+<p>
+<div>
+<input type="text" id="tagSearch" onkeyup="searchTag()" style="width:180px">
+<input type="submit" id="button" value="OK" onclick="collectionClick(document.getElementById('tagSearch').value)"/>
+</div>
+<!--Collapsible panel starts here-->
+
+<div id="container">
+    <div class="expandable-panel" id="cp-1">
+        <div class="expandable-panel-heading">
+            <div><u>Advanced Search<span class="icon-close-open"></span></u></div>
+         </div>
+        <div class="expandable-panel-content">
+            <div style="color:#666;font-size:11px;line-height:14px;margin-top:0px;">
+<p>To refine your search, use these symbols:</p>
+
+<p><b>-</b> to exclude a word or phrase; <i>example: desert - india will show all results for desert which do not include india</i></p>
+
+<p><b>and</b> to include both words; <i>example: india and mountains will show all results which include both india and mountains</i></p>
+
+<p><b>or</b> to include both words; <i>example: india or rivers will show all results which include either india or rivers or both</i></p>
+
+<p><b>"xxx"</b>, where xxx is the search word enclosed in double quotes, to get an exact match; <i>example: "plains" will show results which contain only plains, will not show gangetic plains</i></p>
+
+<p>You can also combine these to further refine your search; <i>example: "constitution" and republic - india, will show all results which have an exact match for constitution, contains republic, but does not contain india</i></p>
+
+</div>
+        </div>
+    </div>
+</div>
+<!--Collapsible panel ends here-->
+</p>
+</form>
+
 {% if user.is_authenticated %}
 <form method="post" action="/gstudio/resources/videos/">
 {% csrf_token %}
@@ -227,9 +304,13 @@ background: green;
 <div id="divpost">
 <form enctype="multipart/form-data" method="post" action="">
 {% csrf_token %}
-<h4 style="color: black;">Submit Videos:</h4>
+
+<h4 style="color: black;">
+Submit Videos:<input type="file" name="clip" multiple="multiple" /></h4>
+Enter the password of wetube.gnowledge.org:
+<input type="password" name="videopassword">
+<input type="submit" id="submitpostid" value="Upload"  onclick="return myupload();"/>
 <!--Title:&nbsp; <input type="text" name="title1">-->
-Select Video:&nbsp;<input type="file" name="clip" multiple="multiple" /></p>
 <!-- Description:&nbsp;&nbsp;<b></b> -->
 <!-- <input type="button"  id="editcommenteditor"  value="edit" style="display:none" > -->
 <!-- <input type="button"  id="commenteditor"  value="Add Content" > -->
@@ -238,10 +319,6 @@ Select Video:&nbsp;<input type="file" name="clip" multiple="multiple" /></p>
 <input type="hidden" name="user" value={{user.username}}>
 <input type="hidden" name="userpassword" value={{user.password}}>
 <input type="hidden" name="useremail" value={{user.email}}>
-<p><font> Enter the password of wetube.gnowledge.org</font> </p>
-<input type="password" name="videopassword" />
-
-<input type="submit" id="submitpostid" value="Upload"  onclick="return myupload();" >
 <script type="text/javascript">
 function myupload()
 {
@@ -249,22 +326,27 @@ document.getElementById('ajax_load_image_video').style.visibility="visible";
 document.getElementById('headvideo').style.visibility="visible";
 }
 </script>
+
 </form>
 </div>
 {% endif %}
+
 {% if reportid %}
 <h2><font color="red">this video is already uploaded on this site</font></h2>
 <a href="/gstudio/resources/videos/show/{{ reportid }}/"> <font size="4">to see this video click here</font></a><br/><br/><br/>
 {% endif %}
 <img width="50" src="/static/grappelli/img/ajax-loader1.gif" style="z-index: 1000;visibility:hidden;" id="ajax_load_image_video"><font size="5px" color="#1F768F" style="visibility:hidden;" id="headvideo">Processing And Uploading Video</font>
-<br><br>
 <div id="videocollections" style="font-size:1.5em;float:left">
-	<h2 style="">Video Collection  </h2><br>
-	Search: <input type="text" id="tagSearch" onkeyup="searchTag()" style="width:180px"><br/>
-	<select id="selectvideocollections" multiple="multiple" style="width:250px;height:160px">
+	<h2 style="">Collections  </h2>
+	
+	<select id="selectvideocollections" multiple="multiple" style="width:725px;height:160px;margin-bottom:20px;">
 	</select>
+
 </div>
-<div class="showVideos" style="max-height:300px;min-height:225px;width:400px;overflow-y:auto;padding-left:60px;padding-top:10px;">
+
+<div style="padding-top:10px;"><h3>Search Results:</h3>
+<div class="showVideos" style="max-height:300px;min-height:625px;width:705px;overflow-y:auto;padding-left:20px;padding-top:10px;background: #eaeaea;border-radius:10px;">
+
 </div>
 </div>
 <br>
@@ -274,6 +356,7 @@ document.getElementById('headvideo').style.visibility="visible";
 <h2 style="">Favourite Videos</h2><br/>
 {% else %}
 {% endif %}
+<!--
 <h2 style="">List of Videos in the library </h2><br/>
 
 
@@ -316,8 +399,9 @@ document.getElementById('headvideo').style.visibility="visible";
 {% endfor %}
 </table>
 </div>
-<h2>{% paginate %}</h2>
 
+<h2>{% paginate %}</h2>
+-->
 {% endblock %}
 
 {% block chart %}
@@ -325,6 +409,3 @@ document.getElementById('headvideo').style.visibility="visible";
 
 <br>
 {% endblock %}
-
-
-

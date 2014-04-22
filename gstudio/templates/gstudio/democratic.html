@@ -1,9 +1,22 @@
 {% extends "gstudio/base.html" %}
 
 {% block title %}My Democratic Classroom{% endblock %}
-
 {% block content %}
+{% if not user.is_authenticated %}
+<script type="text/javascript">
+function message()
+{
+alert("New user: Please Register...!! Existing user: Please Login...!!");
+
+}
+</script>
+
+<div id="constitution_event" style="position:relative;"><img src="/static/gstudio/img/democraticevent.jpg"  width="600px" height="900px">
+<a style="position:absolute;top:777px;left:177px;height:35px;width:252PX;display:block;" alt="Contribute" title="Contribute" onClick="message()"></a>
+</div>
+{%else%}
 <div id="constitution_event" style="position:relative;"><img src="/static/gstudio/img/democraticevent.jpg"  width="600px" height="900px">
 <a style="position:absolute;top:777px;left:177px;height:35px;width:252PX;display:block;" alt="Contribute" title="Contribute" href="http://nroer.gov.in/ContributeResourceForm/"></a>
 </div>
+{% endif %}
 {% endblock %}

@@ -325,7 +325,23 @@ box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
 	}
 /*Constitution Calling Event Style*/
 
+/*Join the Dots Event Style*/
 
+#joindots_event a
+	{	
+position:absolute;z-index:1000;display:block;-webkit-transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-o-transition: all 0.1s ease-in-out;
+transition: all 0.1s ease-in-out;
+	}
+	#joindots_event a:hover
+	{	
+border:0px solid #DCDCDC;-moz-box-shadow:3px 3px 5px 6px #777;
+-webkit-box-shadow: 3px 3px 5px 6px #777;
+box-shadow:3px 3px 5px 6px #777; -webkit-transform: scale(1.01);
+	}
+
+/*Join the Dots Event Style*/
 .Image_form_style legend, .Image_form_style2 legend
 {
 	font-size:14px;
@@ -444,6 +460,7 @@ h3
 {
 
     margin-bottom:5px;
+    color:#1F768F;
 
 }
 
@@ -554,6 +571,14 @@ h2 a
 {
 
     font-size:14px;
+    font-weight:normal;
+
+}
+h2 a:hover
+
+{
+
+    color:#1F768F;
 
 }
 
@@ -3824,7 +3849,7 @@ hr
 
 .tags .tag_2 { font-size: 1.125em; color: #00334c; }
 
-.tags .tag_4 { font-size: 2em; color: #005b89; }
+.tags .tag_4 { font-size: 2em; color: #005b89;display:none; }
 
 .tags .tag_5 { font-size: 2.25em; color: #0070a8; }
 

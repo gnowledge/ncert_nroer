@@ -7,7 +7,7 @@
 	{% endif %}
 
 	{% if key == 'has_audio' %}
-	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Audios" src="/static/gstudio/img/home/home_img/audio.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Audios</p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Audios" src="/static/gstudio/img/home/home_img/audio.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;margin-bottom:10px;">Audios</p>
 	{% endif %}
 	
 	{% if key == 'has_pdf' %}
@@ -16,13 +16,13 @@
 	{% endif %}
 
         {% if key == 'has_image' %}
-	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Images" src="/static/gstudio/img/home/home_img/images.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Images</p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Images" src="/static/gstudio/img/home/home_img/images.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;margin-bottom:10px;">Images</p>
 
 	{% endif %}
 
 	{% if key == 'has_video' %}
 
-	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Videos" src="/static/gstudio/img/home/home_img/video.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Videos</p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Videos" src="/static/gstudio/img/home/home_img/video.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;margin-bottom:10px;">Videos</p>
 	{% endif %}
 
 	{% if  key == 'has_document'  %}
@@ -39,35 +39,43 @@
 	{% endif %}
 
 	{% if  key == 'has_multimedia'  %}
-	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Interactive" src="/static/gstudio/img/home/home_img/interactive.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Interactives</p>
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Interactive" src="/static/gstudio/img/home/home_img/interactive.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;margin-bottom:10px;">Interactives</p>
 
 	{% endif %}
 
 	{% if  key == 'has_html'  %}
-	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Documents" src="/static/gstudio/img/home/home_img/documents.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;">Documents</p>	
+	<p style="padding:5px;background: linear-gradient(#eaeaea, #fff);"><img alt="Documents" src="/static/gstudio/img/home/home_img/documents.png" style="border: 1px solid #8FB4BC;border-radius: 3px;width:50px;height:30px;"> &nbsp;&nbsp;<span style="color: #1F768F;font-size: 16px;position:relative;top:-10px;margin-bottom:10px;">Documents</p>	
 	{% endif %}
 
+<table>
+    <tr>
 	{% for k  in value %}
 		{% if  key == 'has_image'  %}
-
-
-
-<a href="{{k.url}}"><img src="{% admin_media_prefix %}img/{{k.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail" alt="{{k.title}}" ></a> &nbsp;
+<td align="center">
+<a href="{{k.url}}"><img src="{% admin_media_prefix %}img/{{k.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail" alt="{{k.title}}" ><br/>{{k.title}}</a>
+<td>
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
 	
+</tr>
+  {% endif %}
+{% endif %}
 
-		{% endif %}
-	
 		{% if  key == 'has_audio'  %}
-			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+			<div style="font-size:13px;font-weight:bold;"><a href="{{k.url}}">{{k.title}}</a>,&nbsp;</div>
 		{% endif %}	
 		
 		{% if  key == 'has_video'  %}
 
-
-
+<td align="center">
  <a href="{{k.url}}">
-        <img src="http://wetube.gnowledge.org/{{k.slug}}/icon128.jpg" alt="{{ k.title }}" style="border-radius: 10px 10px 10px 10px;" title="{{ k.title }}"> </a>&nbsp;
-
+        <img src="http://wetube.gnowledge.org/{{k.slug}}/icon128.jpg" alt="{{ k.title }}" style="border-radius: 10px 10px 10px 10px;" title="{{ k.title }}"><br/>{{k.title}}</a>
+<td>
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
+	
+</tr>
+  {% endif %}
 
 		{% endif %}
 		
@@ -92,13 +100,32 @@
 		{% endif %}
 			
 		{% if  key == 'has_multimedia'  %}
-			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+			<div style="font-size:13px;font-weight:bold;"><a href="{{k.url}}">{{k.title}}</a>,&nbsp;</div>
 		{% endif %}
 
 		{% if  key == 'has_html'  %}
-			<a href="{{k.url}}">{{k.title}}</a>,&nbsp;
+			<div style="font-size:13px;font-weight:bold;"><a href="{{k.url}}">{{k.title}}</a>,&nbsp;</div>
 		{% endif %}
 	
 	{% endfor %}
-	<br/>
+</tr>
+</table>
+<!--
+<table width="100%">
+    <tr>
+{% for k  in value %}
+{% if  key == 'has_image'  %}
+        <td class="gbobject-image1" id = "{{image1.id}}"><a href="{{k.url}}"><img src="{% admin_media_prefix %}img/{{k.image|cut:'.jpg'|cut:'.png'|cut:'.JPG'|cut:'.JPEG'|cut:'.jpeg'|cut:'.svg'|cut:'.tif'|cut:'.gif'|cut:'.ogv'}}-thumbnail" alt="{{k.title}}"><br/>{{k.title}}</a>
+
+<td>
+	     
+    {% if not forloop.last and forloop.counter|divisibleby:"5" %}
+    </tr>
+  {% endif %}
+{% endif %}
+   {% endfor  %} 
+ 		</tr>
+</table>
+-->
+<div class="clear"></div>
 {% endfor %}
