@@ -659,8 +659,8 @@ def getVideo(request):
 		for each in allVideosData:
 			if not each['id'] in videolist:
 				m=Gbobject()
-				m.title = each['title'].lower()
-				m.altnames=each['title'].lower()
+				m.title = each['title']
+				m.altnames=each['title']
 				m.rurl="http://wetube.gnowledge.org/"+each['id']+'/480p.webm'
 				m.slug=each['id']
 				m.status=2
