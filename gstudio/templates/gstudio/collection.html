@@ -2,11 +2,12 @@
 {% load gstudio_tags %}
 {% load tagging_tags %}
 {% load adminmedia grp_tags %}
+{% load pagination_tags %}
 {% load i18n %}
  {% block title %}{{objecttype}}{% endblock %}
 {% block content %}
 <h1> {{objecttype}} Library </h1>
-
+{% autopaginate objectList 20 %}
       {% for each in objectList  %}
        <div style="padding-left:30px">
       		  <h2 class="nodetype-title">
@@ -23,5 +24,6 @@
                 </div>
                {% endfor %}
 
-
+<br/>
+<h2>{% paginate %}</h2>
 {% endblock %}
