@@ -3,7 +3,15 @@
 {% block title %}Welcome to the OER MOOC!{% endblock %}
 
 {% block content %}
-<div id="joindots_event" style="position:relative;"><img width="725px" height="1642px" src="/static/gstudio/img/oe101-plain.svg">
+
+<div id="joindots_event" style="position:relative;">
+<object type="image/svg+xml" data="/static/gstudio/img/oe101-plain.svg" class="event-flyer" style="position:initial; max-width:100%;">
+  OER - MOOC <!-- fallback image in CSS -->
+</object>
 </div>
+
+<!--
+<img width="725px" height="1642px" src="/static/gstudio/img/oe101-plain.svg">
+-->
 
 {% endblock %}
