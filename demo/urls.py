@@ -85,7 +85,7 @@ urlpatterns = patterns(
     url(r'^MyHand/', direct_to_template, {'template': 'gstudio/myhand.html'}),
     url(r'^Democratic/', direct_to_template, {'template': 'gstudio/democratic.html'}),
     url(r'^Amendment/', direct_to_template, {'template': 'gstudio/amendment.html'}),
-
+    url(r'^CourseOnOERFindOutMore/', direct_to_template, {'template': 'gstudio/eventpage2.html'}),
     url(r'^CourseOnOER/', direct_to_template, {'template': 'gstudio/eventpage.html'}),
     url(r'^DiscoverPatterns/', direct_to_template, {'template': 'gstudio/discoverpatterns.html'}),
     url(r'^NaturePatterns/', direct_to_template, {'template': 'gstudio/naturepatterns.html'}),
