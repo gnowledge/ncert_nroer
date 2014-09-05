@@ -532,7 +532,7 @@ footer.site-footer {
 #footer {
 	font-size: 0.916667em;
 	margin: 0;
-	position: absolute;
+	/*position: absolute;*/
 		bottom: 0;
 	height: 14em; /* Should be less than #banner/#content padding-bottom */
 }
