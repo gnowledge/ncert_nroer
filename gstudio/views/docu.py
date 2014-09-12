@@ -331,7 +331,10 @@ def show(request,documentid):
 	    if gbobject.get_relations():
 		    if 'is_favourite_of' in gbobject.get_relations():
 			    rel = gbobject.get_relations()['is_favourite_of'][0]
-			    reluser = rel._left_subject_cache.title
+                            if rel.__dict__.has_key('_left_subject_cache'):
+                                    reluser = rel._left_subject_cache.title
+                            else:
+                                    reluser=""
 			    if str(reluser) == str(request.user)+str("document"):
 				    relation = "rel"
 	    vars=RequestContext(request,{'doc':gbobject,'relation':relation})
