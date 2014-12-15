@@ -101,6 +101,13 @@ urlpatterns = patterns(
     url(r'^dashboard/','gstudio.views.dashboard.dashboard'),
     url(r'^translate/',include('gstudio.urls.translate')),
     url(r'^contribute/theresources', direct_to_template, {'template': 'gstudio/contribute_resource.html'}),
+url(r'^Ganit/', direct_to_template, {'template': 'gstudio/GanitPoster.html'}),
+url(r'^FunWithGeogebra/', direct_to_template, {'template': 'gstudio/FunWithGeogebra.html'}),
+url(r'^ExploringMathKits/', direct_to_template, {'template': 'gstudio/ExploringMathKits.html'}),
+url(r'^GanitMagicSquare/', direct_to_template, {'template': 'gstudio/GanitMagicSquare.html'}),
+url(r'^KnowSrinivasa/', direct_to_template, {'template': 'gstudio/KnowSrinivasa.html'}),
+url(r'^MoreonMaths/', direct_to_template, {'template': 'gstudio/MoreonMaths.html'}),
+url(r'^GanitInnerTemplate/', direct_to_template, {'template': 'gstudio/GanitInnerTemplate.html'}),
     #URL for XMLRPC
     #url(r'^xmlrpc/$','django_xmlrpc.views.handle_xmlrpc'),
     #url(r'^i18n/', include('django.conf.urls.i18n')),
