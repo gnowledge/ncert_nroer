@@ -1,0 +1,73 @@
+{% extends "gstudio/base.html" %}
+
+{% block title %}Enrich Timeline{% endblock %}
+
+{% block content %}
+
+<script>
+window.onload = function() {
+  
+  function getScrollTop() {
+    if (typeof window.pageYOffset !== 'undefined' ) {
+      return window.pageYOffset;
+    }
+
+    var d = document.documentElement;
+    if (d.clientHeight) {
+      return d.scrollTop;
+    }
+    return document.body.scrollTop;
+  }
+
+  window.onscroll = function() {
+    var box = document.getElementById('box'),
+        scroll = getScrollTop();
+    
+    if (scroll <= 538) {
+      box.style.top = "540px";
+    }
+    else {
+      box.style.top = (scroll + 2) + "px";
+    }
+  };
+  
+};
+</script>
+<h2>Magic Square</h2>
+<p>
+A Magic Square consists of a square array of numbers, whose row, column and diagonal and 
+
+skew-diagonal sums add to the same number. Each square should have a distinct non-zero positive 
+
+integer. No two squares should have the same integer.
+</p>
+<p><a href="http://nroer.gov.in/gstudio/resources/videos/show/43667/">Ramanujan Magic Square</a> </p>
+<p>Create and solve more magic squares and share it with us.</p>
+
+<!--
+<div class="event_maths">
+
+<h1><div class="top_gappings">Enrich Timeline</div></h1>
+<div class="events_text" style="line-height:18px;">
+
+<div class="left"><img src="/static/gstudio/img/RamanujanTimeline.jpg"></div>
+<div class="right"><img src="/static/gstudio/img/RamanujanTimelinecopy2.jpg"><p id="box" align="left"><a href="/static/gstudio/img/RamanujanTimeline1.jpg" class="event_btn2">Download Timeline</a><br/><br/><a href="/static/gstudio/img/RamanujanTimelinecopy.jpg" class="event_btn2">Download form to Enrich Timeline</a>
+<br/><br/>
+
+<b>Contribute:</b><br/>
+<a href="http://nroer.gov.in/gstudio/resources/images/#divpost" style="font-weight:normal;">Images</a><br/>
+<a href="http://nroer.gov.in/gstudio/resources/videos/#divpost" style="font-weight:normal;">Videos</a><br/>
+<a href="http://nroer.gov.in/gstudio/resources/documents/#divpost" style="font-weight:normal;">Text</a><br/><br/>
+<a href="http://nroer.gov.in/gstudio/page/gnowsys-page/43388/" style="font-size:14px;color:#111;"><b>Resources (Srinivasa Ramanujan)</b></a>
+<p>&nbsp;</p>
+
+</div>
+<div class="clear"></div>
+</div>
+
+
+</div>
+-->
+{% endblock %}
+
+
