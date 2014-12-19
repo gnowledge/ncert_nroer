@@ -3,7 +3,9 @@
 {% block title %}More on Mathematics{% endblock %}
 
 {% block content %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+<script type="text/javascript" src="/static/gstudio/js/home/stepcarousel.js"/>
 <script>
 window.onload = function() {
   
@@ -50,27 +52,205 @@ dt
 {
 	font-weight:bold;
 }
+.stepcarousel{
+position: relative; /*leave this value alone*/
+/*border: 10px solid black;*/
+overflow: scroll; /*leave this value alone*/
+width: 600px; /*Width of Carousel Viewer itself*/
+height: 220px; /*Height should enough to fit largest content's height*/
+-webkit-box-sizing: border-box; /* set box model so container width and height value includes any padding/border defined */
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+background:none;
+}
+
+.stepcarousel .belt{
+position: absolute; /*leave this value alone*/
+left: 0;
+top: 0;
+font-size:12px;
+line-height:16px;
+text-align:center;
+}
+
+.stepcarousel .panel{
+float: left; /*leave this value alone*/
+overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
+margin: 10px; /*margin around each panel*/
+width: 140px; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
+}
+.panel img {
+    height: 100px;
+    width: 100px;
+}
+span.paginatecircle{ /* CSS for paginate circle spans. Required */
+background: white;
+border: 2px solid black;
+border-radius: 10px;
+width: 6px;
+height: 6px;
+cursor: pointer;
+display: inline-block;
+margin-right: 4px;
+}
+
+span.paginatecircle:hover{
+background: gray;
+}
+
+span.paginatecircle.selected{
+background: black;
+}
+
 </style>
+
+
+
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'mygallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
 <div id="bg">
 <div class="upper_gap">
 <dl>
 <dt>Video Programmes</dt>
 </dl>
+<p style="padding-bottom:5px;color:#CC3300;">&bull; <b>NCERT</b></p>
+<div id="mygallery" class="stepcarousel">
+<div class="belt">
+
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36080">
+<img title="Activities with the Mathematics Kit 01(Integers)" alt="Activities with the Mathematics Kit 01(Integers)" src="http://wetube.gnowledge.org/CRC/icon128.jpg" width="100px" height="100px"></a><br/>Activities with the Mathematics Kit 01(Integers)</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36081"><img title="Activities with the Mathematics Kit 02(Angle)" alt="Activities with the Mathematics Kit 02(Angle)" src="http://wetube.gnowledge.org/CRD/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Activities with the Mathematics Kit 02(Angle)</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36082"><img title="Activities with the Mathematics Kit 03(Triangles)" alt="Activities with the Mathematics Kit 03(Triangles)" src="http://wetube.gnowledge.org/CRE/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Activities with the Mathematics Kit 03(Triangles)</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/55422"><img title="Angle Making" alt="Angle Making" src="http://wetube.gnowledge.org/ETL/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Angle Making</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9396"><img title="Applications of Quadratic Equations" alt="Applications of Quadratic Equations" src="http://wetube.gnowledge.org/BGK/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Applications of Quadratic Equations</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9519"><img title="Area of Rectilinear Figures" alt="Area of Rectilinear Figures" src="http://wetube.gnowledge.org/BBN/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Area of Rectilinear Figures</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9904"><img title="Area Under a Curve" alt="Area Under a Curve" src="http://wetube.gnowledge.org/BDD/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Area Under a Curve</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9382"><img title="Arithmetic Geometric Sequence" alt="Arithmetic Geometric Sequence" src="http://wetube.gnowledge.org/BGL/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Arithmetic Geometric Sequence</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9158"><img title="Binomial Theorem" alt="Binomial Theorem" src="http://wetube.gnowledge.org/BFE/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Binomial Theorem</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8075"><img title="Boolean Algebra" alt="Boolean Algebra" src="http://wetube.gnowledge.org/AKM/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8068"><img title="Boolean Algebra" alt="Boolean Algebra" src="http://wetube.gnowledge.org/AKL/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/10109"><img title="Boolean Algebra - Algebraic Structure" alt="Boolean Algebra - Algebraic Structure" src="http://wetube.gnowledge.org/BGT/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra - Algebraic Structure</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8562"><img title="Boolean Algebra 01" alt="Boolean Algebra 01" src="http://wetube.gnowledge.org/AYD/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra 01</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8569"><img title="Boolean Algebra 02" alt="Boolean Algebra 02" src="http://wetube.gnowledge.org/AYE/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra 02</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8011"><img title="Boolean Algebra 03" alt="Boolean Algebra 03" src="http://wetube.gnowledge.org/AMO/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra 03</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9319"><img title="Boolean Algebra 06" alt="Boolean Algebra 06" src="http://wetube.gnowledge.org/BEI/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algebra 06</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9326"><img title="Boolean Algerba 05" alt="Boolean Algerba 05" src="http://wetube.gnowledge.org/BEH/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Boolean Algerba 05</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8123"><img title="Combination 01" alt="Combination 01" src="http://wetube.gnowledge.org/AMS/icon128.jpg" width="100px" height="100px" ></a><br/>Combination 01</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9623"><img title="Complex Numbers" alt="Complex Numbers" src="http://wetube.gnowledge.org/BCC/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Complex Numbers</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/18945"><img title="Differential Calculus" alt="Differential Calculus" src="http://wetube.gnowledge.org/BCF/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Differential Calculus</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/10123"><img title="Differential Calculus" alt="Differential Calculus" src="http://wetube.gnowledge.org/BIN/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Differential Calculus</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/10116"><img title="Equation of a Circle" alt="Equation of a Circle" src="http://wetube.gnowledge.org/BGS/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Equation of a Circle</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9799"><img title="Four Sided Fun" alt="Four Sided Fun" src="http://wetube.gnowledge.org/BCN/icon128.jpg" width="100px" height="100px" ></a><br/>Four Sided Fun</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/7678"><img title="Fundamental Principle of Counting" alt="Fundamental Principle of Counting" src="http://wetube.gnowledge.org/ANM/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Fundamental Principle of Counting</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9347"><img title="A Gift for my Mother" alt="A Gift for my Mother" src="http://wetube.gnowledge.org/BGC/icon128.jpg" width="100px" height="100px" ></a>
+<br/>A Gift for my Mother</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9109"><img title="Introduction to Distance Formula" alt="Introduction to Distance Formula" src="http://wetube.gnowledge.org/BEX/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Introduction to Distance Formula</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36158"><img title="Jod" alt="Jod" src="http://wetube.gnowledge.org/CSD/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Jod</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36164"><img title="Kshetraphal (Area)" alt="Kshetraphal (Area)" src="http://wetube.gnowledge.org/CSJ/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Kshetraphal (Area)</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/10058"><img title="Linear Equations in Two Variables" alt="Linear Equations in Two Variables" src="http://wetube.gnowledge.org/BDA/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Linear Equations in Two Variables</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8632"><img title="Matrices and Determinants" alt="Matrices and Determinants" src="http://wetube.gnowledge.org/AYG/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Matrices and Determinants</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9165"><img title="Matrix Method of Solving a System of Equations" alt="Matrix Method of Solving a System of Equations" src="http://wetube.gnowledge.org/BFF/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Matrix Method of Solving a System of Equations</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36167"><img title="Mera Adhoora Tribhuj" alt="Mera Adhoora Tribhuj" src="http://wetube.gnowledge.org/CSM/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Mera Adhoora Tribhuj</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/8000"><img title="Nirdeshank Jyamiti" alt="Nirdeshank Jyamiti" src="http://wetube.gnowledge.org/ANU/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Nirdeshank Jyamiti</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/17246"><img title="Operations on Matrices 01" alt="Operations on Matrices 01" src="http://wetube.gnowledge.org/BDM/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Operations on Matrices 01</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/32082"><img title="Pratishat" alt="Pratishat" src="http://wetube.gnowledge.org/BDR/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Pratishat</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/32084"><img title="Prayikta-Probability" alt="Prayikta-Probability" src="http://wetube.gnowledge.org/BDS/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Prayikta-Probability</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/9834"><img title="Properties of Definite Intergrals" alt="Properties of Definite Intergrals" src="http://wetube.gnowledge.org/BCS/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Properties of Definite Intergrals</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/31744"><img title="Quantum Theory 03" alt="Quantum Theory 03" src="http://wetube.gnowledge.org/CJX/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Quantum Theory 03</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/35301"><img title="Similarity of Triangles" alt="Similarity of Triangles" src="http://wetube.gnowledge.org/BAY/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Similarity of Triangles</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/36157"><img title="Upper Primary Mathematics Kit" alt="Upper Primary Mathematics Kit" src="http://wetube.gnowledge.org/CSC/icon128.jpg" width="100px" height="100px" ></a>
+<br/>Upper Primary Mathematics Kit</div>
+</div>
+</div>
 <table style="font-size:12px;line-height:17px;">
-<tr><td colspan="5" style="padding-bottom:5px;color:#CC3300;">&bull; <b>NCERT</b></td></tr>
-<tr>
-<td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/8075/">
-<img src="http://wetube.gnowledge.org/AKM/icon128.jpg" width="100px" height="100px"/><br/>Boolean Algebra</a></td>
-<td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/10109/">
-<img src="http://wetube.gnowledge.org/BGT/icon128.jpg" width="100px" height="100px"/><br/>Boolean Algebra Algebric Structure</a></td>
-<td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/36164/">
-<img src="http://wetube.gnowledge.org/CSJ/icon128.jpg" width="100px" height="100px"/><br/>Kshtraphal (Area)</a></td>
-<td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/9799/">
-<img src="http://wetube.gnowledge.org/BCN/icon128.jpg" width="100px" height="100px"/><br/>Four Sided Fun</a></td>
-<td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/9109/">
-<img src="http://wetube.gnowledge.org/BEX/icon128.jpg" width="100px" height="100px"/><br/>
-Introduction to Distance Formula</a></td>
-</tr>
+
 <!--
 <tr><td colspan="5" style="padding-bottom:5px;color:#CC3300;">&bull; <b>Vigyan Prasar</b></td></tr>
 <tr>
@@ -87,7 +267,7 @@ Introduction to Distance Formula</a></td>
 05 The Maths factor-The Calculus Enigma</a></td>
 </tr>
 -->
-<tr><td colspan="5" style="padding-bottom:5px;color:#CC3300;">&bull; <b>SIET, Hyderabad</b></td></tr>
+<tr><td colspan="5" style="padding-bottom:5px;color:#CC3300;font-size:14px">&bull; <b>SIET, Hyderabad</b></td></tr>
 <tr>
 <td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/43681/">
 <img src="http://wetube.gnowledge.org/EJS/icon128.jpg" width="100px" height="100px"/><br/>Binnalu Innalu Sankalanam Vyavakalanam</a></td>
