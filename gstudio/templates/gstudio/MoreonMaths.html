@@ -120,11 +120,26 @@ stepcarousel.setup({
 })
 
 </script>
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'vpgallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
 <div id="bg">
 <div class="upper_gap">
 <dl>
 <dt>Video Programmes</dt>
 </dl>
+<!-- NCERT Gallary starts here-->
 <p style="padding-bottom:5px;color:#CC3300;">&bull; <b>NCERT</b></p>
 <div id="mygallery" class="stepcarousel">
 <div class="belt">
@@ -249,24 +264,48 @@ stepcarousel.setup({
 <br/>Upper Primary Mathematics Kit</div>
 </div>
 </div>
-<table style="font-size:12px;line-height:17px;">
+<!-- NCERT Gallary ends here-->
 
-<!--
-<tr><td colspan="5" style="padding-bottom:5px;color:#CC3300;">&bull; <b>Vigyan Prasar</b></td></tr>
-<tr>
-<td  align="center" valign="top"><a href="#">
-<img src="" width="100px" height="100px"/><br/>01 The Maths factor-Shapes and Tessellations</a></td>
-<td  align="center" valign="top"><a href="#">
-<img src="" width="100px" height="100px"/><br/>02 The Maths factor-Network Theory</a></td>
-<td  align="center" valign="top"><a href="#">
-<img src="" width="100px" height="100px"/><br/>03 The Maths factor-Probability</a></td>
-<td  align="center" valign="top"><a href="#">
-<img src="" width="100px" height="100px"/><br/>04 The Maths factor-Fibonacci and his Magical Sequence</a></td>
-<td  align="center" valign="top"><a href="#">
-<img src="" width="100px" height="100px"/><br/>
-05 The Maths factor-The Calculus Enigma</a></td>
-</tr>
--->
+
+
+
+
+<!-- Vigyan Prasar Gallary starts here-->
+<p style="padding-bottom:5px;color:#CC3300;">&bull; <b>Vigyan Prasar</b></p>
+<div id="vpgallery" class="stepcarousel">
+<div class="belt">
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66291"><img title="The Maths Factor The Prime Advantage" alt="The Maths Factor The Prime Advantage" src="http://wetube.gnowledge.org/GRE/icon128.jpg" width="100px" height="100px"></a>
+<br/>The Maths Factor The Prime Advantage</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66292"><img title="The Maths factor-Fibonacci and his Magical Sequence" alt="The Maths factor-Fibonacci and his Magical Sequence" src="http://wetube.gnowledge.org/GQV/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Fibonacci and his Magical Sequence</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66293"><img title="The Maths factor-IN SEARCH OF X- The Magic of Algebra" alt="The Maths factor-IN SEARCH OF X- The Magic of Algebra" src="http://wetube.gnowledge.org/GRA/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-IN SEARCH OF X- The Magic of Algebra</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66294"><img title="The Maths factor-Infinity" alt="The Maths factor-Infinity" src="http://wetube.gnowledge.org/GRC/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Infinity</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66295"><img title="The Maths factor-Maths and Biology" alt="The Maths factor-Maths and Biology" src="http://wetube.gnowledge.org/GRF/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Maths and Biology</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66296"><img title="The Maths factor-Network Theory" alt="The Maths factor-Network Theory" src="http://wetube.gnowledge.org/GQW/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Network Theory</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66297"><img title="The Maths factor-Play up! Play up! Play the Game" alt="The Maths factor-Play up! Play up! Play the Game" src="http://wetube.gnowledge.org/GQY/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Play up! Play up! Play the Game</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66298"><img title="The Maths factor-Probability" alt="The Maths factor-Probability" src="http://wetube.gnowledge.org/GQU/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Probability</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66290"><img title="The Maths factor-Shapes and Tessellations" alt="The Maths factor-Shapes and Tessellations" src="http://wetube.gnowledge.org/GQN/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Shapes and Tessellations</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66299"><img title="The Maths factor-The Calculus Enigma" alt="The Maths factor-The Calculus Enigma" src="http://wetube.gnowledge.org/GQX/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-The Calculus Enigma</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66300"><img title="The Maths factor-The Shape of things- Geometry" alt="The Maths factor-The Shape of things- Geometry" src="http://wetube.gnowledge.org/GRD/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-The Shape of things- Geometry</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66301"><img title="The Maths factor-Topology" alt="The Maths factor-Topology" src="http://wetube.gnowledge.org/GRB/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Topology</div>
+<div class="panel">
+<a href="/gstudio/resources/videos/show/66302"><img title="The Maths factor-Number Sense" alt="The Maths factor-Number Sense" src="http://wetube.gnowledge.org/GRG/icon128.jpg" width="100px" height="100px"></a><br/>The Maths factor-Number Sense</div>
+</div>
+</div>
+<!-- Vigyan Prasar Gallary ends here-->
+<!-- SIET, Hyderabad Gallary starts here-->
+<table style="font-size:12px;line-height:17px;">
 <tr><td colspan="5" style="padding-bottom:5px;color:#CC3300;font-size:14px">&bull; <b>SIET, Hyderabad</b></td></tr>
 <tr>
 <td  align="center" valign="top"><a href="http://nroer.gov.in/gstudio/resources/videos/show/43681/">
@@ -283,6 +322,7 @@ Matrika Parichayam (Introduction Of Matrices)</a></td>
 <td  align="center" valign="top"></td>
 </tr>
 </table>
+<!-- SIET, Hyderabad Gallary ends here-->
 <div style="height:50px;"></div>
 <p>&nbsp;</p>
 <p><b>Contribute your creation on - <a href="http://nroer.gov.in/Contribute/"><u>http://nroer.gov.in/Contribute/</u></b></a> </p>
