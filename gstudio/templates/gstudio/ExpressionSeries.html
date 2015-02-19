@@ -1,0 +1,300 @@
+{% extends "gstudio/base.html" %}
+
+{% block title %}Expression Series 2015{% endblock %}
+
+{% block content %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="/static/gstudio/js/home/stepcarousel.js"/>
+<script>
+window.onload = function() {
+  
+  function getScrollTop() {
+    if (typeof window.pageYOffset !== 'undefined' ) {
+      return window.pageYOffset;
+    }
+
+    var d = document.documentElement;
+    if (d.clientHeight) {
+      return d.scrollTop;
+    }
+    return document.body.scrollTop;
+  }
+
+  window.onscroll = function() {
+    var box = document.getElementById('box'),
+        scroll = getScrollTop();
+    
+    if (scroll <= 538) {
+      box.style.top = "540px";
+    }
+    else {
+      box.style.top = (scroll + 2) + "px";
+    }
+  };
+  
+};
+</script>
+<style>
+#bg
+{
+ background-image:url("/static/gstudio/img/ExpressionHeader.jpg");
+ background-repeat: no-repeat;
+ width:725px;
+}
+.upper_gap
+{
+	padding:280px 20px 0px 20px;
+	font-size:14px;
+	line-height:24px;
+}
+dt
+{
+	font-weight:bold;
+}
+.stepcarousel{
+position: relative; /*leave this value alone*/
+/*border: 10px solid black;*/
+overflow: scroll; /*leave this value alone*/
+width: 600px; /*Width of Carousel Viewer itself*/
+height: 220px; /*Height should enough to fit largest content's height*/
+-webkit-box-sizing: border-box; /* set box model so container width and height value includes any padding/border defined */
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+background:none;
+}
+
+.stepcarousel .belt{
+position: absolute; /*leave this value alone*/
+left: 0;
+top: 0;
+font-size:12px;
+line-height:16px;
+text-align:center;
+}
+
+.stepcarousel .panel{
+float: left; /*leave this value alone*/
+overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
+margin: 10px; /*margin around each panel*/
+width: 140px; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
+}
+.panel img {
+    height: 100px;
+    width: 100px;
+}
+span.paginatecircle{ /* CSS for paginate circle spans. Required */
+background: white;
+border: 2px solid black;
+border-radius: 10px;
+width: 6px;
+height: 6px;
+cursor: pointer;
+display: inline-block;
+margin-right: 4px;
+}
+
+span.paginatecircle:hover{
+background: gray;
+}
+
+span.paginatecircle.selected{
+background: black;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'mygallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'cngallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
+<script type="text/javascript">
+
+stepcarousel.setup({
+	galleryid: 'vpgallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
+<div id="bg" style="border:5px solid red";>
+<div class="upper_gap">
+<i><p style="align:center;width:500px;margin:auto;color:#006699;font-size:15px;font-weight:bold;">
+&quot;Past is experience, Present is experiment and Future is expectation.<br/>
+Use your experience in your experiments to achieve your expectations.&quot;
+</p>
+<p style="padding-left:540px;">- Anonymous </p></i>               
+<p>&nbsp;</p>
+<p>The children of today are the future of tomorrow; this powerful statement brings with it, the obligation to mold and shape our children in order to create the best possible future for everyone. The experiences of past shall be used to experiment and achieve these expectations. Expression Series provides a platform to know more about the selfless and courageous services of the women and men who have served the nation in their own ways. The present day India has been possible only because, several women and men of yester years worked incessantly towards nation-building. </p>
+<p>
+In this Expression Series one can watch audio and video biographies of eminent personalities and take inspiration from their lives to move forward and achive the unachieved. 
+</p>
+<p>&nbsp;</p><p>&nbsp;</p>
+<!-- Audio starts here-->
+<dl>
+<dt>Audios</dt>
+</dl>
+<!-- NCERT Gallary starts here-->
+<p style="padding-bottom:5px;color:#ff0000;">&bull; <b>NCERT</b></p>
+
+
+<div id="mygallery" class="stepcarousel">
+<div class="belt">
+
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43129/">
+<img title="Srinivasa Ramanujan (English 02)" alt="Srinivasa Ramanujan (English 02)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>Srinivasa Ramanujan (English 02)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43179/"><img title="Srinivasa Ramanujan (English 01)" alt="Srinivasa Ramanujan (English 01)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Srinivasa Ramanujan (English 01)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43079/"><img title="Srinivasa Ramanujam (Hindi 01)" alt="Srinivasa Ramanujam (Hindi 01)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Srinivasa Ramanujam (Hindi 01)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43111/"><img title="Srinivasa Ramanujam (Hindi 02)" alt="Srinivasa Ramanujam (Hindi 02)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Srinivasa Ramanujam (Hindi 02)</div>
+
+</div>
+</div>
+<!-- NCERT Gallary ends here-->
+<!--Audio Ends here-->
+
+<dl>
+<dt>Videos</dt>
+</dl>
+
+<p style="padding-bottom:5px;color:#ff0000;">&bull; <b>CIET, NCERT</b></p>
+<div id="cngallery" class="stepcarousel">
+<div class="belt">
+
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/37044/">
+<img title="Alfred Nobel 01" alt="Alfred Nobel 01" src="http://wetube.gnowledge.org/CNR/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>Alfred Nobel 01</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/9498/"><img title="Alfred Nobel 02" alt="Alfred Nobel 02" src="http://wetube.gnowledge.org/BBL/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Alfred Nobel 02</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/8981/"><img title="Interview with Dr. Devyani Borole - A Polar Woman 01" alt="Interview with Dr. Devyani Borole - A Polar Woman 01" src="http://wetube.gnowledge.org/ATU/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Interview with Dr. Devyani Borole - A Polar Woman 01</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/9333/"><img title="C V Raman" alt="C V Raman" src="http://wetube.gnowledge.org/BEJ/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>C V Raman</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/7475/"><img title="Azadi Ka Sangharsh Kuchh Anubhav" alt="Azadi Ka Sangharsh Kuchh Anubhav" src="http://wetube.gnowledge.org/ACM/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Azadi Ka Sangharsh Kuchh Anubhav</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35041/"><img title="Captain Laxmi Sehgal" alt="Captain Laxmi Sehgal" src="http://wetube.gnowledge.org/COA/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Captain Laxmi Sehgal</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/9936/"><img title="Maulana Abul Kalam Azad" alt="Maulana Abul Kalam Azad" src="http://wetube.gnowledge.org/BDE/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Maulana Abul Kalam Azad</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/32439/"><img title="Rediscovering Swami Vivekananda 02" alt="Rediscovering Swami Vivekananda 02" src="http://wetube.gnowledge.org/BDV/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Rediscovering Swami Vivekananda 02</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35284/"><img title="Kasturba Gandhi" alt="Kasturba Gandhi" src="http://wetube.gnowledge.org/CPM/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Kasturba Gandhi</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35039/"><img title="Bhishm Sahni" alt="Bhishm Sahni" src="http://wetube.gnowledge.org/CNY/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Bhishm Sahni</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35282/"><img title="Kavi Kunvar Narayan - Ek Mulakaat" alt="Kavi Kunvar Narayan - Ek Mulakaat" src="http://wetube.gnowledge.org/CPK/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Kavi Kunvar Narayan - Ek Mulakaat</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35283/"><img title="Kavi Trilochan" alt="Kavi Trilochan" src="http://wetube.gnowledge.org/BFA/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Kavi Trilochan</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35285/"><img title="Krishna Sobti" alt="Krishna Sobti" src="http://wetube.gnowledge.org/CPN/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Krishna Sobti</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/9890/"><img title="Mannu Bhandari se Saakshatkar 01" alt="Mannu Bhandari se Saakshatkar 01" src="http://wetube.gnowledge.org/BDB/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Mannu Bhandari se Saakshatkar 01</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/9897/"><img title="Mannu Bhandari se Saakshatkar 02" alt="Mannu Bhandari se Saakshatkar 02" src="http://wetube.gnowledge.org/BDC/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Mannu Bhandari se Saakshatkar 02</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35278/"><img title="Zindagi Ek Kavita - Amrita Preetam" alt="Zindagi Ek Kavita - Amrita Preetam" src="http://wetube.gnowledge.org/CPE/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Zindagi Ek Kavita - Amrita Preetam</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/9841/"><img title="Interview with Sarojini Mahajan" alt="Interview with Sarojini Mahajan" src="http://wetube.gnowledge.org/BCT/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Interview with Sarojini Mahajan</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/35264/"><img title="Ek Ajeeb Admi tha Woh - Kaifi Azmi" alt="Ek Ajeeb Admi tha Woh - Kaifi Azmi" src="http://wetube.gnowledge.org/COS/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>Ek Ajeeb Admi tha Woh - Kaifi Azmi</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/60827/"><img title="Phineas Gage" alt="Phineas Gage" src="http://wetube.gnowledge.org/FRY/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Phineas Gage</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/43426/"><img title="RAMANUJAN HINDI" alt="RAMANUJAN HINDI" src="http://wetube.gnowledge.org/EIZ/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>RAMANUJAN HINDI</div>
+
+
+</div>
+</div>
+<!-- NCERT Gallary ends here-->
+
+
+
+<!-- Vigyan Prasar Gallary starts here-->
+
+<p style="padding-bottom:5px;color:#ff0000;">&bull; <b>Vigyan Prasar</b></p>
+<div id="vpgallery" class="stepcarousel">
+<div class="belt">
+
+
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/43459/"><img title="Ramanujan_1" alt="Ramanujan_1" src="http://wetube.gnowledge.org/GRE/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a>
+<br/>Ramanujan_1</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/43460/"><img title="Ramanujan_2" alt="Ramanujan_2" src="http://wetube.gnowledge.org/GQV/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>Ramanujan_2</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/43434/"><img title="Ramanujan_3" alt="Ramanujan_3" src="http://wetube.gnowledge.org/GRA/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>Ramanujan_3</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/55259/"><img title="India Innovates : B.M. Bhargav" alt="India Innovates : B.M. Bhargav" src="http://wetube.gnowledge.org/GRC/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>India Innovates : B.M. Bhargav</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/55249/"><img title="India Innovates: Dr. Anil Kakodkar Nuclear Scientist" alt="India Innovates: Dr. Anil Kakodkar Nuclear Scientist" src="http://wetube.gnowledge.org/GRF/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>India Innovates: Dr. Anil Kakodkar Nuclear Scientist</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/55250/"><img title="India Innovates: C. N. Rao" alt="India Innovates: C. N. Rao" src="http://wetube.gnowledge.org/GQW/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>India Innovates: C. N. Rao</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/videos/show/55251/"><img title="India Innovates: C. V. Raman" alt="India Innovates: C. V. Raman" src="http://wetube.gnowledge.org/GQY/icon128.jpg" style="width: 128px; height: 128px; border-radius: 20px;"></a><br/>India Innovates: C. V. Raman</div>
+
+</div>
+</div>
+
+<p>&nbsp;</p><p>&nbsp;</p>
+<p>&nbsp;</p><p>&nbsp;</p>
+<div>
+<img src="/static/gstudio/img/ExpressionFooter.jpg" width="700px"/>
+</div>
+
+{% endblock %}
+
