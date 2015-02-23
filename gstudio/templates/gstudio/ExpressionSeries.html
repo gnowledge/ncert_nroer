@@ -103,7 +103,20 @@ background: black;
 }
 
 </style>
+<script type="text/javascript">
 
+stepcarousel.setup({
+	galleryid: 'sietgallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
 
 <script type="text/javascript">
 
@@ -147,10 +160,10 @@ stepcarousel.setup({
 })
 
 </script>
-<div id="bg" style="border:5px solid red;height:1900px">
+<div id="bg" style="border:5px solid red;height:2170px">
 <div class="upper_gap">
 <p>&nbsp;</p>
-<i><p style="align:center;width:500px;margin:auto;color:#006699;font-size:15px;font-weight:bold;">
+<i><p style="align:center;width:550px;margin:auto;color:#006699;font-size:15px;font-weight:bold;">
 &quot;Past is experience, Present is experiment and Future is expectation.<br/>
 Use your experience in your experiments to achieve your expectations.&quot;
 </p>
@@ -166,7 +179,7 @@ In this Expression Series one can watch audio and video biographies of eminent p
 <dt><h1 style="color:#ff0000">Audios</h1></dt>
 </dl>
 <!-- NCERT Gallary starts here-->
-<p style="padding-bottom:5px;color:#006699;font-size:20px;"><b>NCERT</b></p>
+<p style="padding-bottom:5px;color:#006699;font-size:20px;"><b>CIET, NCERT</b></p>
 
 
 <div id="mygallery" class="stepcarousel">
@@ -234,17 +247,56 @@ In this Expression Series one can watch audio and video biographies of eminent p
 <div class="panel">
 <a href="http://nroer.gov.in/gstudio/resources/documents/show/35723/"><img title="Gandhiji" alt="Gandhiji" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
 <br/>Gandhiji </div>
-
-
 <div class="panel">
 <a href="http://nroer.gov.in/gstudio/resources/documents/show/35744/"><img title="J.R.D Tata- Bharat ke Udan Purush" alt="J.R.D Tata- Bharat ke Udan Purush" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
 <br/>J.R.D Tata- Bharat ke Udan Purush</div>
 <div class="panel">
 <a href="http://nroer.gov.in/gstudio/resources/documents/show/35742/"><img title="Ishwar Chandra Vidyasagar" alt="Ishwar Chandra Vidyasagar" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
 <br/>Ishwar Chandra Vidyasagar</div>
+
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35774/"><img title="Louis Braille" alt="Louis Braille" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Louis Braille</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35764/"><img title="Kalpana jo Sitaron me Kho Gayi" alt="Kalpana jo Sitaron me Kho Gayi" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Kalpana jo Sitaron me Kho Gayi</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35812/"><img title="Rani jhansi" alt="Rani jhansi" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Rani jhansi</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35775/"><img title="Madam Curie" alt="Madam Curie" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Madam Curie</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35772/"><img title="Madam Bhikaji Cama" alt="Madam Bhikaji Cama" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Madam Bhikaji Cama</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35780/"><img title="Meera" alt="Meera" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Meera</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/35782/"><img title="Mirza Ghalib -Ek Azeem Shayar" alt="Mirza Ghalib -Ek Azeem Shayar" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Mirza Ghalib -Ek Azeem Shayar</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/66242/"><img title="An Indian American Woman in Space - Kalpana Chawla" alt="An Indian American Woman in Space - Kalpana Chawla" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>An Indian American Woman in Space - Kalpana Chawla</div>
 </div>
 </div>
 <!-- NCERT Gallary ends here-->
+<!-- SIET, Hyderabad Gallary starts here-->
+<p style="padding-bottom:5px;color:#006699;font-size:20px;"><b>SIET, Hyderabad</b></p>
+
+
+<div id="sietgallery" class="stepcarousel">
+<div class="belt">
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43432/"><img title="Ganita Sastraveta Aryabhatta" alt="Ganita Sastraveta Aryabhatta" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Ganita Sastraveta Aryabhatta</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43499/"><img title="Balagangadhar Tilak" alt="Balagangadhar Tilak" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Balagangadhar Tilak</div>
+</div>
+</div>
+<!-- SIET, Hyderabad Gallary ends here-->
+
 <!--Audio Ends here-->
 
 <dl>
@@ -351,7 +403,7 @@ In this Expression Series one can watch audio and video biographies of eminent p
 <p>&nbsp;</p><p>&nbsp;</p>
 <p>&nbsp;</p><p>&nbsp;</p>
 <div>
-<img src="/static/gstudio/img/ExpressionFooter.jpg" width="680px"/>
+<img src="/static/gstudio/img/ExpressionFooter.jpg" width="680px" style="position:relative;top:-20px;"/>
 </div>
 
 {% endblock %}
