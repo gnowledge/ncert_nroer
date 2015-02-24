@@ -840,7 +840,7 @@ function marqueeInit(config){
 						<img class="ncert-logo" alt="NCERT" src="/static/gstudio/img/home/home_img/ncertlogo.png">
 					</div>
 				</div><!-- #banner.astx-col-ena -->
-				<div id="content" class="astx-col-duo" style="left: 70%;width: 70%;" role="main">
+				<div id="content" class="astx-col-duo" style="left: 70%;width: 70%;padding-bottom:6em;" role="main">
 					<article class="front-page page-content">
 						<header class="entry-header">
 							<h2 class="entry-title" style="font-size: 2.124em;font-weight: bold;">
@@ -1043,9 +1043,9 @@ marqueeInit({
 
 
 				</div><!-- #content.astx-col-duo -->
-			</div><!-- #primary.site-content.astx-wrp-ena.astx-wrp-inner -->
-		</div><!-- #main.astx-wrp-duo.astx-wrp-outer -->
-		<div id="footer" class="front-page astx-wrp-duo astx-wrp-outer" role="contentinfo">
+			<!-- #primary.site-content.astx-wrp-ena.astx-wrp-inner -->
+		
+		<div id="footer" class="front-page astx-wrp-duo astx-wrp-outer" role="contentinfo" style="font-size:15px;text-align:center;">
 			<footer class="site-footer front-page astx-wrp-ena astx-wrp-inner" style="right: 70%;">
 				<div id="banner-footer" class="astx-col-ena" style="left: 70%;width: 30%;" role="complementary">
 					<div class="creative-commons">
@@ -1055,7 +1055,7 @@ marqueeInit({
 
 					</div>
 <!-- .creative-commons -->
-					<menu class="footer-menu" role="navigation">
+					<!--<menu class="footer-menu" role="navigation">
 						<ul class="menu-line">
 							<li id="about-us" class="li-first li-continued">
 								<a title="About us" href="/AboutUs/">About</a>
@@ -1079,10 +1079,22 @@ marqueeInit({
 						
 
 						</ul>
-						<!--<ul class="menu-line">
-							
-						</ul>-->
-					</menu>
+						
+					</menu>-->
+<menu class="footer-menu" role="navigation">
+<a title="About us" href="/AboutUs/">About</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a title="Terms of use" href="/TermsOfUse/">Terms of use</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a title="Register" href="/accounts/register">Register</a>&nbsp;&nbsp;&nbsp;<br/>
+
+<a title="Contact us" href="/ContactUs/">Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+{% if not user.is_authenticated %}<a href="/accounts/login/">Login</a>{% else %}<a href="/accounts/logout/">Logout</a>{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a title="Contribute" href="/Contribute">Contribute</a>&nbsp;&nbsp;&nbsp;
+</menu>
 				</div><!-- #banner.astx-col-ena -->
 				<div id="content-footer" class="astx-col-duo" style="left: 70%;width: 70%;" role="complementary">
 
@@ -1099,7 +1111,9 @@ marqueeInit({
 				</div><!-- #content.astx-col-duo -->
 			</footer><!-- .site-footer.astx-wrp-ena.astx-wrp-inner -->
 		</div><!-- #footer.astx-wrp-duo.astx-wrp-outer -->
-	</div><!-- #page.hfeed.site -->
+</div>
+		</div><!-- #page.hfeed.site -->
+	</div><!-- #main.astx-wrp-duo.astx-wrp-outer -->
 </body>
 
 </html>
