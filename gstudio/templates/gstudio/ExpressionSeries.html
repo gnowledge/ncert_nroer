@@ -121,6 +121,21 @@ stepcarousel.setup({
 <script type="text/javascript">
 
 stepcarousel.setup({
+	galleryid: 'scertgallery', //id of carousel DIV
+	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	panelclass: 'panel', //class of panel DIVs each holding content
+	autostep: {enable:true, moveby:1, pause:3000},
+	panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	defaultbuttons: {enable: true, moveby: 1, leftnav: ['/static/gstudio/img/arrowl.gif', -45, 50], rightnav: ['/static/gstudio/img/arrowr.gif', 20, 50]},
+	statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+})
+
+</script>
+
+<script type="text/javascript">
+
+stepcarousel.setup({
 	galleryid: 'mygallery', //id of carousel DIV
 	beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
 	panelclass: 'panel', //class of panel DIVs each holding content
@@ -160,7 +175,7 @@ stepcarousel.setup({
 })
 
 </script>
-<div id="bg" style="border:5px solid red;height:2170px">
+<div id="bg" style="border:5px solid red;height:2400px">
 <div class="upper_gap">
 <p>&nbsp;</p>
 <i><p style="align:center;width:550px;margin:auto;color:#006699;font-size:15px;font-weight:bold;">
@@ -278,6 +293,40 @@ In this Expression Series one can watch audio and video biographies of eminent p
 <div class="panel">
 <a href="http://nroer.gov.in/gstudio/resources/documents/show/66242/"><img title="An Indian American Woman in Space - Kalpana Chawla" alt="An Indian American Woman in Space - Kalpana Chawla" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
 <br/>An Indian American Woman in Space - Kalpana Chawla</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/47731/"><img title="Ishwar Chandra Vidyasagar" alt="Ishwar Chandra Vidyasagar" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Ishwar Chandra Vidyasagar</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/48432/"><img title="Shaheed Jhalkaribai" alt="Shaheed Jhalkaribai" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Shaheed Jhalkaribai</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/48434/"><img title="Nrityangana Sudha Chandran" alt="Nrityangana Sudha Chandran" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Nrityangana Sudha Chandran</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/48428/"><img title="Vishveshwaraiya" alt="Vishveshwaraiya" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Vishveshwaraiya</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/49397/"><img title="Hindi ne Jinaki Zindagi Badal di- Maria Nejyashi" alt="Hindi ne Jinaki Zindagi Badal di- Maria Nejyashi" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Hindi ne Jinaki Zindagi Badal di- Maria Nejyashi</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/50128/"><img title="Bachon ke Priye Keshav Shankar Pillai" alt="Bachon ke Priye Keshav Shankar Pillai" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Bachon ke Priye Keshav Shankar Pillai</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/54314/"><img title="Dr.Salim Ali" alt="Dr.Salim Ali" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Dr.Salim Ali</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/54380/"><img title="Charles Darwin English 01" alt="Charles Darwin English 01" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Charles Darwin English 01</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/54382/"><img title="Charles Darwin Hindi 02" alt="Charles Darwin Hindi 02" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Charles Darwin Hindi 02</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/54388/"><img title="Walt Disney English " alt="Walt Disney English " src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Walt Disney English </div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/54390/"><img title="Walt Disney Hindi" alt="Walt Disney Hindi" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Walt Disney Hindi</div>
+
 </div>
 </div>
 <!-- NCERT Gallary ends here-->
@@ -293,10 +342,94 @@ In this Expression Series one can watch audio and video biographies of eminent p
 <div class="panel">
 <a href="http://nroer.gov.in/gstudio/resources/documents/show/43499/"><img title="Balagangadhar Tilak" alt="Balagangadhar Tilak" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
 <br/>Balagangadhar Tilak</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43563/"><img title="Bhagat Singh " alt="Bhagat Singh " src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Bhagat Singh </div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43561/"><img title="Madam Curie " alt="Madam Curie " src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Madam Curie </div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/43569/"><img title="Dr Yellapragada Subbarao" alt="Dr Yellapragada Subbarao" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Dr Yellapragada Subbarao</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58876/"><img title="Chathrapati Shivaji - II " alt="Chathrapati Shivaji - II " src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Chathrapati Shivaji - II </div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58874/"><img title="Chathrapati Shivaji – I" alt="Chathrapati Shivaji – I" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Chathrapati Shivaji – I</div>
+
+
 </div>
 </div>
 <!-- SIET, Hyderabad Gallary ends here-->
+<!-- SCERT, Manipur Gallary starts here-->
+<p style="padding-bottom:5px;color:#006699;font-size:20px;"><b>SCERT, Manipur</b></p>
 
+
+<div id="scertgallery" class="stepcarousel">
+<div class="belt">
+
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/55440/"><img title="Archemedis (Archemedis)" alt="Archemedis (Archemedis)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Archemedis</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/55668/"><img title="Ningthourel Ashok (Ashoka The Great)" alt="Ningthourel Ashok (Ashoka The Great)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Ningthourel Ashok (Ashoka The Great)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/55670/"><img title="Swami Vivekananda (Swami Vivekananda)" alt="Swami Vivekananda (Swami Vivekananda)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Swami Vivekananda</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/55845/"><img title="Ningthou Robert Bruce (King Robert Bruce)" alt="Ningthou Robert Bruce (King Robert Bruce)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Ningthou Robert Bruce (King Robert Bruce)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/55883/"><img title="Raj Shri Bhagyachandra (King Bhagyachandra)" alt="Raj Shri Bhagyachandra (King Bhagyachandra)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Raj Shri Bhagyachandra</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/55938/"><img title="Sir Issac Newton (Sir Issac Newton)" alt="Sir Issac Newton (Sir Issac Newton)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Sir Issac Newton</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/56255/"><img title="Thomas Alva Edison (Thomas Alva Edison)" alt="Thomas Alva Edison (Thomas Alva Edison)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Thomas Alva Edison</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/56299/"><img title="Galileo Galilei" alt="Galileo Galilei" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Galileo Galilei</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/56301/"><img title="Madam Curie" alt="Madam Curie" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Madam Curie</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58466/"><img title="Raja Ram Mohan Roy" alt="Raja Ram Mohan Roy" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Raja Ram Mohan Roy</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58551/"><img title="Pamheiba" alt="Pamheiba" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Pamheiba</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58601/"><img title="Bapuji Mahatama Gandhi" alt="Bapuji Mahatama Gandhi" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Bapuji Mahatama Gandhi</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58587/"><img title="Shrinivas Ramanujan" alt="Shrinivas Ramanujan" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Shrinivas Ramanujan</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58607/"><img title="Gautam Buddha" alt="Gautam Buddha" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Gautam Buddha</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58577/"><img title="Narsingh" alt="Narsingh" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Narsingh</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58846/"><img title="Leimaren Linthoi Ngambi (Queen Linthoi Nganbi)" alt="Leimaren Linthoi Ngambi (Queen Linthoi Nganbi)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Leimaren Linthoi Ngambi (Queen Linthoi Nganbi)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58792/"><img title="Dhananjoy Laibu Ningba (God devotee Dhananjay)" alt="Dhananjoy Laibu Ningba (God devotee Dhananjay)" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Dhananjoy Laibu Ningba (God devotee Dhananjay)</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58857/"><img title="Karl Marx" alt="Karl Marx" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>Karl Marx</div>
+<div class="panel">
+<a href="http://nroer.gov.in/gstudio/resources/documents/show/58918/"><img title="William Shakespeare" alt="William Shakespeare" src="/static/gstudio/img/ExpressionEventAudioThumbnail.png" style="width: 128px; height: 128px; border-radius: 20px;" ></a>
+<br/>William Shakespeare</div>
+
+</div>
+</div>
+<!-- SCERT, Manipur Gallary ends here-->
 <!--Audio Ends here-->
 
 <dl>
